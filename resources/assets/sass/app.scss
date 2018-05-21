@@ -1,0 +1,34 @@
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+@import '~sweetalert2/src/sweetalert2';
+
+//@import 'elements/card';
+//@import 'elements/navbar';
+//@import 'elements/buttons';
+//@import 'elements/transitions';
+@import "colors/blue";
+
+@import 'pages';
+@import 'grid';
+@import 'styles';
+@import 'responsive';
+@import 'material';
+@import 'sidebar';
+@import 'widgets';
+
+@import 'icons/font-awesome/css/font-awesome.min.css';
+@import 'icons/simple-line-icons/css/simple-line-icons.css';
+@import 'icons/weather-icons/css/weather-icons.min.css';
+@import 'icons/linea-icons/linea.css';
+@import 'icons/themify-icons/themify-icons.css';
+@import 'icons/flag-icon-css/flag-icon.min.css';
+@import "icons/material-design-iconic-font/css/materialdesignicons.min.css";
+@import '../css/spinners.css';
+@import '../css/animate.css';
