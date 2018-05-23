@@ -17,9 +17,7 @@ use JWTAuth;
 
 class UserController extends BaseController
 {
-
     public function me(Request $request) {
-        error_log(JWTAuth::parseToken()->authenticate(), '3', '1.txt');
         return success(JWTAuth::parseToken()->authenticate());
     }
 }
