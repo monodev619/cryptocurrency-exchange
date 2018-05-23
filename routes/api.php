@@ -28,6 +28,6 @@ $api->version('v1', ['middleware' => ['dingo']], function ($api) {
     $api->group( ['middleware' => 'jwt.auth' ], function ($api) {
 
         $api->get('user', ['as' => 'api.user', 'uses' => UserController::class . '@me']);
-        $api->get('logout', ['as' => 'api.logout', 'uses' => UserController::class . '@logout']);
+        $api->post('logout', ['as' => 'api.logout', 'uses' => AuthController::class . '@logout']);
     });
 });

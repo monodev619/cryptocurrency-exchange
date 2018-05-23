@@ -10,5 +10,7 @@ class UserProfile extends Model
         'user_id', 'photo', 'dob', 'country', 'street', 'apt', 'city', 'state', 'zipcode', 'phone'
     ];
 
-
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -20,4 +20,12 @@ class UserController extends BaseController
     public function me(Request $request) {
         return success(JWTAuth::parseToken()->authenticate());
     }
+
+    public function getProfile(Request $request) {
+
+    }
+
+    public function updateProfile(Request $request) {
+
+    }
 }

@@ -9,4 +9,8 @@ class DepositAddress extends Model
     protected $fillable = [
         'user_id', 'currency_id', 'address'
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }
