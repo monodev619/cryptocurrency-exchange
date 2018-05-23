@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWithdrawalsTable extends Migration
+class CreateTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ class CreateWithdrawalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('withdrawals', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('currency_id');
-            $table->string('address', 1024);
+            $table->integer('market_id');
             $table->double('quantity');
-            $table->double('fee');
-            $table->double('total');
-            $table->string('txid', 1024);
-            $table->enum('status', config('enum.withdrawal_status'));
+            $table->double('price');
+            $table->integer('bid_order_id');
+            $table->integer('ask_order_id');
             $table->timestamps();
         });
     }
@@ -34,6 +31,6 @@ class CreateWithdrawalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('withdrawals');
+        Schema::dropIfExists('transactions');
     }
 }
