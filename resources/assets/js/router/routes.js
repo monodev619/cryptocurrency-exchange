@@ -6,9 +6,12 @@ const PasswordReset = () => import('~/pages/auth/password/reset').then(m => m.de
 const NotFound = () => import('~/pages/errors/404').then(m => m.default || m)
 
 const Home = () => import('~/pages/home').then(m => m.default || m)
-const Settings = () => import('~/pages/settings/index').then(m => m.default || m)
-const SettingsProfile = () => import('~/pages/settings/profile').then(m => m.default || m)
-const SettingsPassword = () => import('~/pages/settings/password').then(m => m.default || m)
+// const Settings = () => import('~/pages/settings/index').then(m => m.default || m)
+// const SettingsProfile = () => import('~/pages/settings/profile').then(m => m.default || m)
+// const SettingsPassword = () => import('~/pages/settings/password').then(m => m.default || m)
+const Profile = () => import('~/pages/settings/profile').then(m => m.default || m)
+
+
 
 export default [
   { path: '/', name: 'welcome', component: Welcome },
@@ -19,13 +22,13 @@ export default [
   { path: '/password/reset/:token', name: 'password.reset', component: PasswordReset },
 
   { path: '/home', name: 'home', component: Home },
-  { path: '/settings',
-    component: Settings,
+  { path: '/setting', name: 'setting',  component: Profile,
     children: [
-      { path: '', redirect: { name: 'settings.profile' } },
-      { path: 'profile', name: 'settings.profile', component: SettingsProfile },
-      { path: 'password', name: 'settings.password', component: SettingsPassword }
-    ] },
+       { path: '', redirect: { name: 'settings.profile' } },
+       { path: 'profile', name: 'settings.profile', component: Profile }
+      // { path: 'password', name: 'settings.password', component: SettingsPassword }
+    ]
+  },
 
   { path: '*', component: NotFound }
 ]

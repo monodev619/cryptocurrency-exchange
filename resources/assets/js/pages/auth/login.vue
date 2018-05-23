@@ -50,6 +50,7 @@
       </div>
     </div>
   </div>
+
   <!--<div class="row">-->
     <!--<div class="col-lg-8 m-auto">-->
       <!--<card :title="$t('login')">-->

@@ -13,31 +13,29 @@
     <div class="navbar-collapse">
 
       <ul class="navbar-nav ml-auto my-lg-0">
-
+        <!--<li v-if="user" class="nav-item">-->
+          <!--{{user.data.name}}-->
+        <!--</li>-->
         <li v-if="user" class="nav-item">
           <router-link :to="{ name: 'trading' }" class="nav-link">
             {{ $t('Trading') }}
           </router-link>
         </li>
-
         <li v-if="user" class="nav-item">
           <router-link :to="{ name: 'order' }" class="nav-link">
             {{ $t('Orders') }}
           </router-link>
         </li>
-
         <li v-if="user" class="nav-item">
           <router-link :to="{ name: 'wallet' }" class="nav-link">
             {{ $t('Wallets') }}
           </router-link>
         </li>
-
         <li v-if="user" class="nav-item">
           <router-link :to="{ name: 'setting' }" class="nav-link">
             {{ $t('Settings') }}
           </router-link>
         </li>
-
         <li v-if="user"class="nav-item">
           <a href="#" class="nav-link" @click.prevent="logout">
             <fa icon="sign-out-alt" fixed-width/>
@@ -61,7 +59,6 @@
               {{ $t('register') }}
             </router-link>
           </li>
-
         </template>
 
         <!--<li class="nav-item">-->

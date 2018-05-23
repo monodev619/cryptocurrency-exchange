@@ -5,7 +5,9 @@
         <navbar/>
       </header>
 
-      <div class="">
+      <div class="height"></div>
+
+      <div class="content">
         <child/>
       </div>
     </div>
@@ -14,12 +16,17 @@
 
 <script>
 import Navbar from '~/components/Navbar'
+import Sidebar from "../components/Sidebar";
+
 
 export default {
   name: 'MainLayout',
 
   components: {
-    Navbar
+      Sidebar,
+
+    Navbar,
+
   }
 }
 </script>
