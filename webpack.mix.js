@@ -48,3 +48,9 @@ mix.webpackConfig({
         publicPath: mix.config.hmr ? '//localhost:8080' : '/'
     }
 });
+
+mix.autoload({
+    'jquery': ['$', 'window.jQuery', 'jQuery'],
+    'vue': ['Vue','window.Vue'],
+    'moment': ['moment','window.moment'],
+});

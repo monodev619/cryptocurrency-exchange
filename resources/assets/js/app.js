@@ -9,8 +9,6 @@ import '~/components'
 
 Vue.config.productionTip = false
 
-window.$ = window.jQuery = require('jquery');
-
 
 /* eslint-disable no-new */
 new Vue({
