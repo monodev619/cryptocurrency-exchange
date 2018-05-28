@@ -35,4 +35,31 @@
     }
     ```
 
-
+4. Profile
+- Set & Update Profile   
+    API: `api.updateProfile`  
+    Method: `post`  
+    Params: `dob`, `country`, `street`, `apt(optional)`, `city`, `state`, `zipcode`, `phone(optional)`    
+    Return: 
+    ```javascript
+    response.data = {
+       success: true    
+    }
+    ```
+- Get Profile   
+    API: `api.getProfile`  
+    Method: `get`  
+    Params:     
+    Return: 
+    ```javascript
+    response.data = {
+       'dob' : date of birth
+       'country' : country
+       'street' : street address
+       'apt' : apt or unit
+       'city' : city
+       'state' : state or provice
+       'zipcode' : zipcode or postal
+       'phone' : phone number    
+    }
+    ```
