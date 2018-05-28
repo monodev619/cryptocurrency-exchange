@@ -16,11 +16,11 @@
         <!--<li v-if="user" class="nav-item">-->
           <!--{{user.data.name}}-->
         <!--</li>-->
-        <li v-if="user" class="nav-item">
-          <router-link :to="{ name: 'trading' }" class="nav-link">
-            {{ $t('Trading') }}
-          </router-link>
-        </li>
+        <!--<li v-if="user" class="nav-item">-->
+          <!--<router-link :to="{ name: 'trading-info' }" class="nav-link">-->
+            <!--{{ $t('Trading') }}-->
+          <!--</router-link>-->
+        <!--</li>-->
         <li v-if="user" class="nav-item">
           <router-link :to="{ name: 'order' }" class="nav-link">
             {{ $t('Orders') }}
@@ -32,7 +32,7 @@
           </router-link>
         </li>
         <li v-if="user" class="nav-item">
-          <router-link :to="{ name: 'setting' }" class="nav-link">
+          <router-link :to="{ name: 'settings' }" class="nav-link">
             {{ $t('Settings') }}
           </router-link>
         </li>
