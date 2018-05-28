@@ -32,18 +32,22 @@ class UserController extends BaseController
     public function getProfile(Request $request) {
 
         $user = user();
-        $profile = $user->userProfile();
+        $profile = $user->userProfile;
 
-        return success([
-            'dob' => $profile->dob,
-            'country' => $profile->country,
-            'street' => $profile->street,
-            'apt' => $profile->apt,
-            'city' => $profile->city,
-            'state' => $profile->state,
-            'zipcode' => $profile->zipcode,
-            'phone' => $profile->phone
-        ]);
+        if (is_null($profile)) {
+            return success(null);
+        } else {
+            return success([
+                'dob' => $profile->dob,
+                'country' => $profile->country,
+                'street' => $profile->street,
+                'apt' => $profile->apt,
+                'city' => $profile->city,
+                'state' => $profile->state,
+                'zipcode' => $profile->zipcode,
+                'phone' => $profile->phone
+            ]);
+        }
     }
 
     public function updateProfile(Request $request) {
@@ -57,11 +61,13 @@ class UserController extends BaseController
         ]);
 
         $user = user();
-        $profile = $user->userProfile();
+        $profile = $user->userProfile;
+
+
         if (is_null($profile)) {
             $profile = UserProfile::create([
                 'user_id' => $user->id,
-                'dob' => $request->get('dob'),
+                'dob' => $time = date('Y-m-d',strtotime($request->get('dob'))),
                 'country' => $request->get('country'),
                 'street' => $request->get('street'),
                 'apt' => $request->get('apt'),
@@ -72,7 +78,7 @@ class UserController extends BaseController
             ]);
         } else {
             $profile->update([
-                'dob' => $request->get('dob'),
+                'dob' => date('Y-m-d',strtotime($request->get('dob'))),
                 'country' => $request->get('country'),
                 'street' => $request->get('street'),
                 'apt' => $request->get('apt'),
