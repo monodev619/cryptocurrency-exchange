@@ -43,6 +43,7 @@ export const mutations = {
 
   [types.LOGOUT] (state) {
     state.user = null
+    state.profile = null
     state.token = null
 
     Cookies.remove('token')
