@@ -225,13 +225,8 @@ if (!function_exists('user')) {
      */
     function user(Request $request = null)
     {
-        $self = Auth::user();
-        if (is_null($self)) {
-            $token = get_jwt_token();
-            return jwt_to_user($token);
-        }
+        $self = JWTAuth::parseToken()->authenticate();
         return $self;
-
     }
 }
 
