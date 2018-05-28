@@ -31,6 +31,6 @@ $api->version('v1', ['middleware' => ['dingo']], function ($api) {
         $api->post('logout', ['as' => 'api.logout', 'uses' => AuthController::class . '@logout']);
         $api->get('getProfile', ['as' => 'api.getProfile', 'uses' => UserController::class . '@getProfile']);
         $api->post('updateProfile', ['as' => 'api.updateProfile', 'uses' => UserController::class . '@updateProfile']);
-
+        $api->post('updatePassword', ['as' => 'api.updatePassword', 'uses' => UserController::class . '@updatePassword']);
     });
 });

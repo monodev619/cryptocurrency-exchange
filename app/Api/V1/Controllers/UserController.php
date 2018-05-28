@@ -14,6 +14,7 @@ use App\UserProfile;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use JWTAuth;
+use Hash;
 
 
 class UserController extends BaseController
@@ -90,5 +91,25 @@ class UserController extends BaseController
         }
 
         return success();
+    }
+
+    public function updatePassword(Request $request) {
+        validate($request->all(), [
+            'old_password' => 'required',
+            'password' => 'required|confirmed'
+        ]);
+
+        $user = user();
+        $old = $user->password;
+
+        if (Hash::check($request->get('old_password'), $old)) {
+            $user->update([
+                'password' => bcrypt($request->get('password'))
+            ]);
+
+            return success();
+        } else {
+            return error('Password is mismatched');
+        }
     }
 }
