@@ -54,7 +54,7 @@ export const actions = {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + state.token;
       const { data } = await axios.get('/_api/user');
 
-      commit(types.FETCH_USER_SUCCESS, { user: data });
+      commit(types.FETCH_USER_SUCCESS, { user: data.data });
     } catch (e) {
       commit(types.FETCH_USER_FAILURE)
     }

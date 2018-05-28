@@ -15,8 +15,6 @@
                                 <div class="card-body">
                                     <form action="#">
                                         <div class="form-body">
-                                            <h3 class="card-title">Person Info</h3>
-                                            <hr>
                                             <div class="row p-t-20">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
@@ -26,28 +24,15 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--/row-->
-
                                             <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Phone number</label>
-                                                        <input type="text" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label">Date of Birth</label>
-                                                        <input type="date" class="form-control" placeholder="dd/mm/yyyy">
+                                                        <!--<input type="text" class="form-control" v-model="date" id="datepicker-autoclose" placeholder="mm/dd/yyyy">-->
+                                                        <datepicker v-model="date" :format="dateFormatter"></datepicker>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!--/row-->
-                                            <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label">Country</label>
                                                         <select class="form-control custom-select" data-placeholder="Choose a Category" tabindex="1">
@@ -60,9 +45,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--/row-->
-                                            <h3 class="box-title m-t-40">Address</h3>
-                                            <hr>
                                             <div class="row">
                                                 <div class="col-md-12 ">
                                                     <div class="form-group">
@@ -74,28 +56,18 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>City</label>
-                                                        <input type="text" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <!--/span-->
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
                                                         <label>Apt or unit</label>
                                                         <input type="text" class="form-control">
                                                     </div>
                                                 </div>
-                                                <!--/span-->
-                                            </div>
-                                            <!--/row-->
-                                            <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>Post Code</label>
+                                                        <label>City</label>
                                                         <input type="text" class="form-control">
                                                     </div>
                                                 </div>
-                                                <!--/span-->
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>State or Province</label>
@@ -107,7 +79,20 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <!--/span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>ZipCode</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Phone number(Optional)</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-actions">
@@ -119,7 +104,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -129,13 +113,24 @@
 
 <script>
 
-    // import { mapGetters } from 'vue'
-    import { mapGetters } from 'vuex'
+    import { mapGetters } from 'vuex';
     import Sidebar from "../../components/Sidebar";
+    import Datepicker from "vuejs-datepicker/src/components/Datepicker";
+
 
     export default {
-        components: {Sidebar},
+        components: {Datepicker, Sidebar},
         middleware: 'auth',
+
+        data() {
+            return {
+                date: '',
+                config: {
+                    format: 'DD/MM/YYYY',
+                    useCurrent: false,
+                }
+            }
+        },
 
         computed: mapGetters({
             user: 'auth/user'
@@ -143,6 +138,17 @@
 
         metaInfo () {
             return { title: this.$t('setting') }
+        },
+
+        mounted() {
+            // this.date = this.date.getDate() + '/' + (this.date.getMonth() + 1) + '/' + this.date.getFullYear();
+            // $('#datepicker-autoclose').datepicker();
+        },
+
+        methods: {
+            dateFormatter(date) {
+                return moment(date).format('YYYY-MM-DD');
+            }
         }
     }
 </script>
