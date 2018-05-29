@@ -139,6 +139,18 @@
                 const { data } = await this.form.post('/_api/updatePassword');
 
                 if (data.code == codes.SUCCESS) {
+                    const toast = swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+
+                    toast({
+                        type: 'success',
+                        title: 'Password has been updated successfully.'
+                    });
+
                     this.form.old_password = '';
                     this.form.password = '';
                     this.form.password_confirmation = '';
