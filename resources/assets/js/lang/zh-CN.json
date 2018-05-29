@@ -4,6 +4,7 @@
   "error_alert_title": "错误...",
   "error_alert_text": "遇到一些错误，请稍后重试~",
   "error_password_mismatch": "您输入的密码错了。请输入正确的密码。",
+  "invalid_credential": "该用户和密码是错误的。",
   "token_expired_alert_title": "验证过期!",
   "token_expired_alert_text": "请稍后重新登录系统",
   "login": "登录",

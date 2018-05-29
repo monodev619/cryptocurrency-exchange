@@ -4,6 +4,7 @@
   "error_alert_title": "Error...",
   "error_alert_text": "Something went wrong! Please try again.",
   "error_password_mismatch": "Current password is wrong. Please enter current password correctly.",
+  "invalid_credential": "The credential is wrong.",
   "token_expired_alert_title": "Session Expired!",
   "token_expired_alert_text": "Please log in again to continue.",
   "login": "Log In",

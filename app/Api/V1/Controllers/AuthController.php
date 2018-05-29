@@ -27,7 +27,7 @@ class AuthController extends BaseController
 
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
-                return error('invalid credentials', PARAMS_ILLEGAL);
+                return error('invalid credentials', INVALID_CREDENTIAL);
             }
         } catch (JWTException $e) {
             return error('could not create token', TOKEN_FAIL);
