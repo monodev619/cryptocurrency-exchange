@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <loading ref="loading"/>
+    <loading-progress ref="loading"></loading-progress>
 
     <transition name="page" mode="out-in">
       <component v-if="layout" :is="layout"/>
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Loading from './Loading'
+import LoadingProgress from "./LoadingProgress";
 
 // Load layout components dynamically.
 const requireContext = require.context('~/layouts', false, /.*\.vue$/)
@@ -27,7 +27,7 @@ export default {
   el: '#app',
 
   components: {
-    Loading
+      LoadingProgress,
   },
 
   data: () => ({

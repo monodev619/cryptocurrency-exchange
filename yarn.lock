@@ -9277,6 +9277,10 @@ vue-loader@^14.2.1:
     vue-style-loader "^4.0.1"
     vue-template-es2015-compiler "^1.6.0"
 
+vue-loading-overlay@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/vue-loading-overlay/-/vue-loading-overlay-2.0.4.tgz#856431b40ad6c3ce44c240f9c7bdf9b0c5e88f49"
+
 vue-meta@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/vue-meta/-/vue-meta-1.5.0.tgz#02a9f166a1e87763a87bfd47431122ed575bcdde"

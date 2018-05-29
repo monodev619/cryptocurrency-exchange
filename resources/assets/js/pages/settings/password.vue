@@ -1,11 +1,10 @@
 <template>
     <div>
-        <!--<sidebar/>-->
+        <loading :active.sync="isLoading" :can-cancel="false" ></loading>
         <div class="page-wrapper page-wrapper-borderleft">
             <div class="row page-titles"><div class="col-md-5 align-self-center"></div></div>
             <div class="container-fluid">
                 <div class="row ">
-
                     <div class="profile-content">
                         <div class="col-lg-12">
                             <div class="card card-outline-info">
@@ -80,10 +79,12 @@
     import swal from 'sweetalert2';
     import i18n from '~/plugins/i18n';
     import * as codes from '~/constants/response-codes';
+    import Loading from 'vue-loading-overlay';
+    import 'vue-loading-overlay/dist/vue-loading.min.css';
 
     export default {
         name: "password",
-        components: {Sidebar},
+        components: {Loading, Sidebar},
         middleware: 'auth',
 
         computed: mapGetters({
@@ -100,7 +101,8 @@
                 old_password: false,
                 password: false,
                 password_confirmation: false
-            }
+            },
+            isLoading: false
         }),
 
         methods: {
@@ -136,7 +138,9 @@
             async updatePassword() {
                 if (!this.validateForm()) return;
 
+                this.isLoading = true;
                 const { data } = await this.form.post('/_api/updatePassword');
+                this.isLoading = false;
 
                 if (data.code == codes.SUCCESS) {
                     const toast = swal.mixin({
