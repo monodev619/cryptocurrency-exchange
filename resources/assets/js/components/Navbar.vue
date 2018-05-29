@@ -27,7 +27,7 @@
           </router-link>
         </li>
         <li v-if="user" class="nav-item">
-          <router-link :to="{ name: 'wallet' }" class="nav-link">
+          <router-link :to="{ name: 'wallets' }" class="nav-link">
             {{ $t('Wallets') }}
           </router-link>
         </li>

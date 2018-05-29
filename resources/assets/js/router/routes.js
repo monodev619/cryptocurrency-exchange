@@ -9,6 +9,7 @@ const Home = () => import('~/pages/home').then(m => m.default || m)
 const Setting = () => import('~/pages/settings/setting').then(m => m.default || m)
 const Profile = () => import('~/pages/settings/profile').then(m => m.default || m)
 const Password = () => import('~/pages/settings/password').then(m => m.default || m)
+const Balance = () => import('~/pages/wallets/balance').then(m => m.default || m)
 // const TradingInfo = () => import('~/pages/trading/trading-info').then(m => m.default || m)
 
 
@@ -29,6 +30,7 @@ export default [
         { path: 'password', name: 'settings.password', component: Password }
     ]
   },
+  { path: '/wallets', name: 'wallets', component: Balance },
   // { path: '/trading', name: 'trading-info', component: TradingInfo },
   { path: '*', component: NotFound }
 ]

@@ -52,5 +52,5 @@ mix.webpackConfig({
 mix.autoload({
     'jquery': ['$', 'window.jQuery', 'jQuery'],
     'vue': ['Vue','window.Vue'],
-    'moment': ['moment','window.moment'],
+    'moment': ['moment','window.moment']
 });
