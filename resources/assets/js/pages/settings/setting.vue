@@ -11,7 +11,8 @@
         name: "setting",
         components: {Sidebar},
         mounted() {
-            this.$router.push({ name: 'settings.profile'})
+            if (this.$route.path === '/settings')
+                this.$router.push({ name: 'settings.profile'})
         }
     }
 </script>

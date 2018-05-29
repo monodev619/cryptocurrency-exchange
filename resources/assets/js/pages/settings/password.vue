@@ -77,6 +77,9 @@
     import Sidebar from "../../components/Sidebar";
     import { mapGetters } from 'vuex';
     import Form from 'vform';
+    import swal from 'sweetalert2';
+    import i18n from '~/plugins/i18n';
+    import * as codes from '~/constants/response-codes';
 
     export default {
         name: "password",
@@ -135,9 +138,20 @@
 
                 const { data } = await this.form.post('/_api/updatePassword');
 
-                this.form.old_password = '';
-                this.form.password = '';
-                this.form.password_confirmation = '';
+                if (data.code == codes.SUCCESS) {
+                    this.form.old_password = '';
+                    this.form.password = '';
+                    this.form.password_confirmation = '';
+                } else if (data.code == codes.PASSWORD_MISMATCH) {
+                    swal({
+                        type: 'error',
+                        title: i18n.t('error_alert_title'),
+                        text: i18n.t('error_password_mismatch'),
+                        reverseButtons: true,
+                        confirmButtonText: i18n.t('ok'),
+                        cancelButtonText: i18n.t('cancel')
+                    });
+                }
             }
         }
     }

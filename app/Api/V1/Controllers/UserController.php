@@ -109,7 +109,7 @@ class UserController extends BaseController
 
             return success();
         } else {
-            return error('Password is mismatched');
+            return error('Password is mismatched', PASSWORD_MISMATCH);
         }
     }
 }

@@ -11,6 +11,7 @@ const SUCCESS               = 0;                //成功。
 /**
  * 用户级别错误
  */
+const PASSWORD_MISMATCH     = 401;
 const SIGN_ERROR            = 403;              //签名失败。
 const TOKEN_FAIL            = 405;
 const PARAMS_ILLEGAL        = 417;              //参数不合法。

@@ -24,7 +24,7 @@ export default [
   { path: '/home', name: 'home', component: Home },
   { path: '/settings', name: 'settings',  component: Setting,
     children: [
-        { path: '/', redirect: { name: 'settings.profile' }},
+        // { path: '/', redirect: { name: 'settings.profile' }},
         { path: 'profile', name: 'settings.profile', component: Profile },
         { path: 'password', name: 'settings.password', component: Password }
     ]
