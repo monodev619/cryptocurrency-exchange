@@ -9,7 +9,10 @@
     import Sidebar from "../../components/Sidebar";
     export default {
         name: "setting",
-        components: {Sidebar}
+        components: {Sidebar},
+        mounted() {
+            this.$router.push({ name: 'settings.profile'})
+        }
     }
 </script>
 
