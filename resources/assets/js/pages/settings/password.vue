@@ -9,7 +9,7 @@
                         <div class="col-lg-12">
                             <div class="card card-outline-info">
                                 <div class="card-header">
-                                    <h4 class="m-b-0 text-white">Password</h4>
+                                    <h4 class="m-b-0 text-white">{{ $t('password')}}</h4>
                                 </div>
                                 <div class="card-body">
                                     <form @submit.prevent="updatePassword" @keydown="form.onKeydown($event)">
@@ -17,7 +17,7 @@
                                             <div class="row p-t-20">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label class="control-label">Currently logged in as</label>
+                                                        <label class="control-label">{{ $t('currently')}}</label>
                                                         <hr>
                                                         <h4>{{ user.email }}</h4>
                                                     </div>
@@ -28,9 +28,9 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label>Current password</label>
+                                                        <label>{{ $t('currentpass')}}</label>
                                                         <input type="password" class="form-control" v-model="form.old_password">
-                                                        <div v-if="error.old_password" class="has-danger"><div class="form-control-feedback">This field is required.</div></div>
+                                                        <div v-if="error.old_password" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -38,9 +38,9 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label>New password</label>
+                                                        <label>{{ $t('newpass')}}</label>
                                                         <input type="password" class="form-control" v-model="form.password">
-                                                        <div v-if="error.password" class="has-danger"><div class="form-control-feedback">This field is required.</div></div>
+                                                        <div v-if="error.password" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -48,16 +48,16 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label>Confirm password</label>
+                                                        <label>{{ $t('confirmpass')}}</label>
                                                         <input type="password" class="form-control" v-model="form.password_confirmation">
-                                                        <div v-if="error.password_confirmation" class="has-danger"><div class="form-control-feedback">This field is required.</div></div>
+                                                        <div v-if="error.password_confirmation" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
                                                     </div>
                                                 </div>
                                             </div>
 
                                         </div>
                                         <div class="form-actions">
-                                            <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Change Password</button>
+                                            <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> {{ $t('changepass')}}</button>
                                         </div>
                                     </form>
                                 </div>

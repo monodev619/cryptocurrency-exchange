@@ -4,18 +4,21 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Data Table</h4>
-                        <h6 class="card-subtitle">Data table example</h6>
+                        <h4 class="card-title">BITCOIN MARKETS</h4>
+                        <h6 class="card-subtitle">Total Volume = 10480.670 &nbsp; 1 BTC = $7,410.786</h6>
                         <div class="table-responsive m-t-40">
                             <table id="myTable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
+                                    <th>MARKET</th>
+                                    <th>CURRENCY</th>
+                                    <th>VOLUME</th>
+                                    <th>CHANGE</th>
+                                    <th>LAST PRICE</th>
+                                    <th>24HR HIGH</th>
+                                    <th>24HR LOW</th>
+                                    <th>%SPREAD</th>
+                                    <th>ADDED</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -26,6 +29,9 @@
                                     <td>51</td>
                                     <td>2008/12/16</td>
                                     <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Hope Fuentes</td>
@@ -34,6 +40,9 @@
                                     <td>41</td>
                                     <td>2010/02/12</td>
                                     <td>$109,850</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Vivian Harrell</td>
@@ -42,6 +51,9 @@
                                     <td>62</td>
                                     <td>2009/02/14</td>
                                     <td>$452,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Timothy Mooney</td>
@@ -50,6 +62,9 @@
                                     <td>37</td>
                                     <td>2008/12/11</td>
                                     <td>$136,200</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Jackson Bradshaw</td>
@@ -58,6 +73,9 @@
                                     <td>65</td>
                                     <td>2008/09/26</td>
                                     <td>$645,750</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Olivia Liang</td>
@@ -66,6 +84,9 @@
                                     <td>64</td>
                                     <td>2011/02/03</td>
                                     <td>$234,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Bruno Nash</td>
@@ -74,6 +95,9 @@
                                     <td>38</td>
                                     <td>2011/05/03</td>
                                     <td>$163,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Sakura Yamamoto</td>
@@ -82,6 +106,9 @@
                                     <td>37</td>
                                     <td>2009/08/19</td>
                                     <td>$139,575</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Thor Walton</td>
@@ -90,6 +117,9 @@
                                     <td>61</td>
                                     <td>2013/08/11</td>
                                     <td>$98,540</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Finn Camacho</td>
@@ -98,6 +128,9 @@
                                     <td>47</td>
                                     <td>2009/07/07</td>
                                     <td>$87,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Serge Baldwin</td>
@@ -106,6 +139,9 @@
                                     <td>64</td>
                                     <td>2012/04/09</td>
                                     <td>$138,575</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Zenaida Frank</td>
@@ -114,6 +150,9 @@
                                     <td>63</td>
                                     <td>2010/01/04</td>
                                     <td>$125,250</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Zorita Serrano</td>
@@ -122,6 +161,9 @@
                                     <td>56</td>
                                     <td>2012/06/01</td>
                                     <td>$115,000</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Jennifer Acosta</td>
@@ -130,6 +172,9 @@
                                     <td>43</td>
                                     <td>2013/02/01</td>
                                     <td>$75,650</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Cara Stevens</td>
@@ -138,6 +183,9 @@
                                     <td>46</td>
                                     <td>2011/12/06</td>
                                     <td>$145,600</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Hermione Butler</td>
@@ -146,6 +194,9 @@
                                     <td>47</td>
                                     <td>2011/03/21</td>
                                     <td>$356,250</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Lael Greer</td>
@@ -154,6 +205,9 @@
                                     <td>21</td>
                                     <td>2009/02/27</td>
                                     <td>$103,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Jonas Alexander</td>
@@ -162,6 +216,9 @@
                                     <td>30</td>
                                     <td>2010/07/14</td>
                                     <td>$86,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Shad Decker</td>
@@ -170,6 +227,9 @@
                                     <td>51</td>
                                     <td>2008/11/13</td>
                                     <td>$183,000</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 <tr>
                                     <td>Michael Bruce</td>
@@ -178,6 +238,10 @@
                                     <td>29</td>
                                     <td>2011/06/27</td>
                                     <td>$183,000</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+
                                 </tr>
                                 <tr>
                                     <td>Donna Snider</td>
@@ -186,6 +250,9 @@
                                     <td>27</td>
                                     <td>2011/01/25</td>
                                     <td>$112,000</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
+                                    <td>$164,500</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -198,8 +265,7 @@
 </template>
 
 <script>
-    import '~/plugins/datatables/jquery.dataTables.min';
-    // import '~/plugins/datatables/jquery.dataTables.min.css';
+     import '../../plugins/jquery.dataTables.min.js';
 
     export default {
         name: "balance",
