@@ -104,6 +104,10 @@
             validateForm() {
                 var bSuccess = true;
 
+                this.error.old_password = false;
+                this.error.password = false;
+                this.error.password_confirmation = false;
+
                 if (this.form.old_password.length == 0) {
                     this.error.old_password = true;
                     bSuccess = false;
