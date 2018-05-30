@@ -5,25 +5,25 @@
       <div class="card-body">
         <form class="form-horizontal form-material" @submit.prevent="register" @keydown="form.onKeydown($event)">
           <h3 class="box-title m-b-20">{{ $t('Register') }}</h3>
-          <div class="has-danger" v-if="validation_error"><div class="form-control-feedback">{{ $t('invalid_credential') }}</div></div>
+          <!--<div class="has-danger" v-if="validation_error"><div class="form-control-feedback">{{ $t('invalid_credential') }}</div></div>-->
           <div class="form-group">
             <div class="col-xs-12">
               <input class="form-control" type="text" required="" name="name" v-model="form.name" :placeholder="$t('name')">
             </div>
           </div>
-          <div class="has-danger" v-if="validation_error"><div class="form-control-feedback">{{ $t('invalid_credential') }}</div></div>
+          <!--<div class="has-danger" v-if="validation_error"><div class="form-control-feedback">{{ $t('invalid_credential') }}</div></div>-->
           <div class="form-group ">
             <div class="col-xs-12">
               <input class="form-control" type="text" required="" name="email" v-model="form.email" :placeholder="$t('email')">
             </div>
           </div>
-          <div class="has-danger" v-if="validation_error"><div class="form-control-feedback">{{ $t('invalid_credential') }}</div></div>
+          <!--<div class="has-danger" v-if="validation_error"><div class="form-control-feedback">{{ $t('invalid_credential') }}</div></div>-->
           <div class="form-group ">
             <div class="col-xs-12">
               <input class="form-control" type="password" required="" name="password" v-model="form.password" :placeholder="$t('password')">
             </div>
           </div>
-          <div class="has-danger" v-if="validation_error"><div class="form-control-feedback">{{ $t('invalid_credential') }}</div></div>
+          <!--<div class="has-danger" v-if="validation_error"><div class="form-control-feedback">{{ $t('invalid_credential') }}</div></div>-->
           <div class="form-group">
             <div class="col-xs-12">
               <input class="form-control" type="password" required="" name="password_confirmation" v-model="form.password_confirmation" :placeholder="$t('confirm_password')">

@@ -2036,7 +2036,7 @@ form label {
 
 .page-wrapper {
   background: #eef5f9;
-  padding-bottom: 60px
+  padding-bottom: 60px;
 }
 
 .container-fluid {
@@ -2542,7 +2542,7 @@ ul#themecolors li a.working:before {
 }
 
 .card {
-  margin-bottom: 30px
+  margin-bottom: 0px
 }
 
 .card .card-subtitle {
@@ -8112,7 +8112,8 @@ a.mytooltip {
     margin-left: 240px
   }
   .footer {
-    left: 0px
+    left: 0px;
+    z-index: 100;
   }
 }
 
@@ -8124,7 +8125,8 @@ a.mytooltip {
     transition: 0.2s ease-in
   }
   .footer {
-    left: 0px
+    left: 0px;
+    z-index: 100;
   }
   .widget-app-columns {
     -webkit-column-count: 1;
@@ -9950,4 +9952,9 @@ pre {
 .container-fluid .card-body .card-title {
   font-weight:bold;
   font-size: 25px;
+}
+
+.content {
+  min-height: 606px;
+
 }

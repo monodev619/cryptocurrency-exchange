@@ -11,8 +11,9 @@
                     <!--<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>-->
                 <!--</div>-->
                 <child/>
+                  <footer class="footer" v-if="show_footer"> © 2018 Admin Press Admin by themedesigner.in </footer>
               </div>
-        <footer class="footer"> © 2018 Admin Press Admin by themedesigner.in </footer>
+
     </div>
   </body>
 </template>
@@ -30,8 +31,23 @@ export default {
       Navbar,
   },
 
+  data: () => ({
+     show_footer:true
+  }),
+
   mounted() {
       $('.preloader').fadeOut();
-  }
+  },
+
+    watch:{
+        $route (to, from){
+
+            if (to.name == 'login' || to.name == 'register') {
+                this.show_footer = false;
+            } else {
+                this.show_footer = true;
+            }
+        }
+    }
 }
 </script>
