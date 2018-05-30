@@ -2040,7 +2040,7 @@ form label {
 }
 
 .container-fluid {
-  padding: 0 30px 25px 30px
+  padding: 30px 30px 25px 30px
 }
 
 .topbar {
@@ -8112,7 +8112,7 @@ a.mytooltip {
     margin-left: 240px
   }
   .footer {
-    left: 240px
+    left: 0px
   }
 }
 
@@ -8124,7 +8124,7 @@ a.mytooltip {
     transition: 0.2s ease-in
   }
   .footer {
-    left: 60px
+    left: 0px
   }
   .widget-app-columns {
     -webkit-column-count: 1;
@@ -9931,10 +9931,6 @@ pre {
 
 .blue {
   color: #2119ff !important;
-}
-
-.container-fluid {
-  padding: 30px 30px 25px 30px !important;
 }
 
 .card .card-subtitle {
