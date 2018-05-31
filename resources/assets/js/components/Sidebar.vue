@@ -30,12 +30,12 @@
     export default {
         name: "Sidebar",
         data: () => ({
-            selected:'profile',
             current_url:'settings.profile'
         }) ,
         watch:{
             $route (to, from){
                 this.current_url = to.name;
+                console.log(this.current_url);
             }
         }
     }

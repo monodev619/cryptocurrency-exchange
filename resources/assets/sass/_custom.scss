@@ -2540,7 +2540,8 @@ ul#themecolors li a.working:before {
   position: absolute;
   right: 0;
   border-top: 1px solid rgba(120, 130, 140, 0.13);
-  background: #ffffff
+  background: #ffffff;
+  text-align: center;
 }
 
 .card {
@@ -9953,7 +9954,7 @@ pre {
 
 .container-fluid .card-body .card-title {
   font-weight:700;
-  font-size: 21px;
+  font-size: 20px;
 }
 
 .content {
@@ -10020,7 +10021,7 @@ pre {
 }
 
 .modal-body {
-  padding: 25px 35px !important;
+  padding: 20px !important;
 }
 
 .disclaimer {
@@ -10201,4 +10202,13 @@ pre {
 
 .title1 {
   margin-left: 10px;
+}
+
+.bitcoinmarkets {
+  margin-bottom: 40px;
+  margin-top: 20px;
+}
+
+.ethereummarkets {
+  margin-bottom: 80px;
 }

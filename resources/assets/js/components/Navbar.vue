@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar top-navbar navbar-expand-md navbar-light">
     <div class="navbar-header">
-      <router-link :to="{ name: 'welcome' }" class="navbar-brand">
+      <router-link :to="{ name: 'markets' }" class="navbar-brand">
         <b><img src="../../images/logo-light-icon.png" alt="homepage" class="light-logo" /></b>
         <span>
           <img src="../../images/logo-text.png" alt="homepage" class="dark-logo" />
@@ -13,16 +13,13 @@
     <div class="navbar-collapse">
 
       <ul class="navbar-nav ml-auto my-lg-0">
-        <!--<li v-if="user" class="nav-item">-->
-          <!--{{user.data.name}}-->
-        <!--</li>-->
-        <!--<li v-if="user" class="nav-item">-->
-          <!--<router-link :to="{ name: 'trading-info' }" class="nav-link">-->
-            <!--{{ $t('Trading') }}-->
-          <!--</router-link>-->
-        <!--</li>-->
         <li v-if="user" class="nav-item">
-          <router-link :to="{ name: 'order' }" class="nav-link">
+          <router-link :to="{ name: 'markets' }" class="nav-link">
+            {{ $t('market') }}
+          </router-link>
+        </li>
+        <li v-if="user" class="nav-item">
+          <router-link :to="{ name: 'orders' }" class="nav-link">
             {{ $t('Orders') }}
           </router-link>
         </li>
