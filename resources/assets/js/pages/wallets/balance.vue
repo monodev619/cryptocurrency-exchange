@@ -1,6 +1,6 @@
 <template>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row balances">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
@@ -52,8 +52,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <!--<modal></modal>-->
             <div class="modal fade" id="depositModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-dialog">
@@ -155,23 +153,186 @@
                     </div>
                 </div>
             </div>
+        </div>
 
+        <div class="row wallets pendingwithdraw">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title m-t-10" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo22" aria-expanded="false" aria-controls="collapseTwo22" v-on:click="change_collpase1=!change_collpase1">
+                            <i class="fa fa-plus-square-o" v-if="change_collpase1"></i><i class="fa fa-minus-square-o" v-if="!change_collpase1"></i><span class="title1">PENDING WITHDRAWALS</span>
+                        </h4>
+                        <div class="table-responsive m-t-20 collapse" id="collapseTwo22" role="tabpanel" aria-labelledby="headingTwo22">
+                            <table id="tblpendingwithdraw" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>DATE</th>
+                                        <th>SYMBOL</th>
+                                        <th>QUANTITY</th>
+                                        <th>STATUS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Bitcoin</td>
+                                        <td>BTC</td>
+                                        <td>0.00000000</td>
+                                        <td>0.00000000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bitcoin</td>
+                                        <td>BTC</td>
+                                        <td>0.00000000</td>
+                                        <td>0.00000000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="row wallets pendingdeposit">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title m-t-10" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo33" aria-expanded="false" aria-controls="collapseTwo33" v-on:click="change_collpase2=!change_collpase2">
+                            <i class="fa fa-plus-square-o" v-if="change_collpase2"></i><i class="fa fa-minus-square-o" v-if="!change_collpase2"></i><span class="title1">PENDING DEPOSITS</span>
+                        </h4>
+                        <div class="table-responsive m-t-20 collapse" id="collapseTwo33" role="tabpanel" aria-labelledby="headingTwo22">
+                            <table id="tblpendingdeposit" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>LAST CHECKED</th>
+                                        <th>SYMBOL</th>
+                                        <th>QUANTITY</th>
+                                        <th>CONFIRMATIONS</th>
+                                    </tr>
+                                    </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Bitcoin</td>
+                                        <td>BTC</td>
+                                        <td>0.00000000</td>
+                                        <td>0.00000000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bitcoin</td>
+                                        <td>BTC</td>
+                                        <td>0.00000000</td>
+                                        <td>0.00000000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row wallets withdrawhistory">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title m-t-10" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo44" aria-expanded="false" aria-controls="collapseTwo44" v-on:click="change_collpase3=!change_collpase3">
+                            <i class="fa fa-plus-square-o" v-if="change_collpase3"></i><i class="fa fa-minus-square-o" v-if="!change_collpase3"></i><span class="title1">WITHDRAWAL HISTORY</span>
+                        </h4>
+                        <div class="table-responsive m-t-20 collapse" id="collapseTwo44" role="tabpanel" aria-labelledby="headingTwo22">
+                            <table id="tblwithdrawhistory" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>DATE</th>
+                                        <th>SYMBOL</th>
+                                        <th>QUANTITY</th>
+                                        <th>STATUS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Bitcoin</td>
+                                        <td>BTC</td>
+                                        <td>0.00000000</td>
+                                        <td>0.00000000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bitcoin</td>
+                                        <td>BTC</td>
+                                        <td>0.00000000</td>
+                                        <td>0.00000000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row wallets deposithistory">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title m-t-10" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo55" aria-expanded="false" aria-controls="collapseTwo55" v-on:click="change_collpase4=!change_collpase4">
+                            <i class="fa fa-plus-square-o" v-if="change_collpase4"></i><i class="fa fa-minus-square-o" v-if="!change_collpase4"></i><span class="title1">DEPOSIT HISTORY</span>
+                        </h4>
+                        <div class="table-responsive m-t-20 collapse" id="collapseTwo55" role="tabpanel" aria-labelledby="headingTwo22">
+                            <table id="tbldeposithistory" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>DATE</th>
+                                        <th>SYMBOL</th>
+                                        <th>QUANTITY</th>
+                                        <th>STATUS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Bitcoin</td>
+                                        <td>BTC</td>
+                                        <td>0.00000000</td>
+                                        <td>0.00000000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bitcoin</td>
+                                        <td>BTC</td>
+                                        <td>0.00000000</td>
+                                        <td>0.00000000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
      import '~/plugins/datatables/jquery.dataTables.min';
-     import '~/plugins/sticky-kit-master/dist/sticky-kit.min.js';
+     import '../../plugins/sticky-kit-master/dist/sticky-kit.min.js';
 
      export default {
          name: "balance",
          middleware: 'auth',
          mounted() {
              $('#tblbalances').dataTable();
-         }
-     }
+             $('#tblpendingwithdraw').dataTable();
+             $('#tblpendingdeposit').dataTable();
+             $('#tblwithdrawhistory').dataTable();
+             $('#tbldeposithistory').dataTable();
 
+         },
+
+         data: () => ({
+             change_collpase1:true,
+             change_collpase2:true,
+             change_collpase3:true,
+             change_collpase4:true
+         }),
+
+     }
 
 </script>
 

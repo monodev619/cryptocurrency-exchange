@@ -8,7 +8,7 @@
               <div class="content">
                 <child/>
               </div>
-            <footer class="footer" v-if="show_footer"> © 2018 Admin Press Admin by themedesigner.in </footer>
+            <footer class="footer" v-if="show_footer">2018</footer>
 
     </div>
   </body>

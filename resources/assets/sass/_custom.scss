@@ -9952,8 +9952,8 @@ pre {
 }
 
 .container-fluid .card-body .card-title {
-  font-weight:bold;
-  font-size: 25px;
+  font-weight:700;
+  font-size: 21px;
 }
 
 .content {
@@ -10184,13 +10184,21 @@ pre {
 }
 
 .withdraw-addr-input:hover {
-
   border: 1px solid #1ff7ff;
-
 }
 
 .withdraw-addr-input:focus {
-
   border: 1px solid #121bff;
+}
 
+.row.wallets {
+  margin-top: 40px;
+}
+
+.row.wallets.deposithistory {
+  margin-bottom: 75px;
+}
+
+.title1 {
+  margin-left: 10px;
 }
