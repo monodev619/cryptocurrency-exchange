@@ -162,7 +162,15 @@
 
 <script>
      import '~/plugins/datatables/jquery.dataTables.min';
-     import '~/plugins/sticky-kit.min.js';
+     import '~/plugins/sticky-kit-master/dist/sticky-kit.min.js';
+
+     export default {
+         name: "balance",
+         middleware: 'auth',
+         mounted() {
+             $('#tblbalances').dataTable();
+         }
+     }
 
 
 </script>
