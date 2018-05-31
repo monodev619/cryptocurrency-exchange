@@ -796,7 +796,8 @@ html body .bg-white {
 
 .table td,
 .table th {
-  border-color: #f3f1f1
+  border-color: #f3f1f1;
+  text-align:center;
 }
 
 .table th,
@@ -994,7 +995,8 @@ html body .waves-notransition {
 
 .btn {
   padding: 7px 12px;
-  cursor: pointer
+  cursor: pointer;
+  min-width:41%;
 }
 
 .btn-group label {
@@ -1269,8 +1271,8 @@ html body .waves-notransition {
 
 .btn-danger,
 .btn-danger.disabled {
-  background: #ef5350;
-  border: 1px solid #ef5350;
+  background: #d62a27;
+  border: 1px solid #d62a27;
   -webkit-box-shadow: 0 2px 2px 0 rgba(239, 83, 80, 0.14), 0 3px 1px -2px rgba(239, 83, 80, 0.2), 0 1px 5px 0 rgba(239, 83, 80, 0.12);
   box-shadow: 0 2px 2px 0 rgba(239, 83, 80, 0.14), 0 3px 1px -2px rgba(239, 83, 80, 0.2), 0 1px 5px 0 rgba(239, 83, 80, 0.12);
   -webkit-transition: 0.2s ease-in;
@@ -9956,5 +9958,239 @@ pre {
 
 .content {
   min-height: 606px;
+}
+
+.modal-header .close {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.currency {
+  font-weight: 700;
+  margin-bottom:10px;
+  font-size: 20px;
+}
+
+.current-currency {
+  padding:0 10px;
+}
+
+.current-header {
+  padding:0 10px;
+  font-size:14px;
+}
+
+.current-body {
+  padding:0 10px 30px;
+}
+
+.coinname {
+  font-weight: 500;
+}
+
+.symbolname {
+  font-weight: 500;
+  float: right;
+}
+
+.symbol {
+  float:right;
+}
+
+.current-currency div hr {
+  margin-top:0px !important;
+  margin-bottom: 5px !important;
+}
+
+.close {
+  opacity: 100 !important;
+  color:#fff !important;
+}
+
+.modal-header {
+  background-color:#1976d2;
+}
+
+.modal-title {
+  color:#fff;
+}
+
+.modal-content {
+  border:0px solid !important;
+}
+
+.modal-body {
+  padding: 25px 35px !important;
+}
+
+.disclaimer {
+  border: 1px solid;
+  background-color: #043769;
+  color: #fff;
+  padding: 4%;
+  margin-bottom: 30px;
+}
+
+
+.disc-title {
+  font-weight: 500;
+}
+
+.disc-content {
+  font-size: 13px;
+  font-family: 'Akkurat', sans-serif;
+}
+
+.disc-content a:hover {
+  color: #40befb !important;
+}
+
+
+.address {
+  margin-bottom: 30px;
+}
+
+.addr-title {
+  font-size: 20px;
+  font-weight: 700;
+
+}
+
+.addr-input {
+  margin-top: 10px;
+  padding: 2% 17%;
+  border: none;
+  float: left;
+  background-color: #2074c7;
+  color: #fff;
+  font-family: 'Akkurat', sans-serif;
+}
+
+.addr-button {
+  padding: 2% 4%;
+  margin-top: 10px;
+  background-color: #00aeef;
+  border: none;
+  color: #fff;
+}
+
+.de-instruct {
+  background-color: #043769;
+  padding: 2% 3%;
+  color: white;
+}
+
+.de-instruct .title {
+  font-weight: 500;
+  font-size: 16px;
+  color: white;
+  font-family: 'Akkurat', sans-serif;
+}
+
+.instruct-content {
+  font-size: 13px;
+}
+
+.addr-title input {color: #fff;background-color:#2b3441;}
+
+.modal-dialog {
+  max-width: 600px !important;
+}
+
+@media (min-width:1500px) {
+  .content {
+    min-height: 918px
+  }
+}
+
+::placeholder {
+  color: #ffffff;
+  opacity: 1;
+}
+
+.balancevalue {
+  float: right;
+}
+
+.balance {
+  float: right;
+}
+
+.withdraw .symbol {
+  float: none;
+  text-align: center;
+}
+
+.withdraw .symbolname {
+  float: none;
+  text-align: center;
+}
+
+.withdraw-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.quantityvalue {
+  height: 40px;
+  border-radius: 4px;
+  background-color: #1976d2;
+  text-align: left;
+  padding-left: 7px;
+  margin-right: 10px;
+  border: 1px solid #1976d2;
+  color:#fff;
+}
+
+.quantity {
+  font-size: 15px;
+  margin-bottom: 40px;
+}
+
+.withdrawamount div {
+  margin-bottom: 15px;
+  font-size: 15px;
+}
+
+.feevalue {
+  float: right;
+  padding-right: 12px
+}
+
+.totalvalue {
+  float: right;
+  padding-right: 12px;
+}
+
+.withdraw.address {
+  margin-top: 40px;
+}
+
+.withdraw.de-instruct {
+  margin-top: 100px;
+}
+
+.withdraw-addr-input {
+  margin-top: 10px;
+  padding: 2% 31%;
+  border: 1px solid #bbb6b6;
+  float: left;
+  background-color: #fff;
+  color: #d4caca;
+  font-family: 'Akkurat', sans-serif;
+  border-radius: 5px;
+  color:#000;
+}
+
+.withdraw-addr-input:hover {
+
+  border: 1px solid #1ff7ff;
+
+}
+
+.withdraw-addr-input:focus {
+
+  border: 1px solid #121bff;
 
 }
