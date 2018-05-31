@@ -29,8 +29,8 @@
                                         <td>0.00000000</td>
                                         <td>%0.8</td>
                                         <td>
-                                            <button class="btn btn-googleplus" type="button" data-toggle="modal" data-target="#depositModal"> <i class="mdi mdi-arrow-up-bold"></i> </button>
-                                            <button class="btn btn-twitter waves-effect waves-light" type="button" data-toggle="modal" data-target="#withdrawModal"> <i class="mdi mdi-arrow-down-bold"></i></button>
+                                            <b-btn class="btn btn-googleplus" type="button" data-toggle="modal" data-target="#depositModal" v-b-tooltip.hover title="Deposit"><i class="mdi mdi-arrow-down-bold"></i></b-btn>
+                                            <b-btn class="btn btn-twitter waves-effect waves-light" type="button" data-toggle="modal" data-target="#withdrawModal" v-b-tooltip.hover title="Withdrawal"><i class="mdi mdi-arrow-up-bold"></i></b-btn>
                                         </td>
                                     </tr>
                                     <tr>
@@ -42,8 +42,8 @@
                                         <td>0.00000000</td>
                                         <td>%0.8</td>
                                         <td>
-                                            <button class="btn btn-googleplus" type="button" data-toggle="modal" data-target="#depositModal"> <i class="mdi mdi-arrow-up-bold"></i> </button>
-                                            <button class="btn btn-twitter waves-effect waves-light" type="button" data-toggle="modal" data-target="#withdrawModal"> <i class="mdi mdi-arrow-down-bold"></i></button>
+                                            <b-btn class="btn btn-googleplus" type="button" data-toggle="modal" data-target="#depositModal" v-b-tooltip.hover title="Deposit"><i class="mdi mdi-arrow-down-bold"></i></b-btn>
+                                            <b-btn class="btn btn-twitter waves-effect waves-light" type="button" data-toggle="modal" data-target="#withdrawModal" v-b-tooltip.hover title="Withdrawal"><i class="mdi mdi-arrow-up-bold"></i></b-btn>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -322,6 +322,12 @@
              $('#tblpendingdeposit').dataTable();
              $('#tblwithdrawhistory').dataTable();
              $('#tbldeposithistory').dataTable();
+             $(function() {
+                 $('[data-toggle="tooltip"]').tooltip();
+             });
+                 $(function() {
+                 $('[data-toggle="popover"]').popover();
+             });
 
          },
 
