@@ -2578,7 +2578,6 @@ ul#themecolors li a.working:before {
 
 .card-info {
   background: #1976d2;
-  border-color: #1976d2
 }
 
 .card-primary {
@@ -2646,7 +2645,6 @@ ul#themecolors li a.working:before {
 
 .card-info {
   background: #1976d2;
-  border-color: #1976d2
 }
 
 .card-primary {
@@ -10146,7 +10144,7 @@ pre {
 
 .quantity {
   font-size: 15px;
-  margin-bottom: 40px;
+  margin-bottom: 15px;
 }
 
 .withdrawamount div {
@@ -10211,4 +10209,390 @@ pre {
 
 .ethereummarkets {
   margin-bottom: 80px;
+}
+
+.currentinfo {
+  background-color: #fff;
+}
+
+.currentinfo .card-inverse {
+  background-color: #fff !important;
+  margin-top: 15px;
+}
+
+.currentinfo .card-body {
+  background-color: #1976d2;
+}
+
+
+.mainmarket {
+  margin-bottom: 75px;
+}
+
+.infodetail {
+  color: #fff;
+  font-size: 13px;
+  margin-bottom: 7px;
+}
+
+.infotitle {
+  margin-left: 5px;
+}
+
+.dewthbutton .col-md-4 {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.dewthbutton .btn {
+  width: 90%;
+  float: right;
+}
+
+.dewthbutton {
+  margin-bottom: 15px;
+  margin-top: 20px;
+}
+
+.dewthbutton .btn-info {
+  background-color: #164573 !important;
+  border: 1px solid #164573 !important;
+}
+
+.main-content .card {
+  padding: 20px;
+}
+
+.entirechart {
+  margin-bottom: 20px;
+  border: 1px solid #bac2c5;
+}
+
+.volumechart {
+  border: 1px solid #bac2c5;
+}
+
+.common-table-container {
+  margin-top: 40px;
+}
+
+
+.nav-item.buy {
+  width: 41%;
+  margin-right: 5%;
+  background-color: #ff1405;
+}
+
+.trade-container .card-body .nav-pills a{
+  text-align: center;
+  color: #fff;
+}
+
+.nav-item.sell {
+  width: 41%;
+  background-color: #211AFF;
+}
+
+.ordertype {
+  width: 85%;
+  margin-left: 2%;
+}
+
+.quantity {
+  width: 85%;
+  margin-left: 2%;
+  font-size: 14px;
+  margin-top: 1%;
+}
+
+.quantity .form-control:focus {
+  color: #495057;
+  background-color: #ffffff;
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 0rem rgba(0, 0, 0, 0) !important;
+  box-shadow: 0 0 0 0rem rgba(0, 0, 0, 0) !important;
+}
+
+.quantity .form-control {
+  width: 85%;
+  border: none;
+  min-height: 25px !important;
+  padding: 0;
+}
+
+.line {
+  border: 1px solid #e8eced;
+}
+
+.ordertye .line {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.main-info {
+  padding: 15px;
+}
+
+.nav-pills.success {
+  width: 87%;
+  margin-top: 6%;
+}
+
+.trade-container .card-body .nav-pills .nav-link.active {
+  background-color: transparent !important;
+}
+
+.btn-red {
+  background-color: #ff1405;
+}
+
+.btn-blue {
+  background-color: #211AFF;
+  color: white;
+}
+
+.common-table-container .col-md-6 {
+  max-width: 48% !important;
+  border: 1px solid #000;
+}
+
+.common-table-container .trade-container {
+  padding: 0;
+}
+
+.trade-container .card-body {
+  margin-left: 10%;
+  margin-top: 4%;
+}
+
+
+.markethistory {
+  margin-top: 40px;
+}
+
+.common-table-container .card-title {
+  margin-bottom: 2%;
+}
+
+.buy-sell-container .card-body .table-responsive .table th{
+  padding: 3% 1%;
+}
+
+.mainmarket .left-sidebar {
+  position: fixed;
+  overflow: auto;
+}
+
+.mainmarket .left-sidebar .scroll-sidebar {
+  padding: 10px;
+}
+
+
+.marketinfo .dataTables_length {
+  display: none;
+}
+
+.marketinfo .dataTables_info {
+  display: none;
+}
+
+.marketinfo .dataTables_paginate {
+  display: none;
+}
+
+.mainmarket .left-sidebar .scroll-sidebar .card-title {
+  font-weight: 700;
+}
+
+.color-red {
+  color: #f75535;
+}
+
+.current-info {
+  font-size: 13px;
+  margin-right: 1.5%;
+  width: 15%;
+  min-height: 57px;
+}
+
+.last-usd {
+  float: right;
+}
+
+.last-bitcoin {
+  float: right;
+}
+
+.last-name {
+  float: right;
+}
+
+.top-info {
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+  min-height: 70px;
+}
+
+.color-green {
+  color: #00a45b;
+}
+
+.top-info .row {
+  padding: 5px 0;
+}
+
+.btndepwith .btn {
+  padding: 7px 5px !important;
+  color: #f2f4f8;
+}
+
+.btndepwith {
+  padding: 1% 0 1% 2%;
+}
+
+.top-info .col-lg-2 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 16.66666667%;
+  flex: 6 0 16.66666667%;
+  max-width: 17.666667%;
+}
+
+.top-info .col-md-2 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 16.66666667%;
+  flex: 6 0 16.66666667%;
+  max-width: 17.666667%;
+}
+
+.btnwithdraw {
+  margin-right: 5px;
+}
+
+.buyselltable th {
+  padding: 1.3% 0 !important;
+}
+
+.sell-container {
+  padding-left: 1%;
+  padding-right: 0;
+}
+
+
+.buyselltable td {
+  font-size: 14px;
+  padding: 1.6%;
+}
+
+
+.selltable .dataTables_filter {
+  display: none;
+}
+
+.selltable .dataTables_info {
+  display: none;
+}
+
+.buytable .dataTables_filter {
+  display: none;
+}
+
+.buytable .dataTables_info {
+  display: none;
+}
+
+.buy-container {
+  padding-left: 0;
+  padding-right: 1%;
+}
+
+.selltable .dataTables_paginate {
+  float: left;
+  font-size: 14px;
+  padding-top: 0 !important;
+}
+
+.buytable .dataTables_paginate {
+  font-size: 14px;
+  padding-top: 0 !important;
+}
+
+.marketinfo td {
+  font-size: 14px;
+  padding: 7px 0;
+}
+
+.marketinfo .dataTables_filter {
+  width: 100%;
+}
+
+.table-balance td .btn {
+  padding: 0 !important;
+}
+
+.table-balance th{
+  font-size: 16px;
+  padding: 1% 0;
+}
+
+.table-balance td{
+  font-size: 15px;
+  padding: 1% 0;
+}
+
+.table-balance thead th {
+  width: 60px !important;
+}
+
+
+.marketinfo {
+  overflow-x: hidden !important;
+}
+
+.wallet .left-sidebar .scroll-sidebar .dataTables_wrapper .dataTables_filter label {
+  margin-left: 7px;
+}
+
+.wallet .left-sidebar {
+  border: 1px solid #dee2e6;
+}
+
+.orders .left-sidebar {
+  border: 1px solid #dee2e6;
+}
+
+.orders .main-content {
+  padding: 0.9%;
+}
+
+.table-orders th{
+  font-size: 15px;
+  padding: 1% 0;
+}
+
+.table-orders td{
+  font-size: 14px;
+  padding: 1% 0;
+}
+
+.orders .left-sidebar .scroll-sidebar .dataTables_wrapper .dataTables_filter label {
+  margin-left: 7px;
+}
+
+
+.tradeordereth {
+  float: right;
+  margin-rigth: 5%;
+
+}
+
+.quantity .selectpicker {
+  border: none;
+}
+
+.color-blue {
+  color: #161ae0;
+}
+
+.left-240 {
+  left: 240px;
 }
