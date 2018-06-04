@@ -39,6 +39,7 @@
         },
         mounted() {
             this.current_url = this.$route.name;
+            console.log(this.$route.name);
         }
     }
 
