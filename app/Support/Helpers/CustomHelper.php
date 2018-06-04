@@ -7,6 +7,7 @@
  */
 
 use App\User;
+use App\Admin;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 
