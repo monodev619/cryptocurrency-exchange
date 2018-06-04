@@ -623,7 +623,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row wallets pendingwithdraw">
+                <div class="row wallets mainopenorder">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
@@ -669,7 +669,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row wallets pendingdeposit">
+                <div class="row wallets mainorderhistory">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">

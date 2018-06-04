@@ -7,8 +7,8 @@
                     <table id="tbleordersmarket" class="table marketinfo table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>DATE</th>
-                            <th>BUY/SELL</th>
+                            <th>COIN</th>
+                            <th>VALUE</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -108,7 +108,7 @@
                         <div class="card-body">
                             <h4 class="card-title m-t-10">OPEN ORDERS</h4>
                             <div class="table-responsive m-t-20">
-                                <table id="tblbitcoinmarkets" class="table table-orders table-bordered table-striped">
+                                <table id="tblopenorders" class="table table-orders table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th>ORDER DATE</th>
@@ -156,7 +156,7 @@
                         <div class="card-body">
                             <h4 class="card-title m-t-10">MY ORDER HISTORY</h4>
                             <div class="table-responsive m-t-20">
-                                <table id="tblethereummarkets" class="table table-orders table-bordered table-striped">
+                                <table id="tblorderhistory" class="table table-orders table-bordered table-striped">
                                     <thead>
                                     <tr>
                                         <th>CLOSED DATE</th>
@@ -214,8 +214,8 @@
 
         mounted() {
             $('#tbleordersmarket').dataTable();
-            $('#tblbitcoinmarkets').dataTable();
-            $('#tblethereummarkets').dataTable();
+            $('#tblopenorders').dataTable();
+            $('#tblorderhistory').dataTable();
         },
 
         data: () => ({

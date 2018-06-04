@@ -47,6 +47,9 @@ export default {
                 this.change_footer = true;
 
             }
+            else if (to.name == 'markets' || to.name == 'home') {
+                this.change_footer = false;
+            }
         }
     },
 
