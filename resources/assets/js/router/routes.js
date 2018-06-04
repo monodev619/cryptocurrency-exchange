@@ -12,6 +12,7 @@ const Password = () => import('~/pages/settings/password').then(m => m.default |
 const Balance = () => import('~/pages/wallets/balance').then(m => m.default || m)
 const Market = () => import('~/pages/markets/market').then(m => m.default || m)
 const Order = () => import('~/pages/orders/orders').then(m => m.default || m)
+const mainMarket = () => import('~/pages/main/main').then(m => m.default || m)
 
 
 
@@ -35,5 +36,6 @@ export default [
   { path: '/wallets', name: 'wallets', component: Balance },
   { path: '/markets', name: 'markets', component: Market },
   { path: '/orders', name: 'orders', component: Order },
+  { path: '/main', name: 'mainwindow', component: mainMarket },
   { path: '*', component: NotFound }
 ]
