@@ -80,7 +80,7 @@ export default {
           await this.$store.dispatch('auth/fetchProfile')
 
           // Redirect home.
-          this.$router.push({name: 'home'})
+          this.$router.push({name: 'markets'})
       }
   }
 }

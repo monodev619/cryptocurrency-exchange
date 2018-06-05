@@ -18,13 +18,12 @@ const Trading = () => import('~/pages/markets/main').then(m => m.default || m)
 
 export default [
   { path: '/', name: 'welcome', component: Welcome },
-
   { path: '/login', name: 'login', component: Login },
   { path: '/register', name: 'register', component: Register },
   { path: '/password/reset', name: 'password.request', component: PasswordEmail },
   { path: '/password/reset/:token', name: 'password.reset', component: PasswordReset },
 
-  { path: '/home', name: 'home', component: Market },
+
   { path: '/settings', name: 'settings',  component: Setting,
     children: [
         { path: 'profile', name: 'settings.profile', component: Profile },
