@@ -28,36 +28,33 @@ export default {
 
   data: () => ({
      show_footer:true,
-      change_footer:false
+      change_footer:true
   }),
 
     watch:{
         $route (to, from){
 
-            if (to.name == 'login' || to.name == 'register') {
+            this.change_footer = true;
+            if (to.name.indexOf('login') != -1 || to.name.indexOf('register') != -1) {
                 this.show_footer = false;
 
             } else {
-
                 this.show_footer = true;
-
             }
-            if (to.name == 'orders' || to.name == 'wallets' || to.name == 'mainwindow' || to.name == 'settings')  {
 
-                this.change_footer = true;
-
-            }
-            else if (to.name == 'markets' || to.name == 'home') {
+           if (to.name.indexOf('markets') != -1 || to.name.indexOf('home') != -1) {
                 this.change_footer = false;
-            }
+           }
+
         }
     },
 
   mounted() {
-          this.change_footer = false;
+          this.change_footer = true;
           $('.preloader').fadeOut();
-          if (this.$route.name === 'orders' || this.$route.name === 'wallets' || this.$route.name === 'mainwindow' || this.$route.name === 'settings') {
-              this.change_footer = true;
+
+          if (to.name.indexOf('markets') != -1 || to.name.indexOf('home') != -1) {
+              this.change_footer = false;
           }
   }
 
