@@ -9997,7 +9997,7 @@ pre {
 }
 
 .current-currency div hr {
-  margin-top:0px !important;
+  margin-top:7px !important;
   margin-bottom: 5px !important;
 }
 
@@ -10362,7 +10362,7 @@ pre {
 
 .trade-container .card-body {
   margin-left: 10%;
-  margin-top: 4%;
+  margin-top: 1%;
 }
 
 
@@ -10595,4 +10595,68 @@ pre {
 
 .left-240 {
   left: 240px;
+}
+
+.buyselltable tr:hover {
+  background-color: #504e4e !important;
+  color: white;
+  cursor: default !important;
+}
+
+.buyselltable thead tr:first-child:hover {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+
+.buyselltable .text-info:hover {
+  cursor: pointer;
+}
+
+.btn-sell {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  font-size: 14px;
+  -webkit-box-shadow: none !important;
+}
+
+.sellmodalvalue {
+  font-size: 22px;
+  margin-left: 17%;
+}
+
+.sellmodalcoin {
+  margin-top: 4%;
+}
+
+.sellmodalname {
+  padding: 2% 0 1% 3%
+}
+
+.sellmodal .total {
+  background-color: #bccede;
+}
+
+.comment .col-sm-3 {
+  padding: 0;
+}
+
+.comment .col-sm-6 {
+  padding: 0;
+}
+
+.label-content {
+  font-size: 13px;
+}
+
+.comment {
+  margin: 4% 0;
+}
+
+.buyselltable .btn-secondary:hover {
+  background-color: transparent !important;
+}
+
+.color-dark {
+  color: #7d7d7d;
 }

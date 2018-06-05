@@ -260,13 +260,13 @@
                         <div class="table-responsive selltable">
                             <table id="tblselllist" class="table table-striped buyselltable">
                                 <thead>
-                                <tr>
-                                    <th>SUM</th>
-                                    <th>TOTAL</th>
-                                    <th>SIZE(ZCL)</th>
-                                    <th>BID(BTC)</th>
-                                    <th></th>
-                                </tr>
+                                    <tr>
+                                        <th>SUM</th>
+                                        <th>TOTAL</th>
+                                        <th>SIZE(ZCL)</th>
+                                        <th>BID(BTC)</th>
+                                        <th class="tradebtn"></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
@@ -274,7 +274,7 @@
                                         <td>0.0199</td>
                                         <td>11.089</td>
                                         <td class="text-success">0.70794558</td>
-                                        <td class="text-info">SELL</td>
+                                        <td class="text-info"><b-btn class="btn-sell text-info" type="button" data-toggle="modal" data-target="#sellModal" v-b-modal.sellModal v-b-tooltip.hover title="SELL">SELL</b-btn></td>
                                     </tr>
                                     <tr>
                                         <td>0.0199</td>
@@ -355,6 +355,108 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <b-modal id="sellModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" title="BTC-ETH" ok-title="Confirm" ok-variant="primary" cancel-variant="danger">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="sellmodal current-currency">
+                                            <div class="sellmodal current-header row">
+                                                <div class="sellmodalname col-sm-6"><span class="">QUANTITY</span></div>
+                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">ETH</span></div>
+                                            </div>
+                                            <div><hr></div>
+                                        </div>
+                                        <div class="sellmodal current-currency">
+                                            <div class="sellmodal current-header row">
+                                                <div class="sellmodalname col-sm-6"><span class="">PRICE</span></div>
+                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">BTC</span></div>
+                                            </div>
+                                            <div><hr></div>
+                                        </div>
+                                        <div class="sellmodal current-currency">
+                                            <div class="sellmodal current-header row">
+                                                <div class="sellmodalname col-sm-6"><span class="">SUBTOTAL</span></div>
+                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">BTC</span></div>
+                                            </div>
+                                            <div><hr></div>
+                                        </div>
+                                        <div class="sellmodal current-currency">
+                                            <div class="sellmodal current-header row">
+                                                <div class="sellmodalname col-sm-6"><span class="">COMMISSION</span></div>
+                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">BTC</span></div>
+                                            </div>
+                                            <div><hr></div>
+                                        </div>
+                                        <div class="sellmodal current-currency ">
+                                            <div class="sellmodal current-header row total">
+                                                <div class="sellmodalname col-sm-6"><span class="">TOTAL</span></div>
+                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">BTC</span></div>
+                                            </div>
+                                            <div><hr></div>
+                                        </div>
+                                        <div class="sellmodal comment current-header row">
+                                            <div class="col-sm-3"><span class="label-name">MARKET</span>&nbsp;:&nbsp;<span class="label-content">BTC-ETH</span></div>
+                                            <div class="col-sm-3"><span class="label-type">TYPE</span>&nbsp;:&nbsp;<span class="label-content">Limit Sell</span></div>
+                                            <div class="col-sm-6"><span class="label-time">TIME IN FORCE</span>&nbsp;:&nbsp;<span class="label-content">Immediate or Cancel</span> </div>
+                                        </div>
+                                        <div class="sellmodal disclaimer">
+                                            <div class="disc-title">DISCLAIMER</div>
+                                            <p class="disc-content">Please verify this order before confirming. All orders are final once submitted and we will be unable to issue you a refund.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </b-modal>
+                            <b-modal id="buyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" title="BTC-ETH" ok-title="Confirm" ok-variant="primary" cancel-variant="danger">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="sellmodal current-currency">
+                                            <div class="sellmodal current-header row">
+                                                <div class="sellmodalname col-sm-6"><span class="">QUANTITY</span></div>
+                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">ETH</span></div>
+                                            </div>
+                                            <div><hr></div>
+                                        </div>
+                                        <div class="sellmodal current-currency">
+                                            <div class="sellmodal current-header row">
+                                                <div class="sellmodalname col-sm-6"><span class="">PRICE</span></div>
+                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">BTC</span></div>
+                                            </div>
+                                            <div><hr></div>
+                                        </div>
+                                        <div class="sellmodal current-currency">
+                                            <div class="sellmodal current-header row">
+                                                <div class="sellmodalname col-sm-6"><span class="">SUBTOTAL</span></div>
+                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">BTC</span></div>
+                                            </div>
+                                            <div><hr></div>
+                                        </div>
+                                        <div class="sellmodal current-currency">
+                                            <div class="sellmodal current-header row">
+                                                <div class="sellmodalname col-sm-6"><span class="">COMMISSION</span></div>
+                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">BTC</span></div>
+                                            </div>
+                                            <div><hr></div>
+                                        </div>
+                                        <div class="sellmodal current-currency ">
+                                            <div class="sellmodal current-header row total">
+                                                <div class="sellmodalname col-sm-6"><span class="">TOTAL</span></div>
+                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">BTC</span></div>
+                                            </div>
+                                            <div><hr></div>
+                                        </div>
+                                        <div class="sellmodal comment current-header row">
+                                            <div class="col-sm-3"><span class="label-name">MARKET</span>&nbsp;:&nbsp;<span class="label-content">BTC-ETH</span></div>
+                                            <div class="col-sm-3"><span class="label-type">TYPE</span>&nbsp;:&nbsp;<span class="label-content">Limit BUY</span></div>
+                                            <div class="col-sm-6"><span class="label-time">TIME IN FORCE</span>&nbsp;:&nbsp;<span class="label-content">Immediate or Cancel</span> </div>
+                                        </div>
+                                        <div class="sellmodal disclaimer">
+                                            <div class="disc-title">DISCLAIMER</div>
+                                            <p class="disc-content">Please verify this order before confirming. All orders are final once submitted and we will be unable to issue you a refund.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </b-modal>
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-sm-4 trade-container">
@@ -368,7 +470,7 @@
                                     <div class="row main-info">
                                         <div class="quantity">
                                             <span class="">ORDERTYPE</span><br>
-                                            <select class="selectpicker color-blue" data-style="form-control btn-secondary">
+                                            <select class="selectpicker color-dark" data-style="form-control btn-secondary">
                                                 <option>Limit(Default)</option>
                                                 <option>Conditional</option>
                                             </select>
@@ -383,8 +485,8 @@
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
-                                            <span class="color-blue">BID PRICE</span><br>
-                                            <select class="selectpicker color-blue" data-style="form-control btn-secondary" placeholder="aaa">
+                                            <span class="color-dark">BID PRICE</span><br>
+                                            <select class="selectpicker color-dark" data-style="form-control btn-secondary" placeholder="aaa">
                                                 <option>LAST</option>
                                                 <option>BID</option>
                                                 <option>ASK</option>
@@ -401,7 +503,7 @@
                                         </div>
                                         <div class="quantity">
                                             <span class="">TIME IN FORCE</span><br>
-                                            <select class="selectpicker color-blue" data-style="form-control btn-secondary">
+                                            <select class="selectpicker color-dark" data-style="form-control btn-secondary">
                                                 <option>Good 'Til Cancelled(Default)</option>
                                                 <option>Immediate or Cancel</option>
                                             </select><br>
@@ -476,7 +578,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td class="text-info">BUY</td>
+                                        <td class="text-info"><b-btn class="btn-sell text-info" type="button" data-toggle="modal" data-target="#buyModal" v-b-modal.buyModal v-b-tooltip.hover title="BUY">BUY</b-btn></td>
                                         <td class="text-danger">0.70794558</td>
                                         <td>0.0199</td>
                                         <td>0.0199</td>
@@ -633,35 +735,35 @@
                                 <div class="table-responsive m-t-20 collapse" id="collapseTwo22" role="tabpanel" aria-labelledby="headingTwo22">
                                     <table id="tblopenorders" class="table table-bordered table-striped">
                                         <thead>
-                                        <tr>
-                                            <th>ORDER DATE</th>
-                                            <th>TYPE</th>
-                                            <th>BID/ASK</th>
-                                            <th>FILLED</th>
-                                            <th>UNITS TOTAL</th>
-                                            <th>ACTUAL RATE</th>
-                                            <th>EST.TOTAL(BTC)</th>
-                                        </tr>
+                                            <tr>
+                                                <th>ORDER DATE</th>
+                                                <th>TYPE</th>
+                                                <th>BID/ASK</th>
+                                                <th>FILLED</th>
+                                                <th>UNITS TOTAL</th>
+                                                <th>ACTUAL RATE</th>
+                                                <th>EST.TOTAL(BTC)</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>Bitcoin</td>
-                                            <td>BTC</td>
-                                            <td>0.00000000</td>
-                                            <td>0.00000000</td>
-                                            <td>BTC</td>
-                                            <td>0.00000000</td>
-                                            <td>0.00000000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Bitcoin</td>
-                                            <td>BTC</td>
-                                            <td>0.00000000</td>
-                                            <td>0.00000000</td>
-                                            <td>BTC</td>
-                                            <td>0.00000000</td>
-                                            <td>0.00000000</td>
-                                        </tr>
+                                            <tr>
+                                                <td>Bitcoin</td>
+                                                <td>BTC</td>
+                                                <td>0.00000000</td>
+                                                <td>0.00000000</td>
+                                                <td>BTC</td>
+                                                <td>0.00000000</td>
+                                                <td>0.00000000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Bitcoin</td>
+                                                <td>BTC</td>
+                                                <td>0.00000000</td>
+                                                <td>0.00000000</td>
+                                                <td>BTC</td>
+                                                <td>0.00000000</td>
+                                                <td>0.00000000</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -728,7 +830,8 @@
     Vue.use(BootstrapVue);
 
     export default {
-        name: "mainwindow",
+        name: "trading",
+        middleware: 'auth',
         mounted() {
             $('#tblselllist').dataTable();
             $('#tblbuylist').dataTable();
