@@ -17,8 +17,7 @@ class CreateMarketsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->enum('market_type', config('enum.market_type'));
-            $table->integer('key_currency');
-            $table->integer('target_currency');
+            $table->integer('currency_id');
             $table->double('rate')->default(0);
             $table->double('change')->default(0);
             $table->double('last')->default(0);

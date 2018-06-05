@@ -1,0 +1,89 @@
+.checkbox-col{
+    padding-right:10px!important;
+    width: 80px;
+}
+
+.oper-col{
+    width: 150px;
+}
+
+.image-col{
+    width: 70px;
+}
+
+th, td {
+    vertical-align: middle !important;
+}
+
+.summary-area {
+    min-height: 150px;
+}
+
+.detail-block {
+    margin: 0 10px;
+}
+
+.overlay, .overlay-wrapper .overlay {
+    background: rgba(255, 255, 255, 0.7) none repeat scroll 0 0;
+    border-radius: 3px;
+    z-index: 50;
+}
+.overlay, .overlay-wrapper > .overlay, .loading-img, .overlay-wrapper > .loading-img {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.overlay > .fa, .overlay-wrapper .overlay > .fa {
+    color: #000;
+    font-size: 30px;
+    left: 50%;
+    margin-left: -15px;
+    margin-top: -15px;
+    position: absolute;
+    top: 50%;
+}
+
+.input-image {
+    width: 200px;
+    margin: 5px auto;
+}
+
+.el-element-overlay .el-card-item {
+    padding-bottom: 0px;
+}
+
+.el-element-overlay .el-card-item .el-card-avatar {
+    margin-bottom: 0px;
+}
+
+.project-detail {
+    color: cornflowerblue;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.project-button {
+    margin-top: 15px;
+}
+
+.project-title {
+    color: indigo;
+}
+
+.demo-swtich .demo-switch-title, .demo-swtich .switch {
+    width:50px;
+}
+
+.switch-label {
+    font-size: 14px;
+}
+.btn-operation {
+    margin: 0 5px 0 0;
+}
+
+.card-image {
+    height: 250px !important;
+}
