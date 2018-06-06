@@ -25,7 +25,7 @@ class CurrencyController extends BaseController
                 'name' => $currency->name,
                 'symbol' => $currency->symbol,
                 'info' => $currency->info,
-                'logo' => $currency->logo
+                'logo' => image_url($currency->logo)
             ]);
         }
         return success($ret);
