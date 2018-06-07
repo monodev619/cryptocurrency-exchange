@@ -1,110 +1,107 @@
 
 <template>
-    <div>
-        <div class="page-wrapper page-wrapper-borderleft">
-            <div class="row page-titles"><div class="col-md-5 align-self-center"></div></div>
-            <div class="container-fluid">
-                <div class="row ">
-
-                    <div class="profile-content">
-                        <div class="col-lg-12">
-                            <div class="card card-outline-info">
-                                <div class="card-header">
-                                    <h4 class="m-b-0 text-white">{{ $t('myprofile')}}</h4>
-                                </div>
-                                <div class="card-body">
-                                    <form @submit.prevent="updateProfile" @keydown="form.onKeydown($event)">
-                                        <div class="form-body">
-                                            <div class="row p-t-20">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label">{{ $t('emailaddress')}}</label>
-                                                        <input type="text" v-model="user.email" class="form-control" readonly placeholder="">
-                                                        <div v-if="error.email" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="control-label">{{ $t('dateofbirth')}}</label>
-                                                        <datepicker v-model="form.dob" :format="dateFormatter"></datepicker>
-                                                        <div v-if="error.dob" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="control-label">{{ $t('country')}}</label>
-                                                        <select class="form-control custom-select" data-placeholder="Choose a Country" :placeholder="$t('password')"tabindex="1" v-model="form.country">
-                                                            <option disabled value="">{{ $t('chooseyourcountry')}}</option>
-                                                            <option>United State</option>
-                                                            <option>China</option>
-                                                            <option>Korea</option>
-                                                        </select>
-                                                        <div v-if="error.country" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12 ">
-                                                    <div class="form-group">
-                                                        <label>{{ $t('street')}}</label>
-                                                        <input type="text" class="form-control" v-model="form.street">
-                                                        <div v-if="error.street" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>{{ $t('apt')}}</label>
-                                                        <input type="text" class="form-control" v-model="form.apt">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>{{ $t('city')}}</label>
-                                                        <input type="text" class="form-control" v-model="form.city">
-                                                        <div v-if="error.city" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>{{ $t('state')}}</label>
-                                                        <select class="form-control custom-select" v-model="form.state">
-                                                            <option disabled value="">{{ $t('chooseyourstate')}}</option>
-                                                            <option>NewYork</option>
-                                                            <option>Washington</option>
-                                                            <option>LA</option>
-                                                        </select>
-                                                        <div v-if="error.city" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>{{ $t('zipcode')}}</label>
-                                                        <input type="text" class="form-control" v-model="form.zipcode">
-                                                        <div v-if="error.zipcode" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label>{{ $t('phone')}}</label>
-                                                        <input type="text" class="form-control" v-model="form.phone">
-                                                    </div>
+    <div class="page-wrapper page-wrapper-borderleft">
+        <div class="row page-titles"><div class="col-md-5 align-self-center"></div></div>
+        <div class="container-fluid">
+            <div class="row ">
+                <div class="profile-content">
+                    <div class="col-lg-12">
+                        <div class="card card-outline-info">
+                            <div class="card-header">
+                                <h4 class="m-b-0 text-white">{{ $t('myprofile')}}</h4>
+                            </div>
+                            <div class="card-body">
+                                <form @submit.prevent="updateProfile" @keydown="form.onKeydown($event)">
+                                    <div class="form-body">
+                                        <div class="row p-t-20">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{ $t('emailaddress')}}</label>
+                                                    <input type="text" v-model="user.email" class="form-control" readonly placeholder="">
+                                                    <div v-if="error.email" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-actions">
-                                            <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> {{ $t('submit')}}</button>
-                                            <button type="button" class="btn btn-inverse">{{ $t('cancel')}}</button>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{ $t('dateofbirth')}}</label>
+                                                    <datepicker v-model="form.dob" :format="dateFormatter"></datepicker>
+                                                    <div v-if="error.dob" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">{{ $t('country')}}</label>
+                                                    <select class="form-control custom-select" data-placeholder="Choose a Country" :placeholder="$t('password')"tabindex="1" v-model="form.country">
+                                                        <option disabled value="">{{ $t('chooseyourcountry')}}</option>
+                                                        <option>United State</option>
+                                                        <option>China</option>
+                                                        <option>Korea</option>
+                                                    </select>
+                                                    <div v-if="error.country" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </form>
-                                </div>
+                                        <div class="row">
+                                            <div class="col-md-12 ">
+                                                <div class="form-group">
+                                                    <label>{{ $t('street')}}</label>
+                                                    <input type="text" class="form-control" v-model="form.street">
+                                                    <div v-if="error.street" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{{ $t('apt')}}</label>
+                                                    <input type="text" class="form-control" v-model="form.apt">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{{ $t('city')}}</label>
+                                                    <input type="text" class="form-control" v-model="form.city">
+                                                    <div v-if="error.city" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{{ $t('state')}}</label>
+                                                    <select class="form-control custom-select" v-model="form.state">
+                                                        <option disabled value="">{{ $t('chooseyourstate')}}</option>
+                                                        <option>NewYork</option>
+                                                        <option>Washington</option>
+                                                        <option>LA</option>
+                                                    </select>
+                                                    <div v-if="error.city" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{{ $t('zipcode')}}</label>
+                                                    <input type="text" class="form-control" v-model="form.zipcode">
+                                                    <div v-if="error.zipcode" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>{{ $t('phone')}}</label>
+                                                    <input type="text" class="form-control" v-model="form.phone">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> {{ $t('submit')}}</button>
+                                        <button type="button" class="btn btn-inverse">{{ $t('cancel')}}</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -112,7 +109,6 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -121,6 +117,7 @@
     import Sidebar from "../../components/Sidebar";
     import Datepicker from "vuejs-datepicker/src/components/Datepicker";
     import Form from 'vform';
+    import * as urls from '../../constants/url-constants';
 
     export default {
         components: {Datepicker, Sidebar},
@@ -159,7 +156,7 @@
             return { title: this.$t('Profile') }
         },
 
-        mounted() {
+        updated() {
             if (this.profile != null) {
                 this.form.dob = this.profile.dob
                 this.form.country = this.profile.country
@@ -180,7 +177,7 @@
 
             async updateProfile () {
                 if(!this.validateForm()) return;
-                const { data } = await this.form.post('/_api/updateProfile');
+                const { data } = await this.form.post(urls.API_BASE_URL + '/_api/updateProfile');
                 await this.$store.dispatch('auth/fetchProfile');
                 this.form.apt = '';
                 this.form.dob = '';

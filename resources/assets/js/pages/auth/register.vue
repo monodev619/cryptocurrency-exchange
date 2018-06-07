@@ -57,6 +57,7 @@
 <script>
 import Form from 'vform'
 import * as codes from '~/constants/response-codes';
+import * as urls from '../../constants/url-constants';
 
 export default {
   middleware: 'guest',
@@ -81,23 +82,25 @@ export default {
       // Register the user.
         this.validation_error = false;
 
-      const { data } = await this.form.post('/_api/register')
+      const { data } = await this.form.post(urls.API_BASE_URL + '/_api/register')
 
       // if (data.code == codes.VALIDATION_ERROR) {
       //     this.validation_error = true;
       // }
 
       // Log in the user.
-      const { data: { token } } = await this.form.post('/_api/login')
+      const { data: { token } } = await this.form.post(urls.API_BASE_URL + '/_api/login')
 
       // Save the token.
-      this.$store.dispatch('auth/saveToken', { token })
+      // this.$store.dispatch('auth/saveToken', { token })
 
       // Update the user.
-      await this.$store.dispatch('auth/updateUser', { user: data })
+      await this.$store.dispatch('auth/saveToken', { token: data.data })
+      await this.$store.dispatch('auth/fetchUser')
+
 
       // Redirect home.
-      this.$router.push({ name: 'home' })
+      this.$router.push({ name: 'markets' })
     },
 
       changeResult() {

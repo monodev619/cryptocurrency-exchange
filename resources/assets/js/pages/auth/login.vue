@@ -39,6 +39,7 @@
 <script>
 import Form from 'vform'
 import * as codes from '~/constants/response-codes';
+import * as urls from '../../constants/url-constants';
 
 export default {
   middleware: 'guest',
@@ -61,7 +62,7 @@ export default {
       async login() {
           this.invalid_credential = false;
           // Submit the form.
-          const {data} = await this.form.post('/_api/login');
+          const {data} = await this.form.post(urls.API_BASE_URL + '/_api/login');
 
           if (data.code == codes.INVALID_CREDENTIAL) {
               this.invalid_credential = true;

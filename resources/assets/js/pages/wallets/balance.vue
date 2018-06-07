@@ -4,12 +4,12 @@
             <div class="scroll-sidebar">
                 <h4 class="card-title m-t-10 m-l-10">MARKETS</h4>
                 <div class="table-responsive marketinfo">
-                    <table id="tblebalancemarket" class="table marketinfo table-bordered table-striped">
+                    <table id="tblebalancemarket" class="table marketinfo table-bordered table-striped" data-page-length="50">
                         <thead>
-                        <tr>
-                            <th>DATE</th>
-                            <th>BUY/SELL</th>
-                        </tr>
+                            <tr>
+                                <th>DATE</th>
+                                <th>BUY/SELL</th>
+                            </tr>
                         </thead>
                         <tbody>
                             <tr>
@@ -122,9 +122,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Bitcoin</td>
-                                        <td>BTC</td>
+                                    <tr v-for="currency in currencies">
+                                        <td ref="cointype">{{currency.name}}</td>
+                                        <td ref="coinsymbol">{{currency.symbol}}</td>
                                         <td>0.00000000</td>
                                         <td>0.00000000</td>
                                         <td>0.00000000</td>
@@ -132,22 +132,12 @@
                                         <td>0.00000000</td>
                                         <td>%0.8</td>
                                         <td>
-                                            <b-btn class="btn btn-googleplus" type="button" data-toggle="modal" data-target="#depositModal" v-b-modal.depositModal v-b-tooltip.hover title="Deposit"><i class="mdi mdi-arrow-down-bold"></i></b-btn>
-                                            <b-btn class="btn btn-twitter waves-effect waves-light" type="button" data-toggle="modal" data-target="#withdrawModal" v-b-modal.withdrawModal v-b-tooltip.hover title="Withdrawal"><i class="mdi mdi-arrow-up-bold"></i></b-btn>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Bitcoin</td>
-                                        <td>BTC</td>
-                                        <td>0.00000000</td>
-                                        <td>0.00000000</td>
-                                        <td>0.00000000</td>
-                                        <td>0.00000000</td>
-                                        <td>0.00000000</td>
-                                        <td>%0.8</td>
-                                        <td>
-                                            <b-btn class="btn btn-googleplus" type="button" data-toggle="modal" data-target="#depositModal" v-b-modal.depositModal v-b-tooltip.hover title="Deposit"><i class="mdi mdi-arrow-down-bold"></i></b-btn>
-                                            <b-btn class="btn btn-twitter waves-effect waves-light" type="button" data-toggle="modal" data-target="#withdrawModal" v-b-modal.withdrawModal v-b-tooltip.hover title="Withdrawal"><i class="mdi mdi-arrow-up-bold"></i></b-btn>
+                                            <b-btn class="btn btn-googleplus balbtn" type="button" data-toggle="modal" data-target="#depositModal" v-b-modal.depositModal v-b-tooltip.hover title="Deposit">
+                                                <i class="mdi mdi-arrow-down-bold"></i>
+                                            </b-btn>
+                                            <b-btn class="btn btn-twitter balbtn waves-effect waves-light" type="button" data-toggle="modal" data-target="#withdrawModal" v-b-modal.withdrawModal v-b-tooltip.hover title="Withdrawal">
+                                                <i class="mdi mdi-arrow-up-bold"></i>
+                                            </b-btn>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -390,21 +380,42 @@
 </template>
 
 <script>
+
+     import { mapGetters } from 'vuex';
      import '~/plugins/datatables/jquery.dataTables.min';
      import BootstrapVue from 'bootstrap-vue';
+     import axios from 'axios';
+     import * as urls from '../../constants/url-constants';
+
 
      Vue.use(BootstrapVue);
 
      export default {
          name: "balance",
          middleware: 'auth',
-         mounted() {
-             $('#tblebalancemarket').dataTable();
-             $('#tblbalances').dataTable();
-             $('#tblpendingwithdraw').dataTable();
-             $('#tblpendingdeposit').dataTable();
-             $('#tblwithdrawhistory').dataTable();
-             $('#tbldeposithistory').dataTable();
+
+         updated() {
+
+                 $('#tblebalancemarket').dataTable();
+                 $('#tblbalances').dataTable();
+                 $('#tblpendingwithdraw').dataTable();
+                 $('#tblpendingdeposit').dataTable();
+                 $('#tblwithdrawhistory').dataTable();
+                 $('#tbldeposithistory').dataTable();
+
+         },
+
+         methods: {
+             async fetchCurrencies () {
+
+                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/currencies');
+                 await this.$store.dispatch('wallet/getCurrencies', {currencies: data.data})
+             }
+
+         },
+
+         beforeMount() {
+             this.fetchCurrencies();
          },
 
          data: () => ({
@@ -413,6 +424,10 @@
              change_collpase3:true,
              change_collpase4:true
          }),
+
+         computed: mapGetters({
+             currencies: 'wallet/currencies'
+         })
 
      }
 

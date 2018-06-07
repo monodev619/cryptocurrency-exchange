@@ -77,7 +77,7 @@
                 </div>
             </div>
         </aside>
-        <div class="page-wrapper main-content">
+        <div class="page-wrapper main-content tradingwindow">
             <div class="top-info row">
                 <div class="col-md-2 col-lg-2 col-sm-12"></div>
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 row">
@@ -485,7 +485,7 @@
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
-                                            <span class="color-dark">BID PRICE</span><br>
+                                            <span class="">BID PRICE</span><br>
                                             <select class="selectpicker color-dark" data-style="form-control btn-secondary" placeholder="aaa">
                                                 <option>LAST</option>
                                                 <option>BID</option>

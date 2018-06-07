@@ -1,6 +1,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import * as types from '../mutation-types'
+import  * as urls from '../../constants/url-constants';
 
 // state
 export const state = {
@@ -63,7 +64,7 @@ export const actions = {
   async fetchUser ({ commit, state }) {
     try {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + state.token;
-      const { data } = await axios.get('/_api/user');
+      const { data } = await axios.get(urls.API_BASE_URL + '/_api/user');
 
       commit(types.FETCH_USER_SUCCESS, { user: data.data });
     } catch (e) {
@@ -77,7 +78,7 @@ export const actions = {
 
   async fetchProfile ({ commit, state }) {
     try {
-        const { data } = await axios.get('/_api/getProfile');
+        const { data } = await axios.get(urls.API_BASE_URL + '/_api/getProfile');
 
         commit(types.FETCH_PROFILE_SUCCESS, { profile: data.data });
     } catch (e) {
@@ -87,7 +88,7 @@ export const actions = {
 
   async logout ({ commit }) {
     try {
-      await axios.post('/_api/logout')
+      await axios.post(urls.API_BASE_URL + '/_api/logout')
     } catch (e) { }
 
     commit(types.LOGOUT)

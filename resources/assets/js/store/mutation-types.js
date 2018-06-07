@@ -8,5 +8,10 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const FETCH_PROFILE_SUCCESS = 'FETCH_PROFILE_SUCCESS';
 export const FETCH_PROFILE_FAILURE = 'FETCH_PROFILE_FAILURE';
 
+
 // lang.js
 export const SET_LOCALE = 'SET_LOCALE';
+
+// wallet.js
+export  const FETCH_CURRENCIES = 'FETCH_CURRENCIES';
+export  const GET_CURRENCIES = 'GET_CURRENCIES';

@@ -10183,11 +10183,11 @@ pre {
 }
 
 .withdraw-addr-input:hover {
-  border: 1px solid #1ff7ff;
+  border: 1px solid #1976d2;
 }
 
 .withdraw-addr-input:focus {
-  border: 1px solid #121bff;
+  border: 1px solid #ff1228;
 }
 
 .row.wallets {
@@ -10274,6 +10274,7 @@ pre {
 
 .common-table-container {
   margin-top: 40px;
+  padding: 5px;
 }
 
 
@@ -10383,8 +10384,8 @@ pre {
   overflow: auto;
 }
 
-.mainmarket .left-sidebar .scroll-sidebar {
-  padding: 10px;
+.left-sidebar .scroll-sidebar {
+  padding: 4%;
 }
 
 
@@ -10516,9 +10517,9 @@ pre {
   padding-top: 0 !important;
 }
 
-.marketinfo td {
+.table.marketinfo td {
   font-size: 14px;
-  padding: 7px 0;
+  padding: 0.75rem 0 !important;
 }
 
 .marketinfo .dataTables_filter {
@@ -10534,10 +10535,10 @@ pre {
   padding: 1% 0;
 }
 
-.table-balance td{
-  font-size: 15px;
-  padding: 1% 0;
-}
+//.table-balance td{
+//  font-size: 15px;
+//  padding: 0.2rem 0;
+//}
 
 .table-balance thead th {
   width: 60px !important;
@@ -10546,6 +10547,7 @@ pre {
 
 .marketinfo {
   overflow-x: hidden !important;
+
 }
 
 .wallet .left-sidebar .scroll-sidebar .dataTables_wrapper .dataTables_filter label {
@@ -10554,10 +10556,14 @@ pre {
 
 .wallet .left-sidebar {
   border: 1px solid #dee2e6;
+  position: fixed;
+  overflow: auto;
 }
 
 .orders .left-sidebar {
   border: 1px solid #dee2e6;
+  position: fixed;
+  overflow: auto;
 }
 
 .orders .main-content {
@@ -10658,5 +10664,30 @@ pre {
 }
 
 .color-dark {
-  color: #7d7d7d;
+  color: #212529;
 }
+
+.table td {
+  padding: 0.2rem 0 !important;
+  font-size: 15px;
+}
+
+.page-wrapper.main-content {
+  padding: 20px;
+}
+
+.tradingwindow {
+  padding: 0px !important;
+}
+
+.balbtn {
+  border: none;
+  width: 30px !important;
+  min-width: 0px !important;
+
+}
+
+.balbtn.btn-twitter {
+  background-color: #1976d2 !important;
+}
+
