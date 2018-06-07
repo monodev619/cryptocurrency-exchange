@@ -148,7 +148,7 @@
                         position: 'top-end',
                         showConfirmButton: false,
                         timer: 3000
-                    });
+                          });
 
                     toast({
                         type: 'success',
