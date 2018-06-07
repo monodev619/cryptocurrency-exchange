@@ -1,8 +1,11 @@
 
+/* +++++++++++++++++++++++ Currency ++++++++++++++++++++++++ */
 var currency_table;
 var selected_row;
 
 var openCurrency = function(obj, bEdit, id) {
+    $('#currency-error').html('');
+
     if (!bEdit) {
         $('#preview').attr('src', '');
         $('#logo').val('');
@@ -83,7 +86,40 @@ var selectImage = function(obj) {
     }
 };
 
+/* ---------------------------------------------------------------- */
+
+/* ++++++++++++++++++++++++++++ Market ++++++++++++++++++++++++++++++ */
+
+var openMarket = function(obj, bEdit, id) {
+    if (!bEdit) {
+        $('#market-modal').modal();
+    } else {
+        showOverlay();
+        selected_row = currency_table.row( $(obj).parents('tr') );
+        console.log(currency_table.row(selected_row).data()[0]);
+
+        $.get('/admin/currency/' + id, function (resp) {
+            console.log(resp);
+            if (resp.code == 0) {
+                $('#preview').attr('src', resp.data.logo);
+                $('#name').val(resp.data.name);
+                $('#symbol').val(resp.data.symbol);
+                $('#info').html(resp.data.info);
+                $('#currency_id').val(resp.data.id);
+            }
+            hideOverlay();
+            $('#currency-modal').modal();
+        })
+    }
+};
+/* ---------------------------------------------------------------- */
+
 $(function () {
+    $('.selectpicker').selectpicker();
+    $(".select2").select2({
+        dropdownParent: $("#market-modal")
+    });
+
     currency_table = $('#tblcurrency').DataTable();
 
     $('#currency-form').submit(function (e) {
@@ -101,6 +137,16 @@ $(function () {
                 success: function (resp) {
                     if (resp.code == '0') {
                         console.log(resp);
+                        $('#currency-modal').modal('hide');
+                        currency_table.row.add([
+                            '<img src="' + resp.data.logo + '" width="50px" height="50px">',
+                            resp.data.name,
+                            resp.data.symbol,
+                            '<div class="button-group"><button type="button" class="btn btn-info" onclick="openCurrency(this, true, ' + resp.data.id + ')"><i class="fa fa-edit"></i></button>\n' +
+                            '<button type="button" class="btn btn-danger" onclick="deleteCurrency(this, ' + resp.data.id + ')"><i class="fa fa-remove"></i></button></div>'
+                        ]).draw(false);
+                    } else {
+                        $('#currency-error').html(resp.message);
                     }
                 }
             });
@@ -114,7 +160,6 @@ $(function () {
                 type: 'POST',
                 success: function (resp) {
                     if (resp.code == '0') {
-                        console.log(resp);
                         $('#currency-modal').modal('hide');
                         var data = currency_table.row(selected_row).data();
                         data[0] = '<img src="' + resp.data.logo + '" width="50px" height="50px">';
