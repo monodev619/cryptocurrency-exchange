@@ -7,7 +7,7 @@
                         <h4 class="card-title m-t-10">BITCOIN MARKETS</h4>
                         <span class="current-bitcoin">Total Volume = 10284.324 &nbsp; 1BTC = $7552.5024</span>
                         <div class="table-responsive m-t-20">
-                            <table id="tblbitcoinmarkets" class="table table-bordered table-striped">
+                            <table id="tblbitcoinmarkets" class="table table-bordered table-striped markets">
                                 <thead>
                                 <tr>
                                     <th>MARKET</th>
@@ -59,7 +59,7 @@
                         <h4 class="card-title m-t-10">ETHEREUM MARKETS</h4>
                         <span class="currentethereum">Total Volume = 9185.477</span>
                         <div class="table-responsive m-t-20">
-                            <table id="tblethereummarkets" class="table table-bordered table-striped">
+                            <table id="tblethereummarkets" class="table table-bordered table-striped markets">
                                 <thead>
                                     <tr>
                                         <th>MARKET</th>
