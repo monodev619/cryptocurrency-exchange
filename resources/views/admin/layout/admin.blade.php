@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('static/images/favicon.png') }}">
     <title>Admin Panel</title>
@@ -84,8 +85,10 @@
 <script src="{{ asset('static/plugins/raphael/raphael-min.js') }}"></script>
 <script src="{{ asset('static/plugins/morrisjs/morris.min.js') }}"></script>
 <script src="{{ asset('static/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-
-{{--<script src="{{ asset('static/js/pages/common.js') }}"></script>--}}
+<script src="{{ asset('static/plugins/jquery-loading-overlay/dist/loadingoverlay.min.js') }}"></script>
+<script src="{{ asset('static/plugins/sweetalert/sweetalert.min.js') }}"></script>
+<script src="{{ asset('static/plugins/sweetalert/jquery.sweet-alert.custom.js') }}"></script>
+<script src="{{ asset('static/pages/common.js') }}"></script>
 
 @yield('scripts')
 

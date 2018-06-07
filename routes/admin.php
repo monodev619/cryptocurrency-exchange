@@ -20,5 +20,10 @@ Route::group(['prefix' => 'admin'], function() {
     Route::group(['middleware' => 'admin'], function () {
         Route::get('logout', 'Admin\AuthController@logout')->name('admin.logout');
         Route::get('/', 'Admin\AdminController@index')->name('admin.home');
+
+        Route::post('currency/add', 'Admin\AdminController@addCurrency')->name('admin.currency.add');
+        Route::post('currency/update', 'Admin\AdminController@updateCurrency')->name('admin.currency.update');
+        Route::get('currency/{id}', 'Admin\AdminController@getCurrency')->name('admin.currency.get');
+        Route::post('currency/delete', 'Admin\AdminController@deleteCurrency')->name('admin.currency.delete');
     });
 });

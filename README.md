@@ -63,3 +63,24 @@
        'phone' : phone number    
     }
     ```
+
+#### A. Base Material Management
+
+1. Get All Currency    
+    API: `api.currency.getall`  
+    URL: `currencies`
+    Method: `get`  
+    Params:     
+    Return: 
+    ```javascript
+    response.data = {
+       [
+           "id": Currency ID,
+           "name": Name,
+           "symbol": SYMBOL,
+           "info": Currency Information,
+           "logo": Logo url
+       ],    
+       ...
+    }
+    ```

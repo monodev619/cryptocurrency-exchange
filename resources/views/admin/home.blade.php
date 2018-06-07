@@ -31,10 +31,26 @@
                                         <th>Logo</th>
                                         <th>Name</th>
                                         <th>Symbol</th>
-                                        <th>Info</th>
                                         <th></th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                @foreach($currencies as $currency)
+                                    <tr>
+                                        <td>
+                                            <img src="{{ image_url($currency->logo) }}" width="50px" height="50px">
+                                        </td>
+                                        <td>{{ $currency->name }}</td>
+                                        <td>{{ $currency->symbol }}</td>
+                                        <td>
+                                            <div class="button-group">
+                                                <button type="button" class="btn btn-info" onclick="openCurrency(this, true, {{ $currency->id }})"><i class="fa fa-edit"></i></button>
+                                                <button type="button" class="btn btn-danger" onclick="deleteCurrency(this, {{ $currency->id }})"><i class="fa fa-remove"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -87,6 +103,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
                     <form id="currency-form" novalidate>
+                        {{ csrf_field() }}
                         <div class="modal-body">
                             <div class="form-group text-center">
                                 <img class="text-center" src="" id="preview" width="150px" height="150px">
@@ -130,27 +147,21 @@
                         <h4 class="modal-title">Market</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
-                    <form id="currency-form" novalidate>
+                    <form id="market-form" novalidate>
                         <div class="modal-body">
                             <div class="form-group">
-                                <h5> Name : <span class="text-danger">*</span> </h5>
+                                <h5> Type : <span class="text-danger">*</span> </h5>
                                 <div class="controls">
-                                    <input type="text" class="form-control" id="name" name="name" required data-validation-required-message="required" value="">
+                                    <input type="text" class="form-control" id="type" name="type" required data-validation-required-message="required" value="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <h5>Symbol : <span class="text-danger">*</span> </h5>
                                 <div class="input-group">
-                                    <input type="text" id="symbol" name="symbol" class="form-control" required data-validation-required-message="required" value="">
+                                    <input type="text" id="currency" name="currency" class="form-control" required data-validation-required-message="required" value="">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <h5>Info</h5>
-                                <div class="input-group">
-                                    <textarea class="form-control" name="info" id="info" rows="5" cols="80"></textarea>
-                                </div>
-                            </div>
-                            <input id="currency_id" name="currency_id" type="hidden" value="">
+                            <input id="market_id" name="currency_id" type="hidden" value="">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
