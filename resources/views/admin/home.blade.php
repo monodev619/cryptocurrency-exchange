@@ -21,7 +21,7 @@
                     </div>
                     <div class="card-body">
                         <div class="button-group">
-                            <button type="button" class="btn waves-effect waves-light btn-primary" onclick="openCurrency()">Add</button>
+                            <button type="button" class="btn waves-effect waves-light btn-primary" onclick="openCurrency(this, false)">Add</button>
                             <button type="button" class="btn waves-effect waves-light btn-danger">Delete</button>
                         </div>
                         <div class="table-responsive m-t-20">
@@ -61,7 +61,7 @@
                     </div>
                     <div class="card-body">
                         <div class="button-group">
-                            <button type="button" class="btn waves-effect waves-light btn-primary">Add</button>
+                            <button type="button" class="btn waves-effect waves-light btn-primary" onclick="openMarket(this, false)">Add</button>
                             <button type="button" class="btn waves-effect waves-light btn-danger">Delete</button>
                         </div>
                         <div class="table-responsive m-t-20">
@@ -69,6 +69,7 @@
                                 <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Type</th>
                                     <th>Currency</th>
                                     <th>Minimum Order</th>
                                     <th></th>
@@ -111,6 +112,7 @@
                                     <input type="file" class="input-image" id="logo" name="logo" onchange="selectImage(this)">
                                 </div>
                             </div>
+                            <div class="has-danger"><div id="currency-error" class="form-control-feedback"></div></div>
                             <div class="form-group">
                                 <h5> Name : <span class="text-danger">*</span> </h5>
                                 <div class="controls">
@@ -151,15 +153,19 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <h5> Type : <span class="text-danger">*</span> </h5>
-                                <div class="controls">
-                                    <input type="text" class="form-control" id="type" name="type" required data-validation-required-message="required" value="">
-                                </div>
+                                <select class="selectpicker m-b-20 m-r-10" data-style="btn-primary">
+                                    <option data-tokens="BTC">BTC</option>
+                                    <option data-tokens="ETH">ETH</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <h5>Symbol : <span class="text-danger">*</span> </h5>
-                                <div class="input-group">
-                                    <input type="text" id="currency" name="currency" class="form-control" required data-validation-required-message="required" value="">
-                                </div>
+                                <select class="select2 form-control custom-select" style="width: 100%; height:36px;">
+                                <option>Select currency</option>
+                                @foreach($currencies as $currency)
+                                    <option value="{{ $currency->id }}">{{ $currency->name }}</option>
+                                @endforeach
+                                </select>
                             </div>
                             <input id="market_id" name="currency_id" type="hidden" value="">
                         </div>
@@ -175,6 +181,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('static/plugins/dropify/dist/js/dropify.min.js') }}"></script>
+    <script src="{{ asset('static/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('static/plugins/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('static/pages/base_material.js') }}"></script>
 @endsection

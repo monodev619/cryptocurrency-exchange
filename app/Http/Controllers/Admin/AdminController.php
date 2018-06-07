@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Currency;
+use App\Market;
 use Illuminate\Http\Request;
 
 class AdminController
@@ -27,6 +28,14 @@ class AdminController
             'symbol' => 'required'
         ]);
 
+        $currency = Currency::where('name', $request->get('name'))
+            ->orWhere('symbol', $request->get('symbole'))
+            ->get();
+
+        if (!is_null($currency)) {
+            return error('Currency is exist already.', PARAMS_ILLEGAL);
+        }
+
         $file = $request->hasFile('logo') ? $request->file('logo') : $request->input('logo');
         $filename = '';
 
@@ -39,7 +48,7 @@ class AdminController
             'name' => $request->get('name'),
             'symbol' => $request->get('symbol'),
             'info' => $request->get('info'),
-            'logo' => $filename
+            'logo' => image_url($filename)
         ]);
 
         return success($currency);
@@ -97,5 +106,19 @@ class AdminController
 
         Currency::destroy($request->get('id'));
         return success();
+    }
+
+    public function addMarket(Request $request) {
+        validate($request->all(), [
+            'type' => 'required',
+            'currency' => 'required'
+        ]);
+
+        $market = Market::create([
+            'market_type' => $request->get('type'),
+            'currency_id' => $request->get('currency')
+        ]);
+
+        return success($market);
     }
 }
