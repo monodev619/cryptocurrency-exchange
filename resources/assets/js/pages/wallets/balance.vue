@@ -132,7 +132,7 @@
                                         <td>0.00000000</td>
                                         <td>%0.8</td>
                                         <td>
-                                            <b-btn class="btn btn-googleplus balbtn" type="button" data-toggle="modal" data-target="#depositModal" v-b-modal.depositModal v-b-tooltip.hover title="Deposit">
+                                            <b-btn class="btn btn-googleplus balbtn" type="button" data-toggle="modal" data-target="#depositModal" v-b-modal.depositModal v-b-tooltip.hover title="Deposit" @click="getCurrency(currency.id)">
                                                 <i class="mdi mdi-arrow-down-bold"></i>
                                             </b-btn>
                                             <b-btn class="btn btn-twitter balbtn waves-effect waves-light" type="button" data-toggle="modal" data-target="#withdrawModal" v-b-modal.withdrawModal v-b-tooltip.hover title="Withdrawal">
@@ -410,6 +410,11 @@
 
                  const { data } = await axios.get(urls.API_BASE_URL + '/_api/currencies');
                  await this.$store.dispatch('wallet/getCurrencies', {currencies: data.data})
+             },
+
+             async getCurrency(id) {
+                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/currency/' + id);
+                 console.log(data);
              }
 
          },
