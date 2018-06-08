@@ -84,3 +84,21 @@
        ...
     }
     ```
+
+2. Get All Market    
+    API: `api.market.getall`  
+    URL: `markets`
+    Method: `get`  
+    Params:     
+    Return: 
+    ```javascript
+    response.data = {
+       [
+           "id": Market ID,
+           "name": Market Name,
+           "type": Market type(symbol),
+           "currency": Market currency
+       ],    
+       ...
+    }
+    ```

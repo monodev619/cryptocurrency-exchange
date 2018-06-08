@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use App\Api\V1\Controllers\AuthController;
 use App\Api\V1\Controllers\UserController;
 use App\Api\V1\Controllers\CurrencyController;
+use App\Api\V1\Controllers\MarketController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,6 +27,7 @@ $api->version('v1', ['middleware' => ['dingo']], function ($api) {
     $api->post('login', ['as' => 'api.login', 'uses' => AuthController::class . '@authenticate']);
     $api->post('register', ['as' => 'api.register', 'uses' => AuthController::class . '@register']);
     $api->get('currencies', ['as' => 'api.currency.getall', 'uses' => CurrencyController::class . '@getCurrencies']);
+    $api->get('markets', ['as' => 'api.market.getall', 'uses' => MarketController::class . '@getMarkets']);
 
     $api->group( ['middleware' => 'jwt.auth' ], function ($api) {
 

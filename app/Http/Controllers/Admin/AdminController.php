@@ -65,6 +65,16 @@ class AdminController
             'symbol' => 'required'
         ]);
 
+        $currency = Currency::where('name', $request->get('name'))->get();
+        if (!$currency->isEmpty()) {
+            return error("Currency's name is duplicated.", PARAMS_ILLEGAL);
+        }
+
+        $currency = Currency::where('symbol', $request->get('symbol'))->get();
+        if (!$currency->isEmpty()) {
+            return error("Currency's symbol is duplicated.", PARAMS_ILLEGAL);
+        }
+
         $currency = Currency::find($request->get('currency_id'));
 
         $file = $request->hasFile('logo') ? $request->file('logo') : $request->input('logo');
