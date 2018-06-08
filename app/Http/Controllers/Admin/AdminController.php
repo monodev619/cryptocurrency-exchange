@@ -17,8 +17,12 @@ class AdminController
 {
     public function index(Request $request) {
 
-        $currency = Currency::all();
-        return view('admin.home')->with(['currencies' => $currency]);
+        $currencies = Currency::all();
+        $markets = Market::all();
+        return view('admin.home')->with([
+            'currencies' => $currencies,
+            'markets' => $markets
+        ]);
     }
 
     public function addCurrency(Request $request) {
@@ -29,10 +33,10 @@ class AdminController
         ]);
 
         $currency = Currency::where('name', $request->get('name'))
-            ->orWhere('symbol', $request->get('symbole'))
+            ->orWhere('symbol', $request->get('symbol'))
             ->get();
 
-        if (!is_null($currency)) {
+        if (!$currency->isEmpty()) {
             return error('Currency is exist already.', PARAMS_ILLEGAL);
         }
 
@@ -114,11 +118,90 @@ class AdminController
             'currency' => 'required'
         ]);
 
+        $currency = Currency::find($request->get('currency'));
+
+        if ($request->get('type') == $currency->symbol) {
+            return error("Type can't be equal to symbol.", PARAMS_ILLEGAL);
+        }
+
+        $marketName = $request->get('type') . "-" . $currency->symbol;
+        $market = Market::where('name', $marketName)->get();
+        if (!$market->isEmpty()) {
+            return error("Market is exist already.", PARAMS_ILLEGAL);
+        }
+
+
         $market = Market::create([
+            'name' => $request->get('type') . "-" . $currency->symbol,
             'market_type' => $request->get('type'),
-            'currency_id' => $request->get('currency')
+            'currency_id' => (int)($request->get('currency'))
         ]);
 
-        return success($market);
+        return success([
+            'id' => $market->id,
+            'name' => $market->name,
+            'market_type' => $market->market_type,
+            'currency' => $market->currency->name,
+            'minimum' => (int)$market->minimum
+        ]);
+    }
+
+    public function getMarket($id) {
+        $market = Market::find($id);
+
+        return success([
+            'id' => $market->id,
+            'name' => $market->name,
+            'market_type' => $market->market_type,
+            'currency_id' => $market->currency->id,
+            'minimum' => (int)$market->minimum
+        ]);
+    }
+
+    public function updateMarket(Request $request) {
+        validate($request->all(), [
+            'market_id' => 'required',
+            'type' => 'required',
+            'currency' => 'required'
+        ]);
+
+        $market = Market::find($request->get('market_id'));
+
+        $currency = Currency::find($request->get('currency'));
+
+        if ($request->get('type') == $currency->symbol) {
+            return error("Type can't be equal to symbol.", PARAMS_ILLEGAL);
+        }
+
+        $marketName = $request->get('type') . "-" . $currency->symbol;
+        $marketpresent = Market::where('name', $marketName)->get();
+
+        if (!$marketpresent->isEmpty()) {
+            return error("Market is exist already.", PARAMS_ILLEGAL);
+        }
+
+        $market->update([
+            'name' => $request->get('type') . "-" . $currency->symbol,
+            'market_type' => $request->get('type'),
+            'currency_id' =>(int)($request->get('currency'))
+        ]);
+
+        return success([
+            'id' => $market->id,
+            'name' => $market->name,
+            'market_type' => $market->market_type,
+            'currency' => $market->currency->name,
+            'minimum' => (int)$market->minimum
+        ]);
+
+    }
+
+    public function deleteMarket(Request $request) {
+        validate($request->all(), [
+            'id' => 'required'
+        ]);
+
+        Market::destroy($request->get('id'));
+        return success();
     }
 }

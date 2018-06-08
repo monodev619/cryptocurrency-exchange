@@ -25,5 +25,10 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('currency/update', 'Admin\AdminController@updateCurrency')->name('admin.currency.update');
         Route::get('currency/{id}', 'Admin\AdminController@getCurrency')->name('admin.currency.get');
         Route::post('currency/delete', 'Admin\AdminController@deleteCurrency')->name('admin.currency.delete');
+
+        Route::post('market/add', 'Admin\AdminController@addMarket')->name('admin.market.add');
+        Route::post('market/update', 'Admin\AdminController@updateMarket')->name('admin.market.update');
+        Route::get('market/{id}', 'Admin\AdminController@getMarket')->name('admin.market.get');
+        Route::post('market/delete', 'Admin\AdminController@deleteMarket')->name('admin.market.delete');
     });
 });
