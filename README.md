@@ -68,7 +68,7 @@
 
 1. Get All Currency    
     API: `api.currency.getall`  
-    URL: `currencies`
+    URL: `currencies`   
     Method: `get`  
     Params:     
     Return: 
@@ -87,7 +87,7 @@
 
 2. Get All Market    
     API: `api.market.getall`  
-    URL: `markets`
+    URL: `markets`  
     Method: `get`  
     Params:     
     Return: 
