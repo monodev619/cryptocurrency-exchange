@@ -125,20 +125,20 @@
                             <div class="form-group text-center">
                                 <img class="text-center" src="" id="preview" width="150px" height="150px">
                                 <div class="row text-center">
-                                    <input type="file" class="input-image" id="logo" name="logo" onchange="selectImage(this)">
+                                    <input type="file" class="input-image" id="logo" name="logo" onchange="selectImage(this)" required>
                                 </div>
                             </div>
                             <div class="has-danger"><div id="currency-error" class="form-control-feedback"></div></div>
                             <div class="form-group">
                                 <h5> Name : <span class="text-danger">*</span> </h5>
                                 <div class="controls">
-                                    <input type="text" class="form-control" id="name" name="name" required data-validation-required-message="required" value="">
+                                    <input type="text" class="form-control" id="name" name="name" required data-validation-required-message="This field is required" value="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <h5>Symbol : <span class="text-danger">*</span> </h5>
-                                <div class="input-group">
-                                    <input type="text" id="symbol" name="symbol" class="form-control" required data-validation-required-message="required" value="">
+                                <div class="controls">
+                                    <input type="text" id="symbol" name="symbol" class="form-control" required data-validation-required-message="This field is required" value="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -165,24 +165,26 @@
                         <h4 class="modal-title">Market</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
-                    <form id="market-form" novalidate>
+                    <form id="market-form" validate>
                         <div class="modal-body">
                             <div class="form-group">
                                 <h5> Type : <span class="text-danger">*</span> </h5>
-                                <select id="type" name="type" class="selectpicker m-b-20 m-r-10" data-style="btn-primary">
-                                    <option>Select symbol</option>
-                                    <option data-tokens="BTC">BTC</option>
-                                    <option data-tokens="ETH">ETH</option>
+                                <select id="type" name="type" required class="selectpicker m-b-20 m-r-10">
+                                    <option value="0">Select symbol</option>
+                                    <option value="BTC">BTC</option>
+                                    <option value="ETH">ETH</option>
                                 </select>
+                                <div class="has-danger"><div id="typevalidation" class="form-control-feedback"></div></div>
                             </div>
                             <div class="form-group">
                                 <h5>Symbol : <span class="text-danger">*</span> </h5>
-                                <select id="currency" name="currency" class="select2 form-control custom-select" style="width: 100%; height:36px;">
-                                <option>Select currency</option>
+                                <select id="currency" name="currency"  class="select2 form-control custom-select" style="width: 100%; height:36px;">
+                                <option value="0">Select currency</option>
                                 @foreach($currencies as $currency)
                                     <option value="{{ $currency->id }}">{{ $currency->name.' ('.$currency->symbol.')'}}</option>
                                 @endforeach
                                 </select>
+                                <div class="has-danger"><div id="symbolvalidation" class="form-control-feedback"></div></div>
                             </div>
                             <div class="has-danger"><div id="market-error" class="form-control-feedback"></div></div>
                             <input id="market_id" name="market_id" type="hidden" value="">
@@ -202,4 +204,5 @@
     <script src="{{ asset('static/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('static/plugins/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('static/pages/base_material.js') }}"></script>
+
 @endsection

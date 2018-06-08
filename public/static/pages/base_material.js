@@ -94,8 +94,10 @@ var selectImage = function(obj) {
 var openMarket = function(obj, bEdit, id) {
     $('#market-error').html('');
     if (!bEdit) {
-        $('#currency').val('').change();
-        $('#type').val('').change();
+
+        $('#type').val('0').change();
+        $('#currency').val('0');
+        $('#currency').trigger('change');
         $('#market_id').val('');
         $('#market-modal').modal();
     } else {
@@ -116,10 +118,15 @@ var openMarket = function(obj, bEdit, id) {
 /* ---------------------------------------------------------------- */
 
 $(function () {
+    $('#typevalidation').html('');
+    $('#symbolvalidation').html('');
     $('.selectpicker').selectpicker();
     $("#currency").select2({
         dropdownParent: $("#market-modal")
     });
+
+    var typesuccess = true;
+    var symbolsucess = true;
 
     currency_table = $('#tblcurrency').DataTable();
     market_table = $('#tblmarket').DataTable();
@@ -176,61 +183,84 @@ $(function () {
         }
 
     })
+
+
     $('#market-form').submit(function (e) {
         e.preventDefault();
 
-        var form = new FormData($(this)[0]);
-        if ($('#market_id').val() == '') {
-            $.ajax({
-                url: '/admin/market/add',
-                data: form,
-                cache: false,
-                contentType: false,
-                processData: false,
-                type: 'POST',
-                success: function (resp) {
-                    if (resp.code == '0') {
-                        console.log(resp);
-                        $('#market-modal').modal('hide');
-                        market_table.row.add([
-                            resp.data.name,
-                            resp.data.market_type,
-                            resp.data.currency,
-                            resp.data.minimum,
-                            '<div class="button-group"><button type="button" class="btn btn-info" onclick="openMarket(this, true, ' + resp.data.id + ')"><i class="fa fa-edit"></i></button>\n' +
-                            '<button type="button" class="btn btn-danger" onclick="deleteMarket(this, ' + resp.data.id + ')"><i class="fa fa-remove"></i></button></div>'
-                        ]).draw(false);
-                    } else {
-                        $('#market-error').html(resp.message);
-                    }
-                }
-            });
+        var type = $('.selectpicker option:selected').val();
+        var currency = $('#currency').val();
+        if (type == '0') {
+            $('#typevalidation').html('This field is required');
+            typesuccess = false;
         } else {
-            $.ajax({
-                url: '/admin/market/update',
-                data: form,
-                cache: false,
-                contentType: false,
-                processData: false,
-                type: 'POST',
-                success: function (resp) {
-                    console.log(resp);
-                    if (resp.code == '0') {
-                        $('#market-modal').modal('hide');
-                        var data = market_table.row(selected_row).data();
-                        data[0] = resp.data.name;
-                        data[1] = resp.data.market_type;
-                        data[2] = resp.data.currency;
-                        data[3] = resp.data.minimum;
-                        market_table.row(selected_row).data(data).draw();
-                    } else {
-                        $('#market-error').html(resp.message);
-                    }
-                }
-            });
+            $('#typevalidation').html('');
+            typesuccess = true;
+        }
+        if (currency == '0') {
+            $('#symbolvalidation').html('This field is required');
+            symbolsucess = false
+        } else{
+            $('#symbolvalidation').html('');
+            symbolsucess = true;
         }
 
+        if (typesuccess && symbolsucess) {
+
+            var form = new FormData($(this)[0]);
+            if ($('#market_id').val() == '') {
+                $.ajax({
+                    url: '/admin/market/add',
+                    data: form,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (resp) {
+                        if (resp.code == '0') {
+                            console.log(resp);
+                            $('#market-modal').modal('hide');
+                            market_table.row.add([
+                                resp.data.name,
+                                resp.data.market_type,
+                                resp.data.currency,
+                                resp.data.minimum,
+                                '<div class="button-group"><button type="button" class="btn btn-info" onclick="openMarket(this, true, ' + resp.data.id + ')"><i class="fa fa-edit"></i></button>\n' +
+                                '<button type="button" class="btn btn-danger" onclick="deleteMarket(this, ' + resp.data.id + ')"><i class="fa fa-remove"></i></button></div>'
+                            ]).draw(false);
+                        } else {
+                            $('#market-error').html(resp.message);
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/admin/market/update',
+                    data: form,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (resp) {
+                        console.log(resp);
+                        if (resp.code == '0') {
+                            $('#market-modal').modal('hide');
+                            var data = market_table.row(selected_row).data();
+                            data[0] = resp.data.name;
+                            data[1] = resp.data.market_type;
+                            data[2] = resp.data.currency;
+                            data[3] = resp.data.minimum;
+                            market_table.row(selected_row).data(data).draw();
+                        } else {
+                            $('#market-error').html(resp.message);
+                        }
+                    }
+                });
+            }
+        }
     })
+
+
 });
 
 var deleteMarket = function (obj, id) {
