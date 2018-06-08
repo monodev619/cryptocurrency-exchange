@@ -75,6 +75,22 @@
                                     <th></th>
                                 </tr>
                                 </thead>
+                                <tbody>
+                                @foreach($markets as $market)
+                                    <tr>
+                                        <td>{{ $market->name }}</td>
+                                        <td>{{ $market->market_type }}</td>
+                                        <td>{{ $market->currency->name }}</td>
+                                        <td>{{ $market->minimum }}</td>
+                                        <td>
+                                            <div class="button-group">
+                                                <button type="button" class="btn btn-info" onclick="openMarket(this, true, {{ $market->id }})"><i class="fa fa-edit"></i></button>
+                                                <button type="button" class="btn btn-danger" onclick="deleteMarket(this, {{ $market->id }})"><i class="fa fa-remove"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -153,21 +169,23 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <h5> Type : <span class="text-danger">*</span> </h5>
-                                <select class="selectpicker m-b-20 m-r-10" data-style="btn-primary">
+                                <select id="type" name="type" class="selectpicker m-b-20 m-r-10" data-style="btn-primary">
+                                    <option>Select symbol</option>
                                     <option data-tokens="BTC">BTC</option>
                                     <option data-tokens="ETH">ETH</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <h5>Symbol : <span class="text-danger">*</span> </h5>
-                                <select class="select2 form-control custom-select" style="width: 100%; height:36px;">
+                                <select id="currency" name="currency" class="select2 form-control custom-select" style="width: 100%; height:36px;">
                                 <option>Select currency</option>
                                 @foreach($currencies as $currency)
-                                    <option value="{{ $currency->id }}">{{ $currency->name }}</option>
+                                    <option value="{{ $currency->id }}">{{ $currency->name.' ('.$currency->symbol.')'}}</option>
                                 @endforeach
                                 </select>
                             </div>
-                            <input id="market_id" name="currency_id" type="hidden" value="">
+                            <div class="has-danger"><div id="market-error" class="form-control-feedback"></div></div>
+                            <input id="market_id" name="market_id" type="hidden" value="">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>

@@ -22,7 +22,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr @click="gotoMarket">
                                     <td>Bitcoin</td>
                                     <td>BTC</td>
                                     <td>0.00000000</td>
@@ -121,6 +121,12 @@
         data: () => ({
 
         }),
+
+        methods: {
+            gotoMarket () {
+                this.$router.replace({ name: 'trading', query: {MarketName: "BTC-USD"}});
+            }
+        }
     }
 
 </script>

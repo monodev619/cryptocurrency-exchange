@@ -255,6 +255,7 @@
                 <div class="row common-table-container">
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <h4 class="card-title">ORDER BOOK</h4>
+
                     </div>
                     <div class="col-md-4 col-lg-4 col-sm-4 sell-container">
                         <div class="table-responsive selltable">
@@ -459,7 +460,7 @@
                             </b-modal>
                         </div>
                     </div>
-                    <div class="col-md-4 col-lg-4 col-sm-4 trade-container">
+                    <div class="col-md-4 col-lg-4 col-sm-4 trade-container" v-if="user">
                         <div class="card-body">
                             <ul class="nav nav-pills m-t-20">
                                 <li class="nav-item buy"> <a href="#navpills-1" class="nav-link active" data-toggle="tab" aria-expanded="false">BUY</a> </li>
@@ -563,6 +564,12 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-sm-4 trade-container accounttrade" v-else>
+                        <span class="tradeaccount">To begin trading please log in or create an account.</span>
+                        <button type="button" class="btn waves-effect waves-light btn-block btn-blue accountbtn btn1"><router-link :to="{ name: 'register'}" class="accountbtn">Create Account</router-link></button>
+                        <button type="button" class="btn waves-effect waves-light btn-block btn-blue accountbtn"><router-link :to="{ name: 'login'}" class="accountbtn">Log In</router-link></button>
+
                     </div>
                     <div class="col-md-4 col-lg-4 col-sm-4 buy-container">
                         <div class="table-responsive buytable">
@@ -826,12 +833,13 @@
 
     import '~/plugins/datatables/jquery.dataTables.min';
     import BootstrapVue from 'bootstrap-vue';
+    import { mapGetters } from 'vuex';
 
     Vue.use(BootstrapVue);
 
     export default {
         name: "trading",
-        middleware: 'auth',
+        // middleware: 'auth',
         mounted() {
             $('#tblselllist').dataTable();
             $('#tblbuylist').dataTable();
@@ -845,6 +853,10 @@
             change_collpase1:true,
             change_collpase2:true
         }),
+
+        computed: mapGetters ({
+            user: 'auth/user'
+        })
     }
 </script>
 
