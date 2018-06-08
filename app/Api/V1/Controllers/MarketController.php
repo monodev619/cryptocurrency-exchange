@@ -10,6 +10,7 @@ namespace App\Api\V1\Controllers;
 
 
 use App\Market;
+use Illuminate\Http\Request;
 
 class MarketController extends BaseController
 {
