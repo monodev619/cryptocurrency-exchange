@@ -4,7 +4,7 @@
             <ul id="sidebarnav">
                 <li class="nav-devider"></li>
                 <li> <a class="waves-effect waves-dark {{ strcmp(Request::path(), 'admin') == 0 ? 'active' : '' }}" href="{{ url('/admin') }}" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu">Home</span></a></li>
-                <li> <a class="waves-effect waves-dark {{ str_contains(Request::path(), 'admin/user') ? 'active' : '' }}" href="{{ url('/admin/users') }}" aria-expanded="{{ str_contains(Request::path(), 'admin/project') ? 'true' : 'false' }}"><i class="mdi mdi-account"></i><span class="hide-menu">会员管理</span></a></li>
+                <li> <a class="waves-effect waves-dark {{ str_contains(Request::path(), 'admin/user') ? 'active' : '' }}" href="{{ url('/admin/users') }}" aria-expanded="false"><i class="mdi mdi-account"></i><span class="hide-menu">Users</span></a></li>
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-store"></i><span class="hide-menu">项目管理</span></a>
                     <ul aria-expanded="{{ str_contains(Request::path(), 'admin/project') ? 'true' : 'false' }}" class="{{ str_contains(Request::path(), 'admin/project') ? 'collapse in' : 'collapse' }}">
                         <li><a class="{{ str_contains(Request::path(), 'admin/project/estate') ? 'active' : '' }}" href="{{ url('/admin/project/estates') }}">房产</a></li>
