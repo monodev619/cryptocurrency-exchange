@@ -22,9 +22,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-on:click="gotoMarket(market.name)" v-for="market in markets">
-                                    <td>{{ market.name }}</td>
-                                    <td>{{ market.currency }}</td>
+                                <tr v-on:click="gotoMarket(btc_market.name)" v-for="btc_market in btc_markets">
+                                    <td>{{ btc_market.name }}</td>
+                                    <td>{{ btc_market.currency }}</td>
                                     <td>0.00000000</td>
                                     <td>0.00000000</td>
                                     <td>0.00000000</td>
@@ -63,26 +63,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Bitcoin</td>
-                                        <td>BTC</td>
+                                    <tr v-on:click="gotoMarket(eth_market.name)" v-for="eth_market in eth_markets">
+                                        <td>{{ eth_market.name }}</td>
+                                        <td>{{ eth_market.currency }}</td>
                                         <td>0.00000000</td>
                                         <td>0.00000000</td>
                                         <td>0.00000000</td>
                                         <td>0.00000000</td>
                                         <td>0.00000000</td>
                                         <td>%0.8</td>
-                                        <td>%0.8</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Bitcoin</td>
-                                        <td>BTC</td>
-                                        <td>0.00000000</td>
-                                        <td>0.00000000</td>
-                                        <td>0.00000000</td>
-                                        <td>0.00000000</td>
-                                        <td>%0.8</td>
-                                        <td>0.00000000</td>
                                         <td>%0.8</td>
                                     </tr>
                                 </tbody>
@@ -102,27 +91,30 @@
     import axios from 'axios';
     import * as urls from '../../constants/url-constants';
 
+
     export default {
         name: "market",
-        middleware: 'auth',
+        // middleware: 'auth',
 
         updated() {
-            this.table = $('#tblbitcoinmarkets').DataTable();
-            $('#tblethereummarkets').DataTable();
+            $('#tblbitcoinmarkets').dataTable();
+            $('#tblethereummarkets').dataTable();
         },
 
-        data: () => ({
-        }),
+        mounted() {
+
+        },
 
         methods: {
             async fetchMarkets () {
-              const { data } = await axios.get(urls.API_BASE_URL + '/_api/markets')
-              await this.$store.dispatch('market/getMarkets', {markets: data.data})
+                const { data } = await axios.get(urls.API_BASE_URL + '/_api/markets');
+                await this.$store.dispatch('market/getMarkets', {markets: data.data});
             },
 
             gotoMarket (param) {
                 this.$router.push({ name: 'trading', query: {MarketName: param}});
             }
+
         },
 
         beforeMount() {
@@ -130,7 +122,10 @@
         },
 
         computed: mapGetters({
-            markets: 'market/markets'
+            btc_markets: 'market/btc_markets',
+            eth_markets: 'market/eth_markets'
+            // markets: 'market/markets'
+
         })
     }
 

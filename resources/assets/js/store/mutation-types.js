@@ -13,9 +13,9 @@ export const FETCH_PROFILE_FAILURE = 'FETCH_PROFILE_FAILURE';
 export const SET_LOCALE = 'SET_LOCALE';
 
 // wallet.js
-export  const FETCH_CURRENCIES = 'FETCH_CURRENCIES';
 export  const GET_CURRENCIES = 'GET_CURRENCIES';
 
+
 //market.js
-export  const FETCH_MARKETS = 'FETCH_MARKETS';
 export  const GET_MARKETS = 'GET_MARKETS';
+export  const GET_LEFTMARKETS = 'GET_LEFTMARKETS';

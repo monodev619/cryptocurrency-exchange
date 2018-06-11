@@ -10,14 +10,14 @@ export const state = {
 
 export const getters = {
     currencies: state => state.currencies,
+    currency: (state) => (symbol) => {
+        return state.currencies.find(currency => currency.symbol === symbol)
+    }
+
 
 }
 
 export const mutations = {
-    [types.FETCH_CURRENCIES] (state, { currencies }) {
-        state.currencies = currencies;
-    },
-
     [types.GET_CURRENCIES] (state, {currencies}) {
         state.currencies = currencies
     }

@@ -42,8 +42,8 @@
 
         <template v-else>
           <li class="nav-item">
-            <router-link :to="{ name: 'trading' }" class="nav-link">
-              {{ $t('Trading') }}
+            <router-link :to="{ name: 'markets' }" class="nav-link">
+              {{ $t('market') }}
             </router-link>
           </li>
           <li class="nav-item">

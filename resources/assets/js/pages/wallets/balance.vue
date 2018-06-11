@@ -407,14 +407,8 @@
 
          methods: {
              async fetchCurrencies () {
-
                  const { data } = await axios.get(urls.API_BASE_URL + '/_api/currencies');
                  await this.$store.dispatch('wallet/getCurrencies', {currencies: data.data})
-             },
-
-             async getCurrency(id) {
-                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/currency/' + id);
-                 console.log(data);
              }
          },
 
@@ -430,7 +424,8 @@
          }),
 
          computed: mapGetters({
-             currencies: 'wallet/currencies'
+             currencies: 'wallet/currencies',
+
          })
 
      }
