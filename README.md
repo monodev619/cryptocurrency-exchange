@@ -93,12 +93,23 @@
     Return: 
     ```javascript
     response.data = {
-       [
-           "id": Market ID,
-           "name": Market Name,
-           "type": Market type(symbol),
-           "currency": Market currency
-       ],    
-       ...
+        "BTC_MARKET" : {
+            [
+               "id": Market ID,
+               "name": Market Name,
+               "type": Market type(symbol),
+               "currency": Market currency name
+            ],
+            ...
+        },
+        "ETH_MARKET" : {
+            [
+                "id": Market ID,
+                "name": Market Name,
+                "type": Market type(symbol),
+                "currency": Market currency name
+            ],
+            ...
+        }
     }
     ```

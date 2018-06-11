@@ -30,5 +30,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('market/update', 'Admin\AdminController@updateMarket')->name('admin.market.update');
         Route::get('market/{id}', 'Admin\AdminController@getMarket')->name('admin.market.get');
         Route::post('market/delete', 'Admin\AdminController@deleteMarket')->name('admin.market.delete');
+
+        Route::get('users', 'Admin\UserController@index')->name('admin.users');
     });
 });
