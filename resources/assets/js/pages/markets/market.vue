@@ -22,20 +22,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr @click="gotoMarket">
-                                    <td>Bitcoin</td>
-                                    <td>BTC</td>
-                                    <td>0.00000000</td>
-                                    <td>0.00000000</td>
-                                    <td>0.00000000</td>
-                                    <td>0.00000000</td>
-                                    <td>%0.8</td>
-                                    <td>0.00000000</td>
-                                    <td>%0.8</td>
-                                </tr>
-                                <tr>
-                                    <td>Bitcoin</td>
-                                    <td>BTC</td>
+                                <tr v-on:click="gotoMarket(market.name)" v-for="market in markets">
+                                    <td>{{ market.name }}</td>
+                                    <td>{{ market.currency }}</td>
                                     <td>0.00000000</td>
                                     <td>0.00000000</td>
                                     <td>0.00000000</td>
@@ -107,26 +96,42 @@
 </template>
 
 <script>
+
+    import { mapGetters } from 'vuex';
     import '~/plugins/datatables/jquery.dataTables.min';
+    import axios from 'axios';
+    import * as urls from '../../constants/url-constants';
 
     export default {
         name: "market",
         middleware: 'auth',
 
-        mounted() {
-            $('#tblbitcoinmarkets').dataTable();
-            $('#tblethereummarkets').dataTable();
+        updated() {
+            this.table = $('#tblbitcoinmarkets').DataTable();
+            $('#tblethereummarkets').DataTable();
         },
 
         data: () => ({
-
         }),
 
         methods: {
-            gotoMarket () {
-                this.$router.replace({ name: 'trading', query: {MarketName: "BTC-USD"}});
+            async fetchMarkets () {
+              const { data } = await axios.get(urls.API_BASE_URL + '/_api/markets')
+              await this.$store.dispatch('market/getMarkets', {markets: data.data})
+            },
+
+            gotoMarket (param) {
+                this.$router.push({ name: 'trading', query: {MarketName: param}});
             }
-        }
+        },
+
+        beforeMount() {
+            this.fetchMarkets();
+        },
+
+        computed: mapGetters({
+            markets: 'market/markets'
+        })
     }
 
 </script>

@@ -416,7 +416,6 @@
                  const { data } = await axios.get(urls.API_BASE_URL + '/_api/currency/' + id);
                  console.log(data);
              }
-
          },
 
          beforeMount() {
