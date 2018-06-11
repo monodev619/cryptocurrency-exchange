@@ -154,6 +154,14 @@ $(function () {
                             '<div class="button-group"><button type="button" class="btn btn-info" onclick="openCurrency(this, true, ' + resp.data.id + ')"><i class="fa fa-edit"></i></button>\n' +
                             '<button type="button" class="btn btn-danger" onclick="deleteCurrency(this, ' + resp.data.id + ')"><i class="fa fa-remove"></i></button></div>'
                         ]).draw(false);
+
+                        var data = {
+                            id: resp.data.id,
+                            text: resp.data.name + ' (' + resp.data.symbol + ')'
+                        };
+
+                        var newCoin = new Option(data.text, data.id, false, false);
+                        $('#currency').append(newCoin).trigger('change');
                     } else {
                         $('#currency-error').html(resp.message);
                     }

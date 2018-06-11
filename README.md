@@ -64,7 +64,7 @@
     }
     ```
 
-#### A. Base Material Management
+#### A. Currency Management
 
 1. Get All Currency    
     API: `api.currency.getall`  
@@ -85,7 +85,9 @@
     }
     ```
 
-2. Get All Market    
+#### A. Market Management
+
+1. Get All Market    
     API: `api.market.getall`  
     URL: `markets`  
     Method: `get`  
@@ -111,5 +113,31 @@
             ],
             ...
         }
+    }
+    ```
+    
+2. Get Market Info    
+    API: `api.market.getinfo`  
+    URL: `market/{id}`   
+    Method: `get`  
+    Params: id: market id    
+    Return: 
+    ```javascript
+    response.data = {
+       [
+           'name' => Market Name,
+           'type' => Market Type,
+           'currency' => Currency Name,
+           'symbol' => Currency Symbol,
+           'rate' => Rate,
+           'change' => Change rate,
+           'last_price' => last price,
+           'bid' => bid price,
+           'ask' => ask price,
+           'volume' => Market Volume,
+           'high_24h' => Market 24hr high price,
+           'low_24h' => Market 24hr low price,
+           'minimum' => Market minimum order
+       ]
     }
     ```

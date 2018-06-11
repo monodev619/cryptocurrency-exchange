@@ -44,4 +44,30 @@ class MarketController extends BaseController
             'eth' => $eth_market
         ]);
     }
+
+    public function getMarketInfo($id) {
+
+        $market = Market::find($id);
+        print_r($market);
+
+        if ($market->count()) {
+            return success([
+                'name' => $market->name,
+                'type' => $market->market_type,
+                'currency' => $market->currency->name,
+                'symbol' => $market->currency->symbol,
+                'rate' => $market->rate,
+                'change' => $market->change,
+                'last_price' => $market->last,
+                'bid' => $market->bid,
+                'ask' => $market->ask,
+                'volume' => $market->volume,
+                'high_24h' => $market->high_24h,
+                'low_24h' => $market->low_24h,
+                'minimum' => $market->minimum
+            ]);
+        } else {
+            return error('This market is not exist', PARAMS_ILLEGAL);
+        }
+    }
 }
