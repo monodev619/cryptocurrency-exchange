@@ -8,8 +8,8 @@
 
 return [
     'market_type' => [
-        'BTC',
-        'ETH'
+        'BTC' => 'BTC',
+        'ETH' => 'ETH'
     ],
     'bidask' => [
         'bid',

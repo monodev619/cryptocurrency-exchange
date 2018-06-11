@@ -18,16 +18,30 @@ class MarketController extends BaseController
 
         $markets = Market::all();
 
-        $ret = [];
+        $btc_market = [];
+        $eth_market = [];
+
         foreach ($markets as $market) {
-            array_push($ret, [
-                'id' => $market->id,
-                'name' => $market->name,
-                'type' => $market->market_type,
-                'currency' => $market->currency->symbol
-            ]);
+            if ($market->market_type == 'BTC') {
+                array_push($btc_market, [
+                    'id' => $market->id,
+                    'name' => $market->name,
+                    'type' => $market->market_type,
+                    'currency' => $market->currency->name
+                ]);
+            } elseif ($market->market_type == 'ETH') {
+                array_push($eth_market, [
+                    'id' => $market->id,
+                    'name' => $market->name,
+                    'type' => $market->market_type,
+                    'currency' => $market->currency->name
+                ]);
+            }
         }
 
-        return success($ret);
+        return success([
+            'btc' => $btc_market,
+            'eth' => $eth_market
+        ]);
     }
 }

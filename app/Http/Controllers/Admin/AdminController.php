@@ -10,10 +10,11 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Currency;
+use App\Http\Controllers\Controller;
 use App\Market;
 use Illuminate\Http\Request;
 
-class AdminController
+class AdminController extends Controller
 {
     public function index(Request $request) {
 
