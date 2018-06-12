@@ -45,10 +45,9 @@ class MarketController extends BaseController
         ]);
     }
 
-    public function getMarketInfo($id) {
+    public function getMarketInfo($name) {
 
-        $market = Market::find($id);
-        print_r($market);
+        $market = Market::where('name', $name)->first();
 
         if ($market->count()) {
             return success([

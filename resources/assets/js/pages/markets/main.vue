@@ -799,7 +799,9 @@
             this.marketName = this.$route.query.MarketName;
             this.marketSymbolName = this.marketName.split('-')[0];
             this.marketCurrencyName = this.marketName.split('-')[1];
-            console.log(this.marketName);
+
+            // console.log(this.$store.getters['market/getMarketId'](this.marketName));
+
             this.fetchCurrencies();
             this.fetchMarkets();
 
@@ -819,13 +821,16 @@
                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/currencies?' + 'currency=' + this.marketCurrencyName);
                 this.currencies = data.data;
 
-               for (var prop in this.currencies) {
-                   if (this.currencies[prop].symbol == this.marketCurrencyName) {
-                       this.currency = this.currencies[prop];
-                       this.currencyName = this.currency['name'];
-                       this.imagelink = this.currency['logo'].replace('localhost', '192.168.50.117');
-                   } else continue
-               }
+
+                for (var prop in this.currencies) {
+                    if (this.currencies[prop].symbol == this.marketCurrencyName) {
+                        console.log(this.currencies[prop]);
+                        this.currency = this.currencies[prop];
+                        this.currencyName = this.currency['name'];
+                        this.imagelink = this.currency['logo'];
+                    } else
+                        continue;
+                    }
             },
 
             async fetchMarkets () {

@@ -42,53 +42,54 @@ var user_table;
 var currentTrObj;
 
 var initTable = function () {
-    user_table = $('#tbluser').dataTable({
-        columnDefs: [
-            {
-                targets: [6,7],
-                orderable: false
-            },
-            // {
-            //     targets: 0,
-            //     render: function (data, type, full, meta) {
-            //         console.log(full);
-            //         return '<a href="/admin/user/' + full.id + '"><img src="' + data + '" width="50" height="50" style="border-radius: 100%;" alt="user"></a>';
-            //     }
-            // },
-            // {
-            //     targets: 9,
-            //     render: function (data, type, full, meta) {
-            //         return '<div class="text-center"><button class="btn btn-info" type="button" onclick="open_detail_page('+data+')">查看</button>' +
-            //             '<button class="btn btn-danger" type="button" onclick="delete_user('+data+', this)">删除</button></div>';
-            //     }
-            // }
-        ],
-        columns: [
-            // { "data": "avatar" },
-            // { "data": "name" },
-            { "data": "phone" },
-            { "data": "region" },
-            { "data": "ip" },
-            { "data": "ip_location" },
-            { "data": "register_dt" },
-            { "data": "login_dt" },
-            { "data": "concern_city" },
-            { "data": "concern_trend" },
-            // { "data": "id" }
-        ],
-        aaSorting: [[4, 'desc']],
-        bProcessing: true,
-        bServerSide: true,
-        bPaginate: true,
-        sAjaxSource: '/admin/user/get?name=' + '&phone=' + $('#phone').val() + '&region=' + $('#region').val()+ '&from_register_dt=' + register_dt.startDate.format('YYYY-MM-DD') + '&to_register_dt='
-        + register_dt.endDate.format('YYYY-MM-DD') + '&from_login_dt=' + login_dt.startDate.format('YYYY-MM-DD') + '&to_login_dt=' + login_dt.endDate.format('YYYY-MM-DD'),
-        dom: 'rtip',
-        displayLength: 25,
-        language: {
-            url: "../static/plugins/datatables-plugins/i18n/Chinese.lang"
-        },
-        destroy: true,
-    });
+    // user_table = $('#tbluser').DataTable({
+    //     columnDefs: [
+    //         {
+    //             targets: [6,7],
+    //             orderable: false
+    //         },
+    //         // {
+    //         //     targets: 0,
+    //         //     render: function (data, type, full, meta) {
+    //         //         console.log(full);
+    //         //         return '<a href="/admin/user/' + full.id + '"><img src="' + data + '" width="50" height="50" style="border-radius: 100%;" alt="user"></a>';
+    //         //     }
+    //         // },
+    //         // {
+    //         //     targets: 9,
+    //         //     render: function (data, type, full, meta) {
+    //         //         return '<div class="text-center"><button class="btn btn-info" type="button" onclick="open_detail_page('+data+')">查看</button>' +
+    //         //             '<button class="btn btn-danger" type="button" onclick="delete_user('+data+', this)">删除</button></div>';
+    //         //     }
+    //         // }
+    //     ],
+    //     columns: [
+    //         // { "data": "avatar" },
+    //         // { "data": "name" },
+    //         { "data": "phone" },
+    //         { "data": "region" },
+    //         { "data": "ip" },
+    //         { "data": "ip_location" },
+    //         { "data": "register_dt" },
+    //         { "data": "login_dt" },
+    //         { "data": "concern_city" },
+    //         { "data": "concern_trend" },
+    //         // { "data": "id" }
+    //     ],
+    //     aaSorting: [[4, 'desc']],
+    //     // bProcessing: true,
+    //     // bServerSide: true,
+    //     bPaginate: true,
+    //     // sAjaxSource: '/admin/user/get?name=' + '&phone=' + $('#phone').val() + '&region=' + $('#region').val()+ '&from_register_dt=' + register_dt.startDate.format('YYYY-MM-DD') + '&to_register_dt='
+    //     // + register_dt.endDate.format('YYYY-MM-DD') + '&from_login_dt=' + login_dt.startDate.format('YYYY-MM-DD') + '&to_login_dt=' + login_dt.endDate.format('YYYY-MM-DD'),
+    //     dom: 'rtip',
+    //     displayLength: 25,
+    //     language: {
+    //         url: "../static/plugins/datatables-plugins/i18n/Chinese.lang"
+    //     },
+    //     destroy: true,
+    // });
+    user_table = $('#tbluser').DataTable();
 };
 
 var open_detail_page = function (id) {
@@ -144,6 +145,6 @@ $(function () {
     register_dt.setStartDate('2017/01/01');
     login_dt.setStartDate('2017/01/01');
 
-    // initTable();
+    initTable();
 
 });

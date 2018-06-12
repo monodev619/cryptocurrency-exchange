@@ -84,7 +84,24 @@
        ...
     }
     ```
-
+2. Get Currency Info    
+    API: `api.currency.getinfo`  
+    URL: `currency/{symbol}`   
+    Method: `get`  
+    Params: symbol    
+    Return: 
+    ```javascript
+    response.data = {
+       [
+           "id": Currency ID,
+           "name": Name,
+           "symbol": SYMBOL,
+           "info": Currency Information,
+           "logo": Logo url
+       ]
+    }
+    ```
+    
 #### A. Market Management
 
 1. Get All Market    
@@ -118,9 +135,9 @@
     
 2. Get Market Info    
     API: `api.market.getinfo`  
-    URL: `market/{id}`   
+    URL: `market/{name}`   
     Method: `get`  
-    Params: id: market id    
+    Params: name: market name    
     Return: 
     ```javascript
     response.data = {

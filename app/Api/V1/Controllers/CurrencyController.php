@@ -30,4 +30,18 @@ class CurrencyController extends BaseController
         }
         return success($ret);
     }
+
+    public function getCurrencyInfo($symbol) {
+        $currency = Currency::where('symbol', $symbol)->first();
+
+        if ($currency->count()) {
+            return success([
+                'id' => $currency->id,
+                'name' => $currency->name,
+                'symbol' => $currency->symbol,
+                'info' => $currency->info,
+                'logo' => image_url($currency->logo)
+            ]);
+        }
+    }
 }

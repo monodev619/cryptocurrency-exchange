@@ -27,8 +27,9 @@ $api->version('v1', ['middleware' => ['dingo']], function ($api) {
     $api->post('login', ['as' => 'api.login', 'uses' => AuthController::class . '@authenticate']);
     $api->post('register', ['as' => 'api.register', 'uses' => AuthController::class . '@register']);
     $api->get('currencies', ['as' => 'api.currency.getall', 'uses' => CurrencyController::class . '@getCurrencies']);
+    $api->get('currency/{symbol}', ['as' => 'api.currency.getinfo', 'uses' => CurrencyController::class . '@getCurrencyInfo']);
     $api->get('markets', ['as' => 'api.market.getall', 'uses' => MarketController::class . '@getMarkets']);
-    $api->get('market/{id}', ['as' => 'api.market.getinfo', 'uses' => MarketController::class . '@getMarketInfo']);
+    $api->get('market/{name}', ['as' => 'api.market.getinfo', 'uses' => MarketController::class . '@getMarketInfo']);
 
     $api->group( ['middleware' => 'jwt.auth' ], function ($api) {
 
