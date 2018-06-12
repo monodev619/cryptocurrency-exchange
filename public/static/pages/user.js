@@ -18,12 +18,12 @@ $('.input-daterange-datepicker').daterangepicker({
     // startDate: start,
     // endDate: end,
     ranges: {
-        '今天': [moment(), moment()],
-        '昨天': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-        '最近7天': [moment().subtract(7, 'days'), moment()],
-        '最近30天': [moment().subtract(30, 'days'), moment()],
-        '今月': [moment().startOf('month'), moment().endOf('month')],
-        '上月': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        'Today': [moment(), moment()],
+        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+        'Recent 7 Days': [moment().subtract(7, 'days'), moment()],
+        'Recent 30 Days': [moment().subtract(30, 'days'), moment()],
+        'Previous': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+        'Next': [moment().add(1, 'month').startOf('month'), moment().add(1, 'month').endOf('month')]
     }
 });
 
@@ -42,54 +42,35 @@ var user_table;
 var currentTrObj;
 
 var initTable = function () {
-    // user_table = $('#tbluser').DataTable({
-    //     columnDefs: [
-    //         {
-    //             targets: [6,7],
-    //             orderable: false
-    //         },
-    //         // {
-    //         //     targets: 0,
-    //         //     render: function (data, type, full, meta) {
-    //         //         console.log(full);
-    //         //         return '<a href="/admin/user/' + full.id + '"><img src="' + data + '" width="50" height="50" style="border-radius: 100%;" alt="user"></a>';
-    //         //     }
-    //         // },
-    //         // {
-    //         //     targets: 9,
-    //         //     render: function (data, type, full, meta) {
-    //         //         return '<div class="text-center"><button class="btn btn-info" type="button" onclick="open_detail_page('+data+')">查看</button>' +
-    //         //             '<button class="btn btn-danger" type="button" onclick="delete_user('+data+', this)">删除</button></div>';
-    //         //     }
-    //         // }
-    //     ],
-    //     columns: [
-    //         // { "data": "avatar" },
-    //         // { "data": "name" },
-    //         { "data": "phone" },
-    //         { "data": "region" },
-    //         { "data": "ip" },
-    //         { "data": "ip_location" },
-    //         { "data": "register_dt" },
-    //         { "data": "login_dt" },
-    //         { "data": "concern_city" },
-    //         { "data": "concern_trend" },
-    //         // { "data": "id" }
-    //     ],
-    //     aaSorting: [[4, 'desc']],
-    //     // bProcessing: true,
-    //     // bServerSide: true,
-    //     bPaginate: true,
-    //     // sAjaxSource: '/admin/user/get?name=' + '&phone=' + $('#phone').val() + '&region=' + $('#region').val()+ '&from_register_dt=' + register_dt.startDate.format('YYYY-MM-DD') + '&to_register_dt='
-    //     // + register_dt.endDate.format('YYYY-MM-DD') + '&from_login_dt=' + login_dt.startDate.format('YYYY-MM-DD') + '&to_login_dt=' + login_dt.endDate.format('YYYY-MM-DD'),
-    //     dom: 'rtip',
-    //     displayLength: 25,
-    //     language: {
-    //         url: "../static/plugins/datatables-plugins/i18n/Chinese.lang"
-    //     },
-    //     destroy: true,
-    // });
-    user_table = $('#tbluser').DataTable();
+    user_table = $('#tbluser').DataTable({
+        columnDefs: [
+            // {
+            //     targets: 9,
+            //     render: function (data, type, full, meta) {
+            //         return '<div class="text-center"><button class="btn btn-info" type="button" onclick="open_detail_page('+data+')">查看</button>' +
+            //             '<button class="btn btn-danger" type="button" onclick="delete_user('+data+', this)">删除</button></div>';
+            //     }
+            // }
+        ],
+        columns: [
+            { "data": "name" },
+            { "data": "email" },
+            { "data": "country" },
+            { "data": "state" },
+            { "data": "status" },
+            { "data": "regdate" },
+            { "data": "id" }
+        ],
+        aaSorting: [[5, 'desc']],
+        bProcessing: true,
+        bServerSide: true,
+        bPaginate: true,
+        sAjaxSource: '/admin/getusers/?name=' + $('#name').val() + '&email=' + $('#email').val() + '&country=' + $('#country').val() + '&state=' + $('#state').val() +
+        '&from_register_dt=' + register_dt.startDate.format('YYYY-MM-DD') + '&to_register_dt=' + register_dt.endDate.format('YYYY-MM-DD'),
+        dom: 'rtip',
+        displayLength: 25,
+        destroy: true,
+    });
 };
 
 var open_detail_page = function (id) {
@@ -139,11 +120,12 @@ var exportUsers = function () {
 
 $(function () {
 
+    $(".select2").select2();
+
     register_dt = $('#register-dt').data('daterangepicker');
     login_dt = $('#login-dt').data('daterangepicker');
 
-    register_dt.setStartDate('2017/01/01');
-    login_dt.setStartDate('2017/01/01');
+    register_dt.setStartDate('2018/01/01');
 
     initTable();
 

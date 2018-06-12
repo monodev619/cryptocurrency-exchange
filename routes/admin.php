@@ -32,5 +32,6 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('market/delete', 'Admin\AdminController@deleteMarket')->name('admin.market.delete');
 
         Route::get('users', 'Admin\UserController@index')->name('admin.users');
+        Route::get('getusers', 'Admin\UserController@getUsers')->name('admin.users.get');
     });
 });

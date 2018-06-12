@@ -25,25 +25,30 @@
                                         {{--<h5 class="box-title m-t-10">呢称</h5>--}}
                                         {{--<input type="text" class="form-control" id="name" name="name">--}}
                                         {{--</div>--}}
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <h5 class="box-title m-t-10">Name</h5>
                                             <input type="text" class="form-control" id="name" name="name">
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <h5 class="box-title m-t-10">Email</h5>
                                             <input type="text" class="form-control" id="email" name="email">
                                         </div>
                                         <div class="col-md-3">
-                                            <h5 class="box-title m-t-10">注册日期</h5>
-                                            <input class="form-control input-daterange-datepicker" type="text" id="register-dt" name="daterange" value=""/>
+                                            <h5 class="box-title m-t-10">Country</h5>
+                                            <select id="country" name="country"  class="select2 form-control custom-select" style="width: 100%; height:36px;">
+                                                <option value="0">Select country</option>
+                                                {{--@foreach($currencies as $currency)--}}
+                                                    {{--<option value="{{ $currency->id }}">{{ $currency->name.' ('.$currency->symbol.')'}}</option>--}}
+                                                {{--@endforeach--}}
+                                            </select>
                                         </div>
                                         <div class="col-md-3">
-                                            <h5 class="box-title m-t-10">登录日期</h5>
-                                            <input class="form-control input-daterange-datepicker" type="text" id="login-dt" name="daterange" value=""/>
+                                            <h5 class="box-title m-t-10">Reg Date</h5>
+                                            <input class="form-control input-daterange-datepicker" type="text" id="register-dt" name="daterange" value=""/>
                                         </div>
                                         <div class="col-md-1">
-                                            <h5 class="box-title m-t-10">操作</h5>
-                                            <button type="button" class="btn btn-block btn-success" onclick="initTable()">搜索</button>
+                                            <h5 class="box-title m-t-10">Search</h5>
+                                            <button type="button" class="btn btn-block btn-info" onclick="initTable()">Search</button>
                                         </div>
                                     </div>
                                 </div>
@@ -53,7 +58,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-2">
-                                <a id="export-excel" href="javascript:void(0)" onclick="exportUsers()" class="btn btn-block btn-info">导出</a>
+                                <a id="export-excel" href="javascript:void(0)" onclick="exportUsers()" class="btn btn-block btn-success">Excel</a>
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -68,7 +73,7 @@
                                     <th>State</th>
                                     <th>Status</th>
                                     <th>Reg Date</th>
-                                    {{--<th class="text-center">操作</th>--}}
+                                    <th class="text-center">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -87,5 +92,6 @@
     <script src="{{ asset('static/plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('static/plugins/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('static/plugins/sweetalert/jquery.sweet-alert.custom.js') }}"></script>
+    <script src="{{ asset('static/plugins/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('static/pages/user.js') }}"></script>
 @endsection
