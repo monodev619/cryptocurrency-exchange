@@ -179,7 +179,7 @@
                             <div class="form-group">
                                 <h5>Symbol : <span class="text-danger">*</span> </h5>
                                 <select id="currency" name="currency"  class="select2 form-control custom-select" style="width: 100%; height:36px;">
-                                <option value="0">Select currency</option>
+                                    <option value="0">Select currency</option>
                                 @foreach($currencies as $currency)
                                     <option value="{{ $currency->id }}">{{ $currency->name.' ('.$currency->symbol.')'}}</option>
                                 @endforeach

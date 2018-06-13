@@ -45,10 +45,9 @@ class MarketController extends BaseController
         ]);
     }
 
-    public function getMarketInfo($id) {
+    public function getMarketInfo($name) {
 
-        $market = Market::find($id);
-        print_r($market);
+        $market = Market::where('name', $name)->first();
 
         if ($market->count()) {
             return success([
@@ -57,14 +56,14 @@ class MarketController extends BaseController
                 'currency' => $market->currency->name,
                 'symbol' => $market->currency->symbol,
                 'rate' => $market->rate,
-                'change' => $market->change,
-                'last_price' => $market->last,
-                'bid' => $market->bid,
-                'ask' => $market->ask,
-                'volume' => $market->volume,
-                'high_24h' => $market->high_24h,
-                'low_24h' => $market->low_24h,
-                'minimum' => $market->minimum
+                'change' => number_format((float)$market->change, 2, '.', ''),
+                'last_price' => number_format((float)$market->last, 8, '.', ''),
+                'bid' => number_format((float)$market->bid, 8, '.', ''),
+                'ask' => number_format((float)$market->ask, 8, '.', ''),
+                'volume' => number_format((float)$market->volume, 2, '.', ''),
+                'high_24h' => number_format((float)$market->high_24h, 8, '.', ''),
+                'low_24h' => number_format((float)$market->low_24h, 8, '.', ''),
+                'minimum' => number_format((float)$market->minimum, 8, '.', ''),
             ]);
         } else {
             return error('This market is not exist', PARAMS_ILLEGAL);

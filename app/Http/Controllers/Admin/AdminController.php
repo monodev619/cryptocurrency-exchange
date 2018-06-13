@@ -53,10 +53,16 @@ class AdminController extends Controller
             'name' => $request->get('name'),
             'symbol' => $request->get('symbol'),
             'info' => $request->get('info'),
-            'logo' => image_url($filename)
+            'logo' => $filename
         ]);
 
-        return success($currency);
+        return success([
+            'id' => $currency->id,
+            'name' => $currency->name,
+            'symbol' => $currency->symbol,
+            'info' => $currency->info,
+            'logo' => image_url($filename)
+        ]);
     }
 
     public function updateCurrency(Request $request) {
