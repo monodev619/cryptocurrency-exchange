@@ -3,8 +3,15 @@
         <aside class="left-sidebar">
             <div class="scroll-sidebar">
                 <h4 class="card-title m-t-10">MARKETS</h4>
-                <div class="table-responsive marketinfo">
-                    <table id="tblemarket" class="table marketinfo table-bordered table-striped">
+                <div>
+                    <!--<select id="type" name="type" required class="selectpicker m-r-10" v-model="selected" v-on:change="changeMarket" data-style="btn-info btn-outline-info">-->
+                    <select id="market-type" name="market-type" required class="selectpicker m-r-10" v-model="market_type" @change="changeMarket" data-style="btn-info btn-outline-info">
+                        <option value="btc">BTC Market</option>
+                        <option value="eth">ETH Market</option>
+                    </select>
+                </div>
+                <div id="btc-markets" class="table-responsive marketinfo">
+                    <table id="tblbtcmarket" class="table marketinfo table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>DATE</th>
@@ -12,10 +19,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-on:click="gotoMarket(left_market.name)" v-for="left_market in left_markets">
-                            <td>{{left_market.name}}</td>
-                            <td class="text-danger">0.0000002995</td>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="eth-markets" class="table-responsive marketinfo">
+                    <table id="tblethmarket" class="table marketinfo table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>DATE</th>
+                            <th>BUY/SELL</th>
                         </tr>
+                        </thead>
+                        <tbody>
                         </tbody>
                     </table>
                 </div>
@@ -24,10 +39,10 @@
         <div class="page-wrapper main-content tradingwindow">
             <div class="top-info row">
                 <div class="col-md-2 col-lg-2 col-sm-12">
-                    <div class="image"><img v-bind:src="currency ? currency.logo : ''" width="60" height="60"></div>
+                    <div class="image"><img v-bind:src="market_info ? market_info.logo : ''" width="60" height="60"></div>
                     <div class="imageinfo">
-                        <span class="coinname">{{currentMarketInfo ? currentMarketInfo['name'] : ''}}</span><br>
-                        <span class="marketname">{{currency ? currency['name'] : ''}}</span>
+                        <span class="coinname">{{ market_info ? market_info.currency : '' }}</span><br>
+                        <span class="marketname">{{ market_info ? market_info.name : '' }}</span>
                         <span class="marketname"></span>
                     </div>
                 </div>
@@ -35,11 +50,11 @@
                     <div class="current-info last">
                         <div class="last-usd">
                             <i class="fa fa-usd"></i>
-                            <span class="last-usd-value">{{currentMarketInfo ? currentMarketInfo['last_price'] : 0}}</span>
+                            <span class="last-usd-value">{{ market_info ? market_info.last_price : 0 }}</span>
                         </div><br>
                         <div class="last-bitcoin">
                             <i class="fa fa-bitcoin"></i>
-                            <span class="last-usd-value color-red">{{currentMarketInfo ? currentMarketInfo['last_price'] : 0}}</span>
+                            <span class="last-usd-value color-red">{{market_info ? market_info.last_price : 0 }}</span>
                         </div><br>
                         <div class="last-name">
                             LAST
@@ -48,11 +63,11 @@
                     <div class="current-info bid">
                         <div class="last-usd">
                             <i class="fa fa-usd"></i>
-                            <span class="last-usd-value">{{currentMarketInfo ? currentMarketInfo['bid'] : 0}}</span>
+                            <span class="last-usd-value">{{ market_info ? market_info.bid : 0 }}</span>
                         </div><br>
                         <div class="last-bitcoin">
                             <i class="fa fa-bitcoin"></i>
-                            <span class="last-usd-value color-green">{{currentMarketInfo ? currentMarketInfo['bid'] : 0}}</span>
+                            <span class="last-usd-value color-green">{{ market_info ? market_info.bid : 0 }}</span>
                         </div><br>
                         <div class="last-name">
                             BID
@@ -61,11 +76,11 @@
                     <div class="current-info ask">
                         <div class="last-usd">
                             <i class="fa fa-usd"></i>
-                            <span class="last-usd-value">{{currentMarketInfo ? currentMarketInfo['ask'] : 0}}</span>
+                            <span class="last-usd-value">{{ market_info ? market_info.ask : 0 }}</span>
                         </div><br>
                         <div class="last-bitcoin">
                             <i class="fa fa-bitcoin"></i>
-                            <span class="last-usd-value color-red">{{currentMarketInfo ? currentMarketInfo['ask'] : 0}}</span>
+                            <span class="last-usd-value color-red">{{ market_info ? market_info.ask : 0 }}</span>
                         </div><br>
                         <div class="last-name">
                             ASK
@@ -74,11 +89,11 @@
                     <div class=" current-info volume">
                         <div class="last-usd">
                             <i class="fa fa-usd"></i>
-                            <span class="last-usd-value">{{currentMarketInfo ? currentMarketInfo['volume'] : 0}}</span>
+                            <span class="last-usd-value">{{ market_info ? market_info.volume : 0 }}</span>
                         </div><br>
                         <div class="last-bitcoin">
                             <i class="fa fa-bitcoin"></i>
-                            <span class="last-usd-value color-green">{{currentMarketInfo ? currentMarketInfo['volume'] : 0}}</span>
+                            <span class="last-usd-value color-green">{{ market_info ? market_info.volume : 0 }}</span>
                         </div><br>
                         <div class="last-name">
                             VOLUME
@@ -87,11 +102,11 @@
                     <div class="current-info hhigh">
                         <div class="last-usd">
                             <i class="fa fa-usd"></i>
-                            <span class="last-usd-value">{{currentMarketInfo ? currentMarketInfo['high_24h'] : 0}}</span>
+                            <span class="last-usd-value">{{ market_info ? market_info.high_24h : 0 }}</span>
                         </div><br>
                         <div class="last-bitcoin">
                             <i class="fa fa-bitcoin"></i>
-                            <span class="last-usd-value color-red">{{currentMarketInfo ? currentMarketInfo['high_24h'] : 0}}</span>
+                            <span class="last-usd-value color-red">{{ market_info ? market_info.high_24h : 0 }}</span>
                         </div><br>
                         <div class="last-name">
                             24H HIGH
@@ -100,11 +115,11 @@
                     <div class="current-info hlow">
                         <div class="last-usd">
                             <i class="fa fa-usd"></i>
-                            <span class="last-usd-value">{{currentMarketInfo ? currentMarketInfo['low_24h'] : 0}}</span>
+                            <span class="last-usd-value">{{ market_info ? market_info.low_24h : 0 }}</span>
                         </div><br>
                         <div class="last-bitcoin">
                             <i class="fa fa-bitcoin"></i>
-                            <span class="last-usd-value color-red">{{currentMarketInfo ? currentMarketInfo['low_24h'] : 0}}</span>
+                            <span class="last-usd-value color-red">{{ market_info ? market_info.low_24h : 0 }}</span>
                         </div><br>
                         <div class="last-name">
                             24H LOW
@@ -828,19 +843,23 @@
 
 <script>
     import '~/plugins/datatables/jquery.dataTables.min';
+    import '~/plugins/bootstrap-select/bootstrap-select.min';
+    import '~/plugins/bootstrap-select/bootstrap-select.min.css';
     import BootstrapVue from 'bootstrap-vue';
     import { mapGetters } from 'vuex';
     import axios from 'axios';
     import * as urls from '../../constants/url-constants';
     Vue.use(BootstrapVue);
+
     export default {
         name: "trading",
         middleware: 'auth',
         data: () => ({
-            market_table: null,
+            btc_market_table: null,
+            eth_market_table: null,
+            market_info: null,
             change_collpase1:true,
             change_collpase2:true,
-            url: '',
             marketName: '',
             marketSymbolName: '',
             marketCurrencyName: '',
@@ -849,17 +868,19 @@
             currencies: null,
             imagelink: null,
             leftMarketList: null,
-            currentMarketInfo: null,
+            market_type: 'btc'
         }),
         created() {
-            this.marketName = this.$route.query.MarketName;
-            this.marketSymbolName = this.marketName.split('-')[0];
-            this.marketCurrencyName = this.marketName.split('-')[1];
+
         },
         mounted() {
-            this.market_table = $('#tblemarket').DataTable();
+            $('.selectpicker').selectpicker();
+
+            this.btc_market_table = $('#tblbtcmarket').DataTable();
+            this.eth_market_table = $('#tblethmarket').DataTable();
+            $('#eth-markets').hide();
+
             this.fetchMarket();
-            this.fetchCurrency();
             this.fetchMarkets();
         },
         updated() {
@@ -869,67 +890,73 @@
             $('#tblopenorders').DataTable();
             $('#tblorderhistory').DataTable();
         },
+        watch: {
+            $route (to, from) {
+                this.fetchMarket();
+            }
+        },
         methods: {
-            async fetchCurrency () {
-                const { data } = await axios.get(urls.API_BASE_URL + '/_api/currency/' + this.marketCurrencyName);
-                this.currency = data.data;
-            },
             async fetchMarkets () {
                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/markets');
-                this.leftMarketList = data.data[(this.marketSymbolName).toLowerCase()];
-                await this.$store.dispatch('market/getLeftMarkets', {markets: this.leftMarketList});
+                await this.$store.dispatch('market/getMarkets', {markets: data.data});
+
                 let vm = this;
-                vm.market_table.clear();
-                this.leftMarketList.forEach(function (market) {
-                    vm.market_table.row.add([
+                vm.btc_market_table.clear();
+                this.$store.getters['market/btc_markets'].forEach(function (market) {
+                    vm.btc_market_table.row.add([
                         market.name,
                         0.0002542
                     ]).draw(false);
                 });
 
-                vm.market_table.on('click', 'tr', function () {
-                    vm.gotoMarket(vm.market_table.row(this).data()[0]);
+                vm.btc_market_table.on('click', 'tr', function () {
+                    vm.gotoMarket(vm.btc_market_table.row(this).data()[0]);
+                })
+
+                vm.eth_market_table.clear();
+                this.$store.getters['market/eth_markets'].forEach(function (market) {
+                    vm.eth_market_table.row.add([
+                        market.name,
+                        0.0002542
+                    ]).draw(false);
+                });
+
+                vm.eth_market_table.on('click', 'tr', function () {
+                    vm.gotoMarket(vm.eth_market_table.row(this).data()[0]);
                 })
             },
             async fetchMarket () {
-                const { data } = await axios.get(urls.API_BASE_URL + '/_api/market' + '/' + this.marketName);
-                this.currentMarketInfo = data.data;
+                console.log(this.$route.query)
+                const { data } = await axios.get(urls.API_BASE_URL + '/_api/market' + '/' + this.$route.query.MarketName);
+                this.market_info = data.data;
             },
             gotoMarket (param) {
-                this.marketName = '';
-                this.marketSymbolName = '';
-                this.marketCurrencyName = '';
                 this.$router.push({ name: 'trading', query: {MarketName: param}});
-                this.marketName = param;
-                console.log(this.marketName);
-                this.marketSymbolName = param.split('-')[0];
-                this.marketCurrencyName = param.split('-')[1];
-                this.fetchCurrency();
-                this.fetchMarkets();
-                this.fetchMarket();
-                $('#tblselllist').dataTable();
-                $('#tblbuylist').dataTable();
-                $('#tblemarket').dataTable();
-                $('#tblemarkethistory').dataTable();
-                $('#tblopenorders').dataTable();
-                $('#tblorderhistory').dataTable();
             },
-            showSellModal() {
+            showSellModal () {
                 $('#sell-modal').modal();
             },
-            showBuyModal() {
+            showBuyModal () {
                 $('#buy-modal').modal();
             },
-            showWithdraw() {
+            showWithdraw () {
                 $('#withdraw-modal').modal();
             },
-            showDeposit() {
+            showDeposit () {
                 $('#deposit-modal').modal();
+            },
+            changeMarket () {
+                if (this.market_type == 'btc') {
+                    $('#btc-markets').show();
+                    $('#eth-markets').hide();
+                } else {
+                    $('#btc-markets').hide();
+                    $('#eth-markets').show();
+                }
             }
         },
         computed: mapGetters ({
-            user: 'auth/user',
-            left_markets: 'market/left_markets',
+            user: 'auth/user'
         })
     }
 </script>

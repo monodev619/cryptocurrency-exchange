@@ -51,10 +51,12 @@ class MarketController extends BaseController
 
         if ($market->count()) {
             return success([
+                'id' => $market->id,
                 'name' => $market->name,
                 'type' => $market->market_type,
                 'currency' => $market->currency->name,
                 'symbol' => $market->currency->symbol,
+                'logo' => image_url($market->currency->logo),
                 'rate' => $market->rate,
                 'change' => number_format((float)$market->change, 2, '.', ''),
                 'last_price' => number_format((float)$market->last, 8, '.', ''),

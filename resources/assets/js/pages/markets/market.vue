@@ -22,7 +22,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-on:click="gotoMarket(btc_market.name)" v-for="btc_market in btc_markets">
+                                <tr v-on:click="gotoMarket(btc_market)" v-for="btc_market in btc_markets">
                                     <td>{{ btc_market.name }}</td>
                                     <td>{{ btc_market.currency }}</td>
                                     <td>0.00000000</td>
@@ -63,7 +63,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-on:click="gotoMarket(eth_market.name)" v-for="eth_market in eth_markets">
+                                <tr v-on:click="gotoMarket(eth_market)" v-for="eth_market in eth_markets">
                                     <td>{{ eth_market.name }}</td>
                                     <td>{{ eth_market.currency }}</td>
                                     <td>0.00000000</td>
@@ -103,8 +103,8 @@
                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/markets');
                 await this.$store.dispatch('market/getMarkets', {markets: data.data});
             },
-            gotoMarket (param1) {
-                this.$router.push({ name: 'trading', query: {MarketName: param1}});
+            gotoMarket (param) {
+                this.$router.push({ name: 'trading', query: {MarketName: param.name}, params: {id: param.id}});
             }
         },
         beforeMount() {

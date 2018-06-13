@@ -146,6 +146,7 @@
            'type' => Market Type,
            'currency' => Currency Name,
            'symbol' => Currency Symbol,
+           'logo' => Currency Logo,
            'rate' => Rate,
            'change' => Change rate,
            'last_price' => last price,

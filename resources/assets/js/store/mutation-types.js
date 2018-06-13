@@ -18,4 +18,3 @@ export  const GET_CURRENCIES = 'GET_CURRENCIES';
 
 //market.js
 export  const GET_MARKETS = 'GET_MARKETS';
-export  const GET_LEFTMARKETS = 'GET_LEFTMARKETS';
