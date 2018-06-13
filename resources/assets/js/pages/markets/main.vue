@@ -12,10 +12,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr v-on:click="gotoMarket(left_market.name)" v-for="left_market in left_markets">
-                                <td>{{left_market.name}}</td>
-                                <td class="text-danger">0.0000002995</td>
-                            </tr>
+                        <tr v-on:click="gotoMarket(left_market.name)" v-for="left_market in left_markets">
+                            <td>{{left_market.name}}</td>
+                            <td class="text-danger">0.0000002995</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -24,10 +24,10 @@
         <div class="page-wrapper main-content tradingwindow">
             <div class="top-info row">
                 <div class="col-md-2 col-lg-2 col-sm-12">
-                    <div class="image"><img v-bind:src="this.imagelink" width="60" height="60"></div>
+                    <div class="image"><img v-bind:src="currency ? currency.logo : ''" width="60" height="60"></div>
                     <div class="imageinfo">
-                        <span class="coinname">{{this.marketName}}</span><br>
-                        <span class="marketname">{{this.currencyName}}</span>
+                        <span class="coinname">{{currentMarketInfo ? currentMarketInfo['name'] : ''}}</span><br>
+                        <span class="marketname">{{currency ? currency['name'] : ''}}</span>
                         <span class="marketname"></span>
                     </div>
                 </div>
@@ -35,11 +35,11 @@
                     <div class="current-info last">
                         <div class="last-usd">
                             <i class="fa fa-usd"></i>
-                            <span class="last-usd-value">0.06</span>
+                            <span class="last-usd-value">{{currentMarketInfo ? currentMarketInfo['last_price'] : 0}}</span>
                         </div><br>
                         <div class="last-bitcoin">
                             <i class="fa fa-bitcoin"></i>
-                            <span class="last-usd-value color-red">0.000000799</span>
+                            <span class="last-usd-value color-red">{{currentMarketInfo ? currentMarketInfo['last_price'] : 0}}</span>
                         </div><br>
                         <div class="last-name">
                             LAST
@@ -48,11 +48,11 @@
                     <div class="current-info bid">
                         <div class="last-usd">
                             <i class="fa fa-usd"></i>
-                            <span class="last-usd-value">0.06</span>
+                            <span class="last-usd-value">{{currentMarketInfo ? currentMarketInfo['bid'] : 0}}</span>
                         </div><br>
                         <div class="last-bitcoin">
                             <i class="fa fa-bitcoin"></i>
-                            <span class="last-usd-value color-green">0.000000799</span>
+                            <span class="last-usd-value color-green">{{currentMarketInfo ? currentMarketInfo['bid'] : 0}}</span>
                         </div><br>
                         <div class="last-name">
                             BID
@@ -61,11 +61,11 @@
                     <div class="current-info ask">
                         <div class="last-usd">
                             <i class="fa fa-usd"></i>
-                            <span class="last-usd-value">0.06</span>
+                            <span class="last-usd-value">{{currentMarketInfo ? currentMarketInfo['ask'] : 0}}</span>
                         </div><br>
                         <div class="last-bitcoin">
                             <i class="fa fa-bitcoin"></i>
-                            <span class="last-usd-value color-red">0.000000799</span>
+                            <span class="last-usd-value color-red">{{currentMarketInfo ? currentMarketInfo['ask'] : 0}}</span>
                         </div><br>
                         <div class="last-name">
                             ASK
@@ -74,11 +74,11 @@
                     <div class=" current-info volume">
                         <div class="last-usd">
                             <i class="fa fa-usd"></i>
-                            <span class="last-usd-value">0.06</span>
+                            <span class="last-usd-value">{{currentMarketInfo ? currentMarketInfo['volume'] : 0}}</span>
                         </div><br>
                         <div class="last-bitcoin">
                             <i class="fa fa-bitcoin"></i>
-                            <span class="last-usd-value color-green">0.000000799</span>
+                            <span class="last-usd-value color-green">{{currentMarketInfo ? currentMarketInfo['volume'] : 0}}</span>
                         </div><br>
                         <div class="last-name">
                             VOLUME
@@ -87,11 +87,11 @@
                     <div class="current-info hhigh">
                         <div class="last-usd">
                             <i class="fa fa-usd"></i>
-                            <span class="last-usd-value">0.06</span>
+                            <span class="last-usd-value">{{currentMarketInfo ? currentMarketInfo['high_24h'] : 0}}</span>
                         </div><br>
                         <div class="last-bitcoin">
                             <i class="fa fa-bitcoin"></i>
-                            <span class="last-usd-value color-red">0.000000799</span>
+                            <span class="last-usd-value color-red">{{currentMarketInfo ? currentMarketInfo['high_24h'] : 0}}</span>
                         </div><br>
                         <div class="last-name">
                             24H HIGH
@@ -100,11 +100,11 @@
                     <div class="current-info hlow">
                         <div class="last-usd">
                             <i class="fa fa-usd"></i>
-                            <span class="last-usd-value">0.06</span>
+                            <span class="last-usd-value">{{currentMarketInfo ? currentMarketInfo['low_24h'] : 0}}</span>
                         </div><br>
                         <div class="last-bitcoin">
                             <i class="fa fa-bitcoin"></i>
-                            <span class="last-usd-value color-red">0.000000799</span>
+                            <span class="last-usd-value color-red">{{currentMarketInfo ? currentMarketInfo['low_24h'] : 0}}</span>
                         </div><br>
                         <div class="last-name">
                             24H LOW
@@ -112,86 +112,106 @@
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-2 btndepwith" v-if="user">
-                    <b-btn class="btn waves-effect waves-light btn-danger btnwithdraw" type="button" data-toggle="modal" data-target="#depositModal" v-b-modal.depositModal v-b-tooltip.hover title="Withdraw">Withdraw</b-btn>
-                    <b-btn class="btn waves-effect waves-light btn-success btndeposit" type="button" data-toggle="modal" data-target="#withdrawModal" v-b-modal.withdrawModal v-b-tooltip.hover title="Deposit">Deposit</b-btn>
-                    <b-modal id="depositModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" title="Deposit" ok-title="Done" ok-variant="danger" cancel-variant="primary">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <div class="currency">
-                                    <div class="col-xs-6">Currency</div>
+                    <b-btn class="btn waves-effect waves-light btn-danger btnwithdraw" type="button"  v-b-tooltip.hover title="Withdraw" @click="showWithdraw">Withdraw</b-btn>
+                    <b-btn class="btn waves-effect waves-light btn-success btndeposit" type="button"  v-b-tooltip.hover title="Deposit" @click="showDeposit">Deposit</b-btn>
+                    <div id="withdraw-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Withdrawal</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 </div>
-                                <div class="current-currency">
-                                    <div class="current-header row">
-                                        <div class="col-sm-6"><span class="label-name">NAME</span></div>
-                                        <div class="col-sm-6"><span class="symbol">SYMBOL</span> </div>
-                                    </div>
-                                    <div><hr></div>
-                                    <div class="current-body row">
-                                        <div class="col-sm-6"><span class="coinname">Bitcoin</span></div>
-                                        <div class="col-sm-6"><span class="symbolname">BTC</span></div>
-                                    </div>
-                                </div>
-                                <div class="disclaimer">
-                                    <div class="disc-title">DISCLAIMER</div>
-                                    <p class="disc-content">I acknowledge the following information:<br>
-                                        By depositing tokens to this address, you agree to our <a href="https://bittrex.zendesk.com/hc/en-us/articles/115000961172" target="_blank">deposit recovery policy</a>.
-                                        Depositing tokens to an address other than BTC may result in your funds being lost.
-                                    </p>
-                                </div>
-                                <div class="address">
-                                    <span class="addr-title">Address</span><br>
-                                    <input type="text" class="addr-input" id="addr" placeholder="Error generating address">
-                                    <button class="addr-button">New Address</button>
-                                </div>
-                                <div class="de-instruct">
-                                    <h2 class="title">DEPOSIT INSTRUCTIONS</h2>
-                                    <p class="instruct-content">Depositing tokens to this address other than BTC will result in your funds being lost.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </b-modal>
-                    <b-modal id="withdrawModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" title="Withdraw" ok-title="Withdraw BTC" ok-variant="danger" cancel-variant="primary">
 
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <div class="currency">
-                                    <div class="col-xs-6">Currency</div>
-                                </div>
-                                <div class="current-currency withdraw">
-                                    <div class="current-header row">
-                                        <div class="col-sm-4"><span class="label-name">NAME</span></div>
-                                        <div class="col-sm-4"><span class="symbol">SYMBOL</span> </div>
-                                        <div class="col-sm-4"><span class="balance">AVAILABLE BALANCE</span></div>
+                                <div class="modal-body">
+                                    <div class="currency">
+                                        <div class="col-xs-6">Currency</div>
                                     </div>
-                                    <div><hr></div>
-                                    <div class="current-body row">
-                                        <div class="col-sm-4"><span class="coinname">Bitcoin</span></div>
-                                        <div class="col-sm-4"><span class="symbolname">BTC</span></div>
-                                        <div class="col-sm-4"><span class="balancevalue">0</span></div>
+                                    <div class="current-currency withdraw">
+                                        <div class="current-header row">
+                                            <div class="col-sm-4"><span class="label-name">NAME</span></div>
+                                            <div class="col-sm-4"><span class="symbol">SYMBOL</span> </div>
+                                            <div class="col-sm-4"><span class="balance">AVAILABLE BALANCE</span></div>
+                                        </div>
+                                        <div><hr></div>
+                                        <div class="current-body row">
+                                            <div class="col-sm-4"><span class="coinname">{{currency ? currency['name'] : ''}}</span></div>
+                                            <div class="col-sm-4"><span class="symbolname">{{currency ? currency['symbol'] : ''}}</span></div>
+                                            <div class="col-sm-4"><span class="balancevalue">0</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="withdrawamount row">
+                                        <h2 class="col-sm-12 withdraw-title">Withdrawal amount</h2>
+                                        <div class="col-sm-6">QUANTITY</div>
+                                        <div class="col-sm-6"><input type="text" class="quantityvalue" v-bind:value="0"><span class="cointype">{{currency ? currency['symbol'] : ''}}</span></div>
+                                        <div class="col-sm-6">TRANSACTION FEE</div>
+                                        <div class="col-sm-6"><span class="feevalue">0.00050000 &nbsp;{{currency ? currency['symbol'] : ''}}</span></div>
+                                        <div class="col-sm-6">TOTAL WITHDRAWAL</div>
+                                        <div class="col-sm-6"><span class="totalvalue">-0.00050000 &nbsp;{{currency ? currency['symbol'] : ''}}</span></div>
+                                    </div>
+                                    <div class="address withdraw">
+                                        <span class="addr-title">Address</span><br>
+                                        <input type="text" class="withdraw-addr-input" id="addr" placeholder="Error generating address">
+                                    </div>
+                                    <div class="de-instruct withdraw">
+                                        <h2 class="title">DISCLAIMER</h2>
+                                        <p class="instruct-content">Please verify your withdrawal address. We cannot refund an incorrect withdrawal.</p>
+                                        <p>DO NOT WITHDRAW DIRECTLY TO A CROWDFUND OR ICO.</p>
+                                        <p class="instruct-content">We will not credit your account with tokens from that sale.</p>
                                     </div>
                                 </div>
-                                <div class="withdrawamount row">
-                                    <h2 class="col-sm-12 withdraw-title">Withdrawal amount</h2>
-                                    <div class="col-sm-6">QUANTITY</div>
-                                    <div class="col-sm-6"><input type="text" class="quantityvalue" v-bind:value="0"><span class="cointype">BTC</span></div>
-                                    <div class="col-sm-6">TRANSACTION FEE</div>
-                                    <div class="col-sm-6"><span class="feevalue">0.00050000 &nbsp;BTC</span></div>
-                                    <div class="col-sm-6">TOTAL WITHDRAWAL</div>
-                                    <div class="col-sm-6"><span class="totalvalue">-0.00050000 &nbsp;BTC</span></div>
-                                </div>
-                                <div class="address withdraw">
-                                    <span class="addr-title">Address</span><br>
-                                    <input type="text" class="withdraw-addr-input" id="addr" placeholder="Error generating address">
-                                </div>
-                                <div class="de-instruct withdraw">
-                                    <h2 class="title">DISCLAIMER</h2>
-                                    <p class="instruct-content">Please verify your withdrawal address. We cannot refund an incorrect withdrawal.</p>
-                                    <p>DO NOT WITHDRAW DIRECTLY TO A CROWDFUND OR ICO.</p>
-                                    <p class="instruct-content">We will not credit your account with tokens from that sale.</p>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default waves-effect cancel" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-danger waves-effect waves-light">{{currency ? currency['symbol'] : ''}}&nbsp; Withdraw</button>
                                 </div>
                             </div>
                         </div>
-                    </b-modal>
+                    </div>
+                    <div id="deposit-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Deposit</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="currency">
+                                        <div class="col-xs-6">Currency</div>
+                                    </div>
+                                    <div class="current-currency">
+                                        <div class="current-header row">
+                                            <div class="col-sm-6"><span class="label-name">NAME</span></div>
+                                            <div class="col-sm-6"><span class="symbol">SYMBOL</span> </div>
+                                        </div>
+                                        <div><hr></div>
+                                        <div class="current-body row">
+                                            <div class="col-sm-6"><span class="coinname">Bitcoin</span></div>
+                                            <div class="col-sm-6"><span class="symbolname">BTC</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="disclaimer">
+                                        <div class="disc-title">DISCLAIMER</div>
+                                        <p class="disc-content">I acknowledge the following information:<br>
+                                            By depositing tokens to this address, you agree to our <a href="https://bittrex.zendesk.com/hc/en-us/articles/115000961172" target="_blank">deposit recovery policy</a>.
+                                            Depositing tokens to an address other than BTC may result in your funds being lost.
+                                        </p>
+                                    </div>
+                                    <div class="address">
+                                        <span class="addr-title">Address</span><br>
+                                        <input type="text" class="addr-input" id="addr" placeholder="Error generating address">
+                                        <button class="addr-button">New Address</button>
+                                    </div>
+                                    <div class="de-instruct">
+                                        <h2 class="title">DEPOSIT INSTRUCTIONS</h2>
+                                        <p class="instruct-content">Depositing tokens to this address other than BTC will result in your funds being lost.</p>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-danger waves-effect waves-light">Done</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card">
@@ -206,209 +226,236 @@
                 <div class="row common-table-container">
                     <div class="col-md-12 col-lg-12 col-sm-12">
                         <h4 class="card-title">ORDER BOOK</h4>
-
                     </div>
                     <div class="col-md-4 col-lg-4 col-sm-4 sell-container">
                         <div class="table-responsive selltable">
                             <table id="tblselllist" class="table table-striped buyselltable">
                                 <thead>
-                                    <tr>
-                                        <th>SUM</th>
-                                        <th>TOTAL</th>
-                                        <th>SIZE(ZCL)</th>
-                                        <th>BID(BTC)</th>
-                                        <th class="tradebtn"></th>
-                                    </tr>
+                                <tr>
+                                    <th>SUM</th>
+                                    <th>TOTAL</th>
+                                    <th>SIZE({{marketName ? marketCurrencyName : ''}})</th>
+                                    <th>BID({{marketName ? marketSymbolName : ''}})</th>
+                                    <th class="tradebtn"></th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                        <td class="text-success">0.70794558</td>
-                                        <td class="text-info"><b-btn class="btn-sell text-info" type="button" data-toggle="modal" data-target="#sellModal" v-b-modal.sellModal v-b-tooltip.hover title="SELL">SELL</b-btn></td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                        <td class="text-success">0.70794558</td>
-                                        <td class="text-info">SELL</td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                        <td class="text-success">0.70794558</td>
-                                        <td class="text-info">SELL</td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                        <td class="text-success">0.70794558</td>
-                                        <td class="text-info">SELL</td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                        <td class="text-success">0.70794558</td>
-                                        <td class="text-info">SELL</td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                        <td class="text-success">0.70794558</td>
-                                        <td class="text-info">SELL</td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                        <td class="text-success">0.70794558</td>
-                                        <td class="text-info">SELL</td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                        <td class="text-success">0.70794558</td>
-                                        <td class="text-info">SELL</td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                        <td class="text-success">0.70794558</td>
-                                        <td class="text-info">SELL</td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                        <td class="text-success">0.70794558</td>
-                                        <td class="text-info">SELL</td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                        <td class="text-success">0.70794558</td>
-                                        <td class="text-info">SELL</td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                        <td class="text-success">0.70794558</td>
-                                        <td class="text-info">SELL</td>
-                                    </tr>
+                                <tr>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                    <td class="text-success">0.70794558</td>
+                                    <td class="text-info"><b-btn class="btn-sell text-info" type="button"  v-b-tooltip.hover title="SELL" @click="showSellModal">SELL</b-btn></td>
+                                </tr>
+                                <tr>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                    <td class="text-success">0.70794558</td>
+                                    <td class="text-info">SELL</td>
+                                </tr>
+                                <tr>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                    <td class="text-success">0.70794558</td>
+                                    <td class="text-info">SELL</td>
+                                </tr>
+                                <tr>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                    <td class="text-success">0.70794558</td>
+                                    <td class="text-info">SELL</td>
+                                </tr>
+                                <tr>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                    <td class="text-success">0.70794558</td>
+                                    <td class="text-info">SELL</td>
+                                </tr>
+                                <tr>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                    <td class="text-success">0.70794558</td>
+                                    <td class="text-info">SELL</td>
+                                </tr>
+                                <tr>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                    <td class="text-success">0.70794558</td>
+                                    <td class="text-info">SELL</td>
+                                </tr>
+                                <tr>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                    <td class="text-success">0.70794558</td>
+                                    <td class="text-info">SELL</td>
+                                </tr>
+                                <tr>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                    <td class="text-success">0.70794558</td>
+                                    <td class="text-info">SELL</td>
+                                </tr>
+                                <tr>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                    <td class="text-success">0.70794558</td>
+                                    <td class="text-info">SELL</td>
+                                </tr>
+                                <tr>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                    <td class="text-success">0.70794558</td>
+                                    <td class="text-info">SELL</td>
+                                </tr>
+                                <tr>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                    <td class="text-success">0.70794558</td>
+                                    <td class="text-info">SELL</td>
+                                </tr>
                                 </tbody>
                             </table>
-                            <b-modal id="sellModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" modal-title="this.marketname" ok-title="Confirm" ok-variant="primary" cancel-variant="danger">
-                                <div class="modal-content">
-                                    <div class="modal-body">
-                                        <div class="sellmodal current-currency">
-                                            <div class="sellmodal current-header row">
-                                                <div class="sellmodalname col-sm-6"><span class="">QUANTITY</span></div>
-                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{this.marketCurrencyName}}</span></div>
+                            <div id="sell-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">{{marketName}}</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="sellmodal current-currency">
+                                                <div class="sellmodal current-header row">
+                                                    <div class="sellmodalname col-sm-6"><span class="">QUANTITY</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketCurrencyName}}</span></div>
+                                                </div>
+                                                <div><hr></div>
                                             </div>
-                                            <div><hr></div>
-                                        </div>
-                                        <div class="sellmodal current-currency">
-                                            <div class="sellmodal current-header row">
-                                                <div class="sellmodalname col-sm-6"><span class="">PRICE</span></div>
-                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{this.marketSymbolName}}</span></div>
+                                            <div class="sellmodal current-currency">
+                                                <div class="sellmodal current-header row">
+                                                    <div class="sellmodalname col-sm-6"><span class="">PRICE</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketSymbolName}}</span></div>
+                                                </div>
+                                                <div><hr></div>
                                             </div>
-                                            <div><hr></div>
-                                        </div>
-                                        <div class="sellmodal current-currency">
-                                            <div class="sellmodal current-header row">
-                                                <div class="sellmodalname col-sm-6"><span class="">SUBTOTAL</span></div>
-                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{this.marketSymbolName}}</span></div>
+                                            <div class="sellmodal current-currency">
+                                                <div class="sellmodal current-header row">
+                                                    <div class="sellmodalname col-sm-6"><span class="">SUBTOTAL</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketSymbolName}}</span></div>
+                                                </div>
+                                                <div><hr></div>
                                             </div>
-                                            <div><hr></div>
-                                        </div>
-                                        <div class="sellmodal current-currency">
-                                            <div class="sellmodal current-header row">
-                                                <div class="sellmodalname col-sm-6"><span class="">COMMISSION</span></div>
-                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{this.marketSymbolName}}</span></div>
+                                            <div class="sellmodal current-currency">
+                                                <div class="sellmodal current-header row">
+                                                    <div class="sellmodalname col-sm-6"><span class="">COMMISSION</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketSymbolName}}</span></div>
+                                                </div>
+                                                <div><hr></div>
                                             </div>
-                                            <div><hr></div>
-                                        </div>
-                                        <div class="sellmodal current-currency ">
-                                            <div class="sellmodal current-header row total">
-                                                <div class="sellmodalname col-sm-6"><span class="">TOTAL</span></div>
-                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{this.marketSymbolName}}</span></div>
+                                            <div class="sellmodal current-currency ">
+                                                <div class="sellmodal current-header row total">
+                                                    <div class="sellmodalname col-sm-6"><span class="">TOTAL</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketSymbolName}}</span></div>
+                                                </div>
+                                                <div><hr></div>
                                             </div>
-                                            <div><hr></div>
+                                            <div class="sellmodal comment current-header row">
+                                                <div class="col-sm-3"><span class="label-name">MARKET</span>&nbsp;:&nbsp;<span class="label-content">{{marketName}}</span></div>
+                                                <div class="col-sm-3"><span class="label-type">TYPE</span>&nbsp;:&nbsp;<span class="label-content">Limit Sell</span></div>
+                                                <div class="col-sm-6"><span class="label-time">TIME IN FORCE</span>&nbsp;:&nbsp;<span class="label-content">Immediate or Cancel</span> </div>
+                                            </div>
+                                            <div class="sellmodal disclaimer">
+                                                <div class="disc-title">DISCLAIMER</div>
+                                                <p class="disc-content">Please verify this order before confirming. All orders are final once submitted and we will be unable to issue you a refund.
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="sellmodal comment current-header row">
-                                            <div class="col-sm-3"><span class="label-name">MARKET</span>&nbsp;:&nbsp;<span class="label-content">{{this.marketName}}</span></div>
-                                            <div class="col-sm-3"><span class="label-type">TYPE</span>&nbsp;:&nbsp;<span class="label-content">Limit Sell</span></div>
-                                            <div class="col-sm-6"><span class="label-time">TIME IN FORCE</span>&nbsp;:&nbsp;<span class="label-content">Immediate or Cancel</span> </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn btn-danger waves-effect waves-light">Save</button>
                                         </div>
-                                        <div class="sellmodal disclaimer">
-                                            <div class="disc-title">DISCLAIMER</div>
-                                            <p class="disc-content">Please verify this order before confirming. All orders are final once submitted and we will be unable to issue you a refund.
-                                            </p>
-                                        </div>
+
+
                                     </div>
                                 </div>
-                            </b-modal>
-                            <b-modal id="buyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" title="BTC-ETH" ok-title="Confirm" ok-variant="primary" cancel-variant="danger">
-                                <div class="modal-content">
-                                    <div class="modal-body">
-                                        <div class="sellmodal current-currency">
-                                            <div class="sellmodal current-header row">
-                                                <div class="sellmodalname col-sm-6"><span class="">QUANTITY</span></div>
-                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">ETH</span></div>
+                            </div>
+                            <div id="buy-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">{{marketName}}</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div class="sellmodal current-currency">
+                                                <div class="sellmodal current-header row">
+                                                    <div class="sellmodalname col-sm-6"><span class="">QUANTITY</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketCurrencyName}}</span></div>
+                                                </div>
+                                                <div><hr></div>
                                             </div>
-                                            <div><hr></div>
-                                        </div>
-                                        <div class="sellmodal current-currency">
-                                            <div class="sellmodal current-header row">
-                                                <div class="sellmodalname col-sm-6"><span class="">PRICE</span></div>
-                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">BTC</span></div>
+                                            <div class="sellmodal current-currency">
+                                                <div class="sellmodal current-header row">
+                                                    <div class="sellmodalname col-sm-6"><span class="">PRICE</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketSymbolName}}</span></div>
+                                                </div>
+                                                <div><hr></div>
                                             </div>
-                                            <div><hr></div>
-                                        </div>
-                                        <div class="sellmodal current-currency">
-                                            <div class="sellmodal current-header row">
-                                                <div class="sellmodalname col-sm-6"><span class="">SUBTOTAL</span></div>
-                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">BTC</span></div>
+                                            <div class="sellmodal current-currency">
+                                                <div class="sellmodal current-header row">
+                                                    <div class="sellmodalname col-sm-6"><span class="">SUBTOTAL</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketSymbolName}}</span></div>
+                                                </div>
+                                                <div><hr></div>
                                             </div>
-                                            <div><hr></div>
-                                        </div>
-                                        <div class="sellmodal current-currency">
-                                            <div class="sellmodal current-header row">
-                                                <div class="sellmodalname col-sm-6"><span class="">COMMISSION</span></div>
-                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">BTC</span></div>
+                                            <div class="sellmodal current-currency">
+                                                <div class="sellmodal current-header row">
+                                                    <div class="sellmodalname col-sm-6"><span class="">COMMISSION</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketSymbolName}}</span></div>
+                                                </div>
+                                                <div><hr></div>
                                             </div>
-                                            <div><hr></div>
-                                        </div>
-                                        <div class="sellmodal current-currency ">
-                                            <div class="sellmodal current-header row total">
-                                                <div class="sellmodalname col-sm-6"><span class="">TOTAL</span></div>
-                                                <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">BTC</span></div>
+                                            <div class="sellmodal current-currency ">
+                                                <div class="sellmodal current-header row total">
+                                                    <div class="sellmodalname col-sm-6"><span class="">TOTAL</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketSymbolName}}</span></div>
+                                                </div>
+                                                <div><hr></div>
                                             </div>
-                                            <div><hr></div>
+                                            <div class="sellmodal comment current-header row">
+                                                <div class="col-sm-3"><span class="label-name">MARKET</span>&nbsp;:&nbsp;<span class="label-content">{{marketName}}</span></div>
+                                                <div class="col-sm-3"><span class="label-type">TYPE</span>&nbsp;:&nbsp;<span class="label-content">Limit Sell</span></div>
+                                                <div class="col-sm-6"><span class="label-time">TIME IN FORCE</span>&nbsp;:&nbsp;<span class="label-content">Immediate or Cancel</span> </div>
+                                            </div>
+                                            <div class="sellmodal disclaimer">
+                                                <div class="disc-title">DISCLAIMER</div>
+                                                <p class="disc-content">Please verify this order before confirming. All orders are final once submitted and we will be unable to issue you a refund.
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="sellmodal comment current-header row">
-                                            <div class="col-sm-3"><span class="label-name">MARKET</span>&nbsp;:&nbsp;<span class="label-content">BTC-ETH</span></div>
-                                            <div class="col-sm-3"><span class="label-type">TYPE</span>&nbsp;:&nbsp;<span class="label-content">Limit BUY</span></div>
-                                            <div class="col-sm-6"><span class="label-time">TIME IN FORCE</span>&nbsp;:&nbsp;<span class="label-content">Immediate or Cancel</span> </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn btn-danger waves-effect waves-light">Save</button>
                                         </div>
-                                        <div class="sellmodal disclaimer">
-                                            <div class="disc-title">DISCLAIMER</div>
-                                            <p class="disc-content">Please verify this order before confirming. All orders are final once submitted and we will be unable to issue you a refund.
-                                            </p>
-                                        </div>
+
+
                                     </div>
                                 </div>
-                            </b-modal>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-sm-4 trade-container" v-if="user">
@@ -433,7 +480,7 @@
                                         <div class="quantity">
                                             <span class="">QUANTITY</span><br>
                                             <input type="text" id="buyquantity" placeholder=" " class="form-control">
-                                            <span class="tradeordereth">{{this.marketCurrencyName}}</span>
+                                            <span class="tradeordereth">{{marketCurrencyName}}</span>
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
@@ -444,13 +491,13 @@
                                                 <option>ASK</option>
                                             </select><br>
                                             <input type="text" id="buyprice" placeholder=" " class="form-control">
-                                            <span class="tradeordereth">{{this.marketSymbolName}}</span>
+                                            <span class="tradeordereth">{{marketSymbolName}}</span>
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
                                             <span class="">TOTAL</span><br>
                                             <input type="text" id="buytotal" placeholder=" " class="form-control">
-                                            <span class="tradeordereth">{{this.marketSymbolName}}</span>
+                                            <span class="tradeordereth">{{marketSymbolName}}</span>
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
@@ -462,7 +509,7 @@
                                             <div class="line"></div>
                                         </div>
                                         <ul class="nav nav-pills success">
-                                            <button type="button" class="btn waves-effect waves-light btn-block btn-red">BUY&nbsp;&nbsp;{{this.currencyName}}</button>
+                                            <button type="button" class="btn waves-effect waves-light btn-block btn-red">BUY&nbsp;&nbsp;{{currency ? currency['name']:''}}</button>
                                         </ul>
                                     </div>
                                 </div>
@@ -480,7 +527,7 @@
                                         <div class="quantity">
                                             <span class="">QUANTITY</span><br>
                                             <input type="text" id="sellquantity" placeholder=" " class="form-control">
-                                            <span class="tradeordereth">{{this.marketCurrencyName}}</span>
+                                            <span class="tradeordereth">{{marketCurrencyName}}</span>
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
@@ -491,13 +538,13 @@
                                                 <option>ASK</option>
                                             </select><br>
                                             <input type="text" id="askprice" placeholder=" " class="form-control">
-                                            <span class="tradeordereth">{{this.marketSymbolName}}</span>
+                                            <span class="tradeordereth">{{marketSymbolName}}</span>
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
                                             <span class="">TOTAL</span><br>
                                             <input type="text" id="selltotal" placeholder=" " class="form-control">
-                                            <span class="tradeordereth">{{this.marketSymbolName}}</span>
+                                            <span class="tradeordereth">{{marketSymbolName}}</span>
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
@@ -509,7 +556,7 @@
                                             <div class="line"></div>
                                         </div>
                                         <ul class="nav nav-pills success">
-                                            <button type="button" class="btn waves-effect waves-light btn-block btn-blue">SELL&nbsp;&nbsp;{{this.currencyName}}</button>
+                                            <button type="button" class="btn waves-effect waves-light btn-block btn-blue">SELL&nbsp;&nbsp;{{currency ? currency['name'] : ''}}</button>
                                         </ul>
                                     </div>
                                 </div>
@@ -520,105 +567,104 @@
                         <span class="tradeaccount">To begin trading please log in or create an account.</span>
                         <button type="button" class="btn waves-effect waves-light btn-block btn-blue accountbtn btn1"><router-link :to="{ name: 'register'}" class="accountbtn">Create Account</router-link></button>
                         <button type="button" class="btn waves-effect waves-light btn-block btn-blue accountbtn"><router-link :to="{ name: 'login'}" class="accountbtn">Log In</router-link></button>
-
                     </div>
                     <div class="col-md-4 col-lg-4 col-sm-4 buy-container">
                         <div class="table-responsive buytable">
                             <table id="tblbuylist" class="table table-striped buyselltable">
                                 <thead>
                                 <tr>
-                                    <th>ASK(BTC)</th>
-                                    <th>SIZE(ZCL)</th>
+                                    <th>ASK({{marketName ? marketSymbolName : ''}})</th>
+                                    <th>SIZE({{marketName ? marketCurrencyName : ''}})</th>
                                     <th>TOTAL</th>
                                     <th>SUM</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="text-info"><b-btn class="btn-sell text-info" type="button" data-toggle="modal" data-target="#buyModal" v-b-modal.buyModal v-b-tooltip.hover title="BUY">BUY</b-btn></td>
-                                        <td class="text-danger">0.70794558</td>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-info">BUY</td>
-                                        <td class="text-danger">0.70794558</td>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-info">BUY</td>
-                                        <td class="text-danger">0.70794558</td>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-info">BUY</td>
-                                        <td class="text-danger">0.70794558</td>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-info">BUY</td>
-                                        <td class="text-danger">0.70794558</td>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-info">BUY</td>
-                                        <td class="text-danger">0.70794558</td>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-info">BUY</td>
-                                        <td class="text-danger">0.70794558</td>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-info">BUY</td>
-                                        <td class="text-danger">0.70794558</td>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-info">BUY</td>
-                                        <td class="text-danger">0.70794558</td>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-info">BUY</td>
-                                        <td class="text-danger">0.70794558</td>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-info">BUY</td>
-                                        <td class="text-danger">0.70794558</td>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-info">BUY</td>
-                                        <td class="text-danger">0.70794558</td>
-                                        <td>0.0199</td>
-                                        <td>0.0199</td>
-                                        <td>11.089</td>
-                                    </tr>
+                                <tr>
+                                    <td class="text-info"><b-btn class="btn-sell text-info" type="button" v-b-tooltip.hover title="BUY" @click="showBuyModal">BUY</b-btn></td>
+                                    <td class="text-danger">0.70794558</td>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-info">BUY</td>
+                                    <td class="text-danger">0.70794558</td>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-info">BUY</td>
+                                    <td class="text-danger">0.70794558</td>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-info">BUY</td>
+                                    <td class="text-danger">0.70794558</td>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-info">BUY</td>
+                                    <td class="text-danger">0.70794558</td>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-info">BUY</td>
+                                    <td class="text-danger">0.70794558</td>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-info">BUY</td>
+                                    <td class="text-danger">0.70794558</td>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-info">BUY</td>
+                                    <td class="text-danger">0.70794558</td>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-info">BUY</td>
+                                    <td class="text-danger">0.70794558</td>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-info">BUY</td>
+                                    <td class="text-danger">0.70794558</td>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-info">BUY</td>
+                                    <td class="text-danger">0.70794558</td>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-info">BUY</td>
+                                    <td class="text-danger">0.70794558</td>
+                                    <td>0.0199</td>
+                                    <td>0.0199</td>
+                                    <td>11.089</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -636,8 +682,8 @@
                                             <th>DATE</th>
                                             <th>BUY/SELL</th>
                                             <th>BID/ASK</th>
-                                            <th>TOTAL UNITS(GAM)</th>
-                                            <th>TOTAL COST(BTC)</th>
+                                            <th>TOTAL UNITS({{marketCurrencyName}})</th>
+                                            <th>TOTAL COST({{marketSymbolName}})</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -693,35 +739,35 @@
                                 <div class="table-responsive m-t-20 collapse" id="collapseTwo22" role="tabpanel" aria-labelledby="headingTwo22">
                                     <table id="tblopenorders" class="table table-bordered table-striped">
                                         <thead>
-                                            <tr>
-                                                <th>ORDER DATE</th>
-                                                <th>TYPE</th>
-                                                <th>BID/ASK</th>
-                                                <th>FILLED</th>
-                                                <th>UNITS TOTAL</th>
-                                                <th>ACTUAL RATE</th>
-                                                <th>EST.TOTAL(BTC)</th>
-                                            </tr>
+                                        <tr>
+                                            <th>ORDER DATE</th>
+                                            <th>TYPE</th>
+                                            <th>BID/ASK</th>
+                                            <th>FILLED</th>
+                                            <th>UNITS TOTAL</th>
+                                            <th>ACTUAL RATE</th>
+                                            <th>EST.TOTAL({{marketSymbolName}})</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Bitcoin</td>
-                                                <td>BTC</td>
-                                                <td>0.00000000</td>
-                                                <td>0.00000000</td>
-                                                <td>BTC</td>
-                                                <td>0.00000000</td>
-                                                <td>0.00000000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Bitcoin</td>
-                                                <td>BTC</td>
-                                                <td>0.00000000</td>
-                                                <td>0.00000000</td>
-                                                <td>BTC</td>
-                                                <td>0.00000000</td>
-                                                <td>0.00000000</td>
-                                            </tr>
+                                        <tr>
+                                            <td>Bitcoin</td>
+                                            <td>BTC</td>
+                                            <td>0.00000000</td>
+                                            <td>0.00000000</td>
+                                            <td>BTC</td>
+                                            <td>0.00000000</td>
+                                            <td>0.00000000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bitcoin</td>
+                                            <td>BTC</td>
+                                            <td>0.00000000</td>
+                                            <td>0.00000000</td>
+                                            <td>BTC</td>
+                                            <td>0.00000000</td>
+                                            <td>0.00000000</td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -781,82 +827,17 @@
 </template>
 
 <script>
-
     import '~/plugins/datatables/jquery.dataTables.min';
     import BootstrapVue from 'bootstrap-vue';
     import { mapGetters } from 'vuex';
     import axios from 'axios';
     import * as urls from '../../constants/url-constants';
-
     Vue.use(BootstrapVue);
-
     export default {
         name: "trading",
         middleware: 'auth',
-
-        created() {
-
-            this.marketName = this.$route.query.MarketName;
-            this.marketSymbolName = this.marketName.split('-')[0];
-            this.marketCurrencyName = this.marketName.split('-')[1];
-            console.log(this.marketName);
-            this.fetchCurrencies();
-            this.fetchMarkets();
-
-        },
-
-        updated() {
-            $('#tblselllist').dataTable();
-            $('#tblbuylist').dataTable();
-            $('#tblemarket').dataTable();
-            $('#tblemarkethistory').dataTable();
-            $('#tblopenorders').dataTable();
-            $('#tblorderhistory').dataTable();
-        },
-
-        methods: {
-            async fetchCurrencies () {
-                const { data } = await axios.get(urls.API_BASE_URL + '/_api/currencies?' + 'currency=' + this.marketCurrencyName);
-                this.currencies = data.data;
-
-               for (var prop in this.currencies) {
-                   if (this.currencies[prop].symbol == this.marketCurrencyName) {
-                       this.currency = this.currencies[prop];
-                       this.currencyName = this.currency['name'];
-                       this.imagelink = this.currency['logo'].replace('localhost', '192.168.50.117');
-                   } else continue
-               }
-            },
-
-            async fetchMarkets () {
-                const { data } = await axios.get(urls.API_BASE_URL + '/_api/markets');
-                this.leftMarketList = data.data[(this.marketSymbolName).toLowerCase()];
-                await this.$store.dispatch('market/getLeftMarkets', {markets: this.leftMarketList});
-            },
-
-            gotoMarket (param) {
-                this.$router.push({ name: 'trading', query: {MarketName: param}});
-                this.marketName = this.$route.query.MarketName;
-                this.marketSymbolName = param.split('-')[0];
-                this.marketCurrencyName = param.split('-')[1];
-                this.fetchCurrencies();
-                this.fetchMarkets();
-                $('#tblselllist').dataTable();
-                $('#tblbuylist').dataTable();
-                $('#tblemarket').dataTable();
-                $('#tblemarkethistory').dataTable();
-                $('#tblopenorders').dataTable();
-                $('#tblorderhistory').dataTable();
-            }
-
-        },
-
-        beforeMount() {
-            // this.fetchCurrencies();
-            // this.fetchMarkets();
-        },
-
         data: () => ({
+            market_table: null,
             change_collpase1:true,
             change_collpase2:true,
             url: '',
@@ -867,9 +848,85 @@
             currencyName: null,
             currencies: null,
             imagelink: null,
-            leftMarketList: null
+            leftMarketList: null,
+            currentMarketInfo: null,
         }),
+        created() {
+            this.marketName = this.$route.query.MarketName;
+            this.marketSymbolName = this.marketName.split('-')[0];
+            this.marketCurrencyName = this.marketName.split('-')[1];
+        },
+        mounted() {
+            this.market_table = $('#tblemarket').DataTable();
+            this.fetchMarket();
+            this.fetchCurrency();
+            this.fetchMarkets();
+        },
+        updated() {
+            $('#tblselllist').DataTable();
+            $('#tblbuylist').DataTable();
+            $('#tblemarkethistory').DataTable();
+            $('#tblopenorders').DataTable();
+            $('#tblorderhistory').DataTable();
+        },
+        methods: {
+            async fetchCurrency () {
+                const { data } = await axios.get(urls.API_BASE_URL + '/_api/currency/' + this.marketCurrencyName);
+                this.currency = data.data;
+            },
+            async fetchMarkets () {
+                const { data } = await axios.get(urls.API_BASE_URL + '/_api/markets');
+                this.leftMarketList = data.data[(this.marketSymbolName).toLowerCase()];
+                await this.$store.dispatch('market/getLeftMarkets', {markets: this.leftMarketList});
+                let vm = this;
+                vm.market_table.clear();
+                this.leftMarketList.forEach(function (market) {
+                    vm.market_table.row.add([
+                        market.name,
+                        0.0002542
+                    ]).draw(false);
+                });
 
+                vm.market_table.on('click', 'tr', function () {
+                    vm.gotoMarket(vm.market_table.row(this).data()[0]);
+                })
+            },
+            async fetchMarket () {
+                const { data } = await axios.get(urls.API_BASE_URL + '/_api/market' + '/' + this.marketName);
+                this.currentMarketInfo = data.data;
+            },
+            gotoMarket (param) {
+                this.marketName = '';
+                this.marketSymbolName = '';
+                this.marketCurrencyName = '';
+                this.$router.push({ name: 'trading', query: {MarketName: param}});
+                this.marketName = param;
+                console.log(this.marketName);
+                this.marketSymbolName = param.split('-')[0];
+                this.marketCurrencyName = param.split('-')[1];
+                this.fetchCurrency();
+                this.fetchMarkets();
+                this.fetchMarket();
+                $('#tblselllist').dataTable();
+                $('#tblbuylist').dataTable();
+                $('#tblemarket').dataTable();
+                $('#tblemarkethistory').dataTable();
+                $('#tblopenorders').dataTable();
+                $('#tblorderhistory').dataTable();
+            },
+            showSellModal() {
+                $('#sell-modal').modal();
+            },
+            showBuyModal() {
+                $('#buy-modal').modal();
+            },
+            showWithdraw() {
+                $('#withdraw-modal').modal();
+            },
+            showDeposit() {
+                $('#deposit-modal').modal();
+            }
+        },
         computed: mapGetters ({
             user: 'auth/user',
             left_markets: 'market/left_markets',
@@ -878,5 +935,4 @@
 </script>
 
 <style scoped>
-
 </style>
