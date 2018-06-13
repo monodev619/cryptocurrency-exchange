@@ -111,8 +111,8 @@
                 await this.$store.dispatch('market/getMarkets', {markets: data.data});
             },
 
-            gotoMarket (param) {
-                this.$router.push({ name: 'trading', query: {MarketName: param}});
+            gotoMarket (param1) {
+                this.$router.push({ name: 'trading', query: {MarketName: param1}});
             }
 
         },
@@ -124,7 +124,6 @@
         computed: mapGetters({
             btc_markets: 'market/btc_markets',
             eth_markets: 'market/eth_markets'
-            // markets: 'market/markets'
 
         })
     }
