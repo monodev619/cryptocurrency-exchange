@@ -4,7 +4,6 @@
             <div class="scroll-sidebar">
                 <h4 class="card-title m-t-10">MARKETS</h4>
                 <div>
-                    <!--<select id="type" name="type" required class="selectpicker m-r-10" v-model="selected" v-on:change="changeMarket" data-style="btn-info btn-outline-info">-->
                     <select id="market-type" name="market-type" required class="selectpicker m-r-10" v-model="market_type" @change="changeMarket" data-style="btn-info btn-outline-info">
                         <option value="btc">BTC Market</option>
                         <option value="eth">ETH Market</option>
@@ -127,8 +126,10 @@
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-2 btndepwith" v-if="user">
-                    <b-btn class="btn waves-effect waves-light btn-danger btnwithdraw" type="button"  v-b-tooltip.hover title="Withdraw" @click="showWithdraw">Withdraw</b-btn>
-                    <b-btn class="btn waves-effect waves-light btn-success btndeposit" type="button"  v-b-tooltip.hover title="Deposit" @click="showDeposit">Deposit</b-btn>
+                    <div class="button">
+                        <b-btn class="waves-effect waves-light btn-danger btnwithdraw" type="button"  v-b-tooltip.hover title="Withdraw" @click="showWithdraw">Withdraw</b-btn>
+                        <b-btn class="waves-effect waves-light btn-success btndeposit" type="button"  v-b-tooltip.hover title="Deposit" @click="showDeposit">Deposit</b-btn>
+                    </div>
                     <div id="withdraw-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -136,7 +137,6 @@
                                     <h4 class="modal-title">Withdrawal</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 </div>
-
                                 <div class="modal-body">
                                     <div class="currency">
                                         <div class="col-xs-6">Currency</div>
@@ -149,19 +149,19 @@
                                         </div>
                                         <div><hr></div>
                                         <div class="current-body row">
-                                            <div class="col-sm-4"><span class="coinname">{{currency ? currency['name'] : ''}}</span></div>
-                                            <div class="col-sm-4"><span class="symbolname">{{currency ? currency['symbol'] : ''}}</span></div>
+                                            <div class="col-sm-4"><span class="coinname">{{ market_info ? market_info.currency : 0 }}</span></div>
+                                            <div class="col-sm-4"><span class="symbolname">{{ market_info ? market_info.symbol : 0 }}</span></div>
                                             <div class="col-sm-4"><span class="balancevalue">0</span></div>
                                         </div>
                                     </div>
                                     <div class="withdrawamount row">
                                         <h2 class="col-sm-12 withdraw-title">Withdrawal amount</h2>
                                         <div class="col-sm-6">QUANTITY</div>
-                                        <div class="col-sm-6"><input type="text" class="quantityvalue" v-bind:value="0"><span class="cointype">{{currency ? currency['symbol'] : ''}}</span></div>
+                                        <div class="col-sm-6"><input type="text" class="quantityvalue" v-bind:value="0"><span class="cointype">{{ market_info ? market_info.symbol : 0 }}</span></div>
                                         <div class="col-sm-6">TRANSACTION FEE</div>
-                                        <div class="col-sm-6"><span class="feevalue">0.00050000 &nbsp;{{currency ? currency['symbol'] : ''}}</span></div>
+                                        <div class="col-sm-6"><span class="feevalue">0.00050000 &nbsp;{{ market_info ? market_info.symbol : 0 }}</span></div>
                                         <div class="col-sm-6">TOTAL WITHDRAWAL</div>
-                                        <div class="col-sm-6"><span class="totalvalue">-0.00050000 &nbsp;{{currency ? currency['symbol'] : ''}}</span></div>
+                                        <div class="col-sm-6"><span class="totalvalue">-0.00050000 &nbsp;{{ market_info ? market_info.symbol : 0 }}</span></div>
                                     </div>
                                     <div class="address withdraw">
                                         <span class="addr-title">Address</span><br>
@@ -175,8 +175,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default waves-effect cancel" data-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-danger waves-effect waves-light">{{currency ? currency['symbol'] : ''}}&nbsp; Withdraw</button>
+                                    <button type="button" class="btn btn-danger btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn  waves-effect waves-light perform">{{ market_info ? market_info.symbol : 0 }}&nbsp; Withdraw</button>
                                 </div>
                             </div>
                         </div>
@@ -199,8 +199,8 @@
                                         </div>
                                         <div><hr></div>
                                         <div class="current-body row">
-                                            <div class="col-sm-6"><span class="coinname">Bitcoin</span></div>
-                                            <div class="col-sm-6"><span class="symbolname">BTC</span></div>
+                                            <div class="col-sm-6"><span class="coinname">{{ market_info ? market_info.currency : 0 }}</span></div>
+                                            <div class="col-sm-6"><span class="symbolname">{{ market_info ? market_info.symbol : 0 }}</span></div>
                                         </div>
                                     </div>
                                     <div class="disclaimer">
@@ -221,8 +221,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-danger waves-effect waves-light">Done</button>
+                                    <button type="button" class="btn btn-danger btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn waves-effect waves-light perform">Done</button>
                                 </div>
                             </div>
                         </div>
@@ -249,8 +249,8 @@
                                 <tr>
                                     <th>SUM</th>
                                     <th>TOTAL</th>
-                                    <th>SIZE({{marketName ? marketCurrencyName : ''}})</th>
-                                    <th>BID({{marketName ? marketSymbolName : ''}})</th>
+                                    <th>SIZE({{ market_info ? market_info.symbol : 0 }})</th>
+                                    <th>BID({{ market_info ? market_info.type : 0 }})</th>
                                     <th class="tradebtn"></th>
                                 </tr>
                                 </thead>
@@ -345,7 +345,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title">{{marketName}}</h4>
+                                            <h4 class="modal-title">{{ market_info ? market_info.name : 0 }}</h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                         </div>
 
@@ -353,40 +353,40 @@
                                             <div class="sellmodal current-currency">
                                                 <div class="sellmodal current-header row">
                                                     <div class="sellmodalname col-sm-6"><span class="">QUANTITY</span></div>
-                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketCurrencyName}}</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.symbol : 0 }}</span></div>
                                                 </div>
                                                 <div><hr></div>
                                             </div>
                                             <div class="sellmodal current-currency">
                                                 <div class="sellmodal current-header row">
                                                     <div class="sellmodalname col-sm-6"><span class="">PRICE</span></div>
-                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketSymbolName}}</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                 </div>
                                                 <div><hr></div>
                                             </div>
                                             <div class="sellmodal current-currency">
                                                 <div class="sellmodal current-header row">
                                                     <div class="sellmodalname col-sm-6"><span class="">SUBTOTAL</span></div>
-                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketSymbolName}}</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                 </div>
                                                 <div><hr></div>
                                             </div>
                                             <div class="sellmodal current-currency">
                                                 <div class="sellmodal current-header row">
                                                     <div class="sellmodalname col-sm-6"><span class="">COMMISSION</span></div>
-                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketSymbolName}}</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                 </div>
                                                 <div><hr></div>
                                             </div>
                                             <div class="sellmodal current-currency ">
                                                 <div class="sellmodal current-header row total">
                                                     <div class="sellmodalname col-sm-6"><span class="">TOTAL</span></div>
-                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketSymbolName}}</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                 </div>
                                                 <div><hr></div>
                                             </div>
                                             <div class="sellmodal comment current-header row">
-                                                <div class="col-sm-3"><span class="label-name">MARKET</span>&nbsp;:&nbsp;<span class="label-content">{{marketName}}</span></div>
+                                                <div class="col-sm-3"><span class="label-name">MARKET</span>&nbsp;:&nbsp;<span class="label-content">{{ market_info ? market_info.name : 0 }}</span></div>
                                                 <div class="col-sm-3"><span class="label-type">TYPE</span>&nbsp;:&nbsp;<span class="label-content">Limit Sell</span></div>
                                                 <div class="col-sm-6"><span class="label-time">TIME IN FORCE</span>&nbsp;:&nbsp;<span class="label-content">Immediate or Cancel</span> </div>
                                             </div>
@@ -396,13 +396,10 @@
                                                 </p>
                                             </div>
                                         </div>
-
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-danger waves-effect waves-light">Save</button>
+                                            <button type="button" class="btn btn-danger btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn waves-effect waves-light perform">Save</button>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
@@ -410,48 +407,47 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title">{{marketName}}</h4>
+                                            <h4 class="modal-title">{{ market_info ? market_info.name : 0 }}</h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                         </div>
-
                                         <div class="modal-body">
                                             <div class="sellmodal current-currency">
                                                 <div class="sellmodal current-header row">
                                                     <div class="sellmodalname col-sm-6"><span class="">QUANTITY</span></div>
-                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketCurrencyName}}</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.symbol : 0 }}</span></div>
                                                 </div>
                                                 <div><hr></div>
                                             </div>
                                             <div class="sellmodal current-currency">
                                                 <div class="sellmodal current-header row">
                                                     <div class="sellmodalname col-sm-6"><span class="">PRICE</span></div>
-                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketSymbolName}}</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                 </div>
                                                 <div><hr></div>
                                             </div>
                                             <div class="sellmodal current-currency">
                                                 <div class="sellmodal current-header row">
                                                     <div class="sellmodalname col-sm-6"><span class="">SUBTOTAL</span></div>
-                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketSymbolName}}</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                 </div>
                                                 <div><hr></div>
                                             </div>
                                             <div class="sellmodal current-currency">
                                                 <div class="sellmodal current-header row">
                                                     <div class="sellmodalname col-sm-6"><span class="">COMMISSION</span></div>
-                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketSymbolName}}</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                 </div>
                                                 <div><hr></div>
                                             </div>
                                             <div class="sellmodal current-currency ">
                                                 <div class="sellmodal current-header row total">
                                                     <div class="sellmodalname col-sm-6"><span class="">TOTAL</span></div>
-                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{marketSymbolName}}</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                 </div>
                                                 <div><hr></div>
                                             </div>
                                             <div class="sellmodal comment current-header row">
-                                                <div class="col-sm-3"><span class="label-name">MARKET</span>&nbsp;:&nbsp;<span class="label-content">{{marketName}}</span></div>
+                                                <div class="col-sm-3"><span class="label-name">MARKET</span>&nbsp;:&nbsp;<span class="label-content">{{ market_info ? market_info.name : 0 }}</span></div>
                                                 <div class="col-sm-3"><span class="label-type">TYPE</span>&nbsp;:&nbsp;<span class="label-content">Limit Sell</span></div>
                                                 <div class="col-sm-6"><span class="label-time">TIME IN FORCE</span>&nbsp;:&nbsp;<span class="label-content">Immediate or Cancel</span> </div>
                                             </div>
@@ -461,13 +457,10 @@
                                                 </p>
                                             </div>
                                         </div>
-
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-danger waves-effect waves-light">Save</button>
+                                            <button type="button" class="btn btn-danger btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn waves-effect waves-light perform">Save</button>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
@@ -479,52 +472,50 @@
                                 <li class="nav-item buy"> <a href="#navpills-1" class="nav-link active" data-toggle="tab" aria-expanded="false">BUY</a> </li>
                                 <li class="nav-item sell"> <a href="#navpills-2" class="nav-link" data-toggle="tab" aria-expanded="false">SELL</a> </li>
                             </ul>
-                            <div class="tab-content br-n pn">
+                            <div class="tab-content">
                                 <div id="navpills-1" class="tab-pane active">
                                     <div class="row main-info">
                                         <div class="quantity">
                                             <span class="">ORDERTYPE</span><br>
-                                            <select class="selectpicker color-dark" data-style="form-control btn-secondary">
+                                            <select id="buyordertype" name="buyordertype" class="selectpicker color-dark" data-style="form-control btn-secondary">
                                                 <option>Limit(Default)</option>
                                                 <option>Conditional</option>
                                             </select>
-                                            <!--<input type="text" id="ordertype" placeholder=" " class="form-control">-->
-                                            <!--<span class="tradeordereth">ETH</span>-->
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
                                             <span class="">QUANTITY</span><br>
-                                            <input type="text" id="buyquantity" placeholder=" " class="form-control">
-                                            <span class="tradeordereth">{{marketCurrencyName}}</span>
+                                            <input type="text" id="buyquantity" name="buyquantity" placeholder=" " class="form-control">
+                                            <span class="tradeordereth">{{ market_info ? market_info.symbol : 0 }}</span>
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
                                             <span class="">BID PRICE</span><br>
-                                            <select class="selectpicker color-dark" data-style="form-control btn-secondary" placeholder="aaa">
+                                            <select id="buybidprice" name="buybidprice" class="selectpicker color-dark" data-style="form-control btn-secondary" placeholder="aaa">
                                                 <option>LAST</option>
                                                 <option>BID</option>
                                                 <option>ASK</option>
                                             </select><br>
-                                            <input type="text" id="buyprice" placeholder=" " class="form-control">
-                                            <span class="tradeordereth">{{marketSymbolName}}</span>
+                                            <input type="text" id="buyprice" name="buyprice" placeholder=" " class="form-control">
+                                            <span class="tradeordereth">{{ market_info ? market_info.type : 0 }}</span>
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
                                             <span class="">TOTAL</span><br>
-                                            <input type="text" id="buytotal" placeholder=" " class="form-control">
-                                            <span class="tradeordereth">{{marketSymbolName}}</span>
+                                            <input type="text" id="buytotal" name="buytotal" placeholder=" " class="form-control">
+                                            <span class="tradeordereth">{{ market_info ? market_info.type : 0 }}</span>
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
                                             <span class="">TIME IN FORCE</span><br>
-                                            <select class="selectpicker color-dark" data-style="form-control btn-secondary">
+                                            <select id="buytimeforce" name="buytimeforce" class="selectpicker color-dark" data-style="form-control btn-secondary">
                                                 <option>Good 'Til Cancelled(Default)</option>
                                                 <option>Immediate or Cancel</option>
                                             </select><br>
                                             <div class="line"></div>
                                         </div>
                                         <ul class="nav nav-pills success">
-                                            <button type="button" class="btn waves-effect waves-light btn-block btn-red">BUY&nbsp;&nbsp;{{currency ? currency['name']:''}}</button>
+                                            <button type="button" class="btn waves-effect waves-light btn-block btn-red">BUY&nbsp;&nbsp;{{ market_info ? market_info.currency : 0 }}</button>
                                         </ul>
                                     </div>
                                 </div>
@@ -532,7 +523,7 @@
                                     <div class="row main-info">
                                         <div class="quantity">
                                             <span class="">ORDERTYPE</span><br>
-                                            <select class="selectpicker color-blue" data-style="form-control btn-secondary">
+                                            <select id="sellordertype" name="sellordertype" class="selectpicker color-blue" data-style="form-control btn-secondary">
                                                 <option>Limit(Default)</option>
                                                 <option>Conditional</option>
                                             </select>
@@ -541,37 +532,37 @@
                                         </div>
                                         <div class="quantity">
                                             <span class="">QUANTITY</span><br>
-                                            <input type="text" id="sellquantity" placeholder=" " class="form-control">
-                                            <span class="tradeordereth">{{marketCurrencyName}}</span>
+                                            <input type="text" id="sellquantity" name="sellquantity" placeholder=" " class="form-control">
+                                            <span class="tradeordereth">{{ market_info ? market_info.symbol : 0 }}</span>
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
                                             <span class="color-blue">ASK PRICE</span><br>
-                                            <select class="selectpicker color-blue" data-style="form-control btn-secondary">
+                                            <select id="sellaskprice" name="sellaskprice" class="selectpicker color-blue" data-style="form-control btn-secondary">
                                                 <option>LAST</option>
                                                 <option>BID</option>
                                                 <option>ASK</option>
                                             </select><br>
                                             <input type="text" id="askprice" placeholder=" " class="form-control">
-                                            <span class="tradeordereth">{{marketSymbolName}}</span>
+                                            <span class="tradeordereth">{{ market_info ? market_info.type : 0 }}</span>
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
                                             <span class="">TOTAL</span><br>
-                                            <input type="text" id="selltotal" placeholder=" " class="form-control">
-                                            <span class="tradeordereth">{{marketSymbolName}}</span>
+                                            <input type="text" id="selltotal" name="selltotal" placeholder=" " class="form-control">
+                                            <span class="tradeordereth">{{ market_info ? market_info.type : 0 }}</span>
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
                                             <span class="">TIME IN FORCE</span><br>
-                                            <select class="selectpicker color-blue" data-style="form-control btn-secondary">
+                                            <select id="selltimeforce" name="selltimeforce" class="selectpicker color-blue" data-style="form-control btn-secondary">
                                                 <option>Good 'Til Cancelled(Default)</option>
                                                 <option>Immediate or Cancel</option>
                                             </select><br>
                                             <div class="line"></div>
                                         </div>
                                         <ul class="nav nav-pills success">
-                                            <button type="button" class="btn waves-effect waves-light btn-block btn-blue">SELL&nbsp;&nbsp;{{currency ? currency['name'] : ''}}</button>
+                                            <button type="button" class="btn waves-effect waves-light btn-block btn-blue">SELL&nbsp;&nbsp;{{ market_info ? market_info.currency : 0 }}</button>
                                         </ul>
                                     </div>
                                 </div>
@@ -588,8 +579,8 @@
                             <table id="tblbuylist" class="table table-striped buyselltable">
                                 <thead>
                                 <tr>
-                                    <th>ASK({{marketName ? marketSymbolName : ''}})</th>
-                                    <th>SIZE({{marketName ? marketCurrencyName : ''}})</th>
+                                    <th>ASK({{ market_info ? market_info.type : 0 }})</th>
+                                    <th>SIZE({{ market_info ? market_info.symbol : 0 }})</th>
                                     <th>TOTAL</th>
                                     <th>SUM</th>
                                     <th></th>
@@ -697,8 +688,8 @@
                                             <th>DATE</th>
                                             <th>BUY/SELL</th>
                                             <th>BID/ASK</th>
-                                            <th>TOTAL UNITS({{marketCurrencyName}})</th>
-                                            <th>TOTAL COST({{marketSymbolName}})</th>
+                                            <th>TOTAL UNITS({{ market_info ? market_info.symbol : 0 }})</th>
+                                            <th>TOTAL COST({{ market_info ? market_info.type : 0 }})</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -761,7 +752,7 @@
                                             <th>FILLED</th>
                                             <th>UNITS TOTAL</th>
                                             <th>ACTUAL RATE</th>
-                                            <th>EST.TOTAL({{marketSymbolName}})</th>
+                                            <th>EST.TOTAL({{ market_info ? market_info.type : 0 }})</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -804,8 +795,8 @@
                                             <th>CLOSED DATE</th>
                                             <th>OPEN DATE</th>
                                             <th>TYPE</th>
-                                            <th>UNITS FILLED({{this.marketCurrencyName}})</th>
-                                            <th>TOTAL UNITS({{this.marketCurrencyName}})</th>
+                                            <th>UNITS FILLED({{ market_info ? market_info.symbol : 0 }})</th>
+                                            <th>TOTAL UNITS({{ market_info ? market_info.symbol : 0 }})</th>
                                             <th>ACTUAL RATE</th>
                                             <th>COST/PROCEEDS</th>
                                         </tr>
@@ -860,14 +851,6 @@
             market_info: null,
             change_collpase1:true,
             change_collpase2:true,
-            marketName: '',
-            marketSymbolName: '',
-            marketCurrencyName: '',
-            currency: null,
-            currencyName: null,
-            currencies: null,
-            imagelink: null,
-            leftMarketList: null,
             market_type: 'btc'
         }),
         created() {
@@ -910,6 +893,7 @@
                 });
 
                 vm.btc_market_table.on('click', 'tr', function () {
+                    console.log(vm.btc_market_table.row(this).data()[0])
                     vm.gotoMarket(vm.btc_market_table.row(this).data()[0]);
                 })
 
@@ -926,7 +910,6 @@
                 })
             },
             async fetchMarket () {
-                console.log(this.$route.query)
                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/market' + '/' + this.$route.query.MarketName);
                 this.market_info = data.data;
             },

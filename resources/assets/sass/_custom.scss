@@ -10444,11 +10444,16 @@ pre {
 
 .btndepwith .btn {
   padding: 7px 5px !important;
-  color: #f2f4f8;
+  color: #f2f4f8;  
 }
 
 .btndepwith {
   padding: 1% 0 1% 2%;
+
+}
+
+.btndepwith .button {
+  text-align: center;
 }
 
 .top-info .col-lg-2 {
@@ -10466,7 +10471,15 @@ pre {
 }
 
 .btnwithdraw {
+  width: 80px;
+  height: 35px;
+  color: white;
+  border-radius: 0.25rem;
+  font-size: 14px;
+  border: none;
   margin-right: 5px;
+  min-width: 0px;
+  padding: 0px !important;
 }
 
 .buyselltable th {
@@ -10749,4 +10762,26 @@ pre {
 
 .cancel {
   background-color: #fff;
+}
+
+.top-info .col-md-2,
+.top-info .col-lg-2,
+.top-info .col-sm-12 {
+  padding-right: 0px !important;
+}
+
+.btndeposit {
+  width: 80px;
+  height: 35px;
+  color: white;
+  border-radius: 0.25rem;
+  font-size: 14px;
+  border: none;
+  padding: 0px !important;
+  min-width: 0px;
+}
+
+.perform {
+  background-color: #1976d2;
+  color: #fff;
 }

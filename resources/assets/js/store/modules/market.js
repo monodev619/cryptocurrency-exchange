@@ -6,7 +6,6 @@ import * as urls from '../../constants/url-constants'
 export const state = {
     btc_markets: null,
     eth_markets: null,
-    // markets: null,
 }
 
 export const getters = {
