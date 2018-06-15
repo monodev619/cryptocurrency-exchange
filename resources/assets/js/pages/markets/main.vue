@@ -240,9 +240,9 @@
                 </div>
                 <div class="row common-table-container">
                     <div class="col-md-12 col-lg-12 col-sm-12">
-                        <h4 class="card-title">ORDER BOOK</h4>
+                        <h3 class="card-title">ORDER BOOK</h3>
                     </div>
-                    <div class="col-md-4 col-lg-4 col-sm-4 sell-container">
+                    <div class="col-sm-12 col-xs-12 col-md-4 col-lg-4 sell-container">
                         <div class="table-responsive selltable">
                             <table id="tblselllist" class="table table-striped buyselltable">
                                 <thead>
@@ -466,115 +466,283 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-lg-4 col-sm-4 trade-container" v-if="user">
+                    <div class="col-sm-12 col-xs-12 col-md-4 col-lg-4 trade-container" v-if="user">
                         <div class="card-body">
                             <ul class="nav nav-pills m-t-20">
-                                <li class="nav-item buy"> <a href="#navpills-1" class="nav-link active" data-toggle="tab" aria-expanded="false">BUY</a> </li>
-                                <li class="nav-item sell"> <a href="#navpills-2" class="nav-link" data-toggle="tab" aria-expanded="false">SELL</a> </li>
+                                <li class="nav-item buy"> <a href="#navpills-1" class="nav-link first active" data-toggle="tab" aria-expanded="false">BUY</a> </li>
+                                <li class="nav-item sell"> <a href="#navpills-2" class="nav-link second" data-toggle="tab" aria-expanded="false">SELL</a> </li>
                             </ul>
                             <div class="tab-content">
                                 <div id="navpills-1" class="tab-pane active">
                                     <div class="row main-info">
-                                        <div class="quantity">
-                                            <span class="">ORDERTYPE</span><br>
-                                            <select id="buyordertype" name="buyordertype" class="selectpicker color-dark" data-style="form-control btn-secondary">
-                                                <option>Limit(Default)</option>
-                                                <option>Conditional</option>
+                                        <div class="quantity type1">
+                                            <span class="quantitytitle">ORDERTYPE</span><br>
+                                            <select id="buyordertype" name="buyordertype" v-model="buy_order_type" class="selectpicker color-dark" data-style="form-control btn-secondary">
+                                                <option value="Limit">Limit(Default)</option>
+                                                <option value="Condition">Conditional</option>
                                             </select>
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
-                                            <span class="">QUANTITY</span><br>
-                                            <input type="text" id="buyquantity" name="buyquantity" placeholder=" " class="form-control">
+                                            <span class="quantitytitle">QUANTITY</span><br>
+                                            <input type="text" id="buyquantity" name="buyquantity" v-model="buy_quantity" placeholder=" " class="form-control inputvalue">
                                             <span class="tradeordereth">{{ market_info ? market_info.symbol : 0 }}</span>
                                             <div class="line"></div>
                                         </div>
-                                        <div class="quantity">
-                                            <span class="">BID PRICE</span><br>
-                                            <select id="buybidprice" name="buybidprice" class="selectpicker color-dark" data-style="form-control btn-secondary" placeholder="aaa">
-                                                <option>LAST</option>
-                                                <option>BID</option>
-                                                <option>ASK</option>
+                                        <div class="quantity type2">
+                                            <span class="quantitytitle">BID PRICE</span><br>
+                                            <select id="buybidselect" name="buybidselect" v-model="buy_bid" class="selectpicker color-dark" data-style="form-control btn-secondary" placeholder="aaa">
+                                                <option value="Last">LAST</option>
+                                                <option value="Bid">BID</option>
+                                                <option value="Ask">ASK</option>
                                             </select><br>
-                                            <input type="text" id="buyprice" name="buyprice" placeholder=" " class="form-control">
+                                            <input type="text" id="buybidvalue" name="buybidvalue" v-model="buy_bid_value" placeholder=" " class="form-control inputvalue">
                                             <span class="tradeordereth">{{ market_info ? market_info.type : 0 }}</span>
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
-                                            <span class="">TOTAL</span><br>
-                                            <input type="text" id="buytotal" name="buytotal" placeholder=" " class="form-control">
+                                            <span class="quantitytitle">TOTAL</span><br>
+                                            <input type="text" id="buytotal" name="buytotal" v-model="buy_total" placeholder=" " class="form-control inputvalue">
                                             <span class="tradeordereth">{{ market_info ? market_info.type : 0 }}</span>
                                             <div class="line"></div>
                                         </div>
-                                        <div class="quantity">
-                                            <span class="">TIME IN FORCE</span><br>
-                                            <select id="buytimeforce" name="buytimeforce" class="selectpicker color-dark" data-style="form-control btn-secondary">
-                                                <option>Good 'Til Cancelled(Default)</option>
-                                                <option>Immediate or Cancel</option>
+                                        <div class="quantity type3">
+                                            <span class="quantitytitle">TIME IN FORCE</span><br>
+                                            <select id="buytimeforce" name="buytimeforce" v-model="buy_timeforce" class="selectpicker color-dark" data-style="form-control btn-secondary">
+                                                <option value="Good">Good 'Til Cancelled(Default)</option>
+                                                <option value="Immediate">Immediate or Cancel</option>
                                             </select><br>
                                             <div class="line"></div>
                                         </div>
                                         <ul class="nav nav-pills success">
-                                            <button type="button" class="btn waves-effect waves-light btn-block btn-red">BUY&nbsp;&nbsp;{{ market_info ? market_info.currency : 0 }}</button>
+                                            <button id="buybtn" type="button" class="btn waves-effect waves-light btn-block" @click="showBuyFail">BUY&nbsp;&nbsp;{{ market_info ? market_info.currency : 0 }}</button>
                                         </ul>
                                     </div>
                                 </div>
                                 <div id="navpills-2" class="tab-pane">
                                     <div class="row main-info">
-                                        <div class="quantity">
-                                            <span class="">ORDERTYPE</span><br>
-                                            <select id="sellordertype" name="sellordertype" class="selectpicker color-blue" data-style="form-control btn-secondary">
+                                        <div class="quantity type1">
+                                            <span class="quantitytitle">ORDERTYPE</span><br>
+                                            <select id="sellordertype" name="sellordertype" v-model="sell_order_type"class="selectpicker color-blue" data-style="form-control btn-secondary">
                                                 <option>Limit(Default)</option>
                                                 <option>Conditional</option>
                                             </select>
-                                            <!--<span class="tradeordereth">ETH</span>-->
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
-                                            <span class="">QUANTITY</span><br>
-                                            <input type="text" id="sellquantity" name="sellquantity" placeholder=" " class="form-control">
+                                            <span class="quantitytitle">QUANTITY</span><br>
+                                            <input type="text" id="sellquantity" name="sellquantity" v-model="sell_quantity" placeholder=" " class="form-control inputvalue">
                                             <span class="tradeordereth">{{ market_info ? market_info.symbol : 0 }}</span>
                                             <div class="line"></div>
                                         </div>
-                                        <div class="quantity">
-                                            <span class="color-blue">ASK PRICE</span><br>
-                                            <select id="sellaskprice" name="sellaskprice" class="selectpicker color-blue" data-style="form-control btn-secondary">
+                                        <div class="quantity type2">
+                                            <span class="">ASK PRICE</span><br>
+                                            <select id="sellaskprice" name="sellaskprice" v-model="sell_ask" class="selectpicker color-blue" data-style="form-control btn-secondary">
                                                 <option>LAST</option>
                                                 <option>BID</option>
                                                 <option>ASK</option>
                                             </select><br>
-                                            <input type="text" id="askprice" placeholder=" " class="form-control">
+                                            <input type="text" id="askprice" v-model="sell_ask_value" placeholder=" " class="form-control inputvalue">
                                             <span class="tradeordereth">{{ market_info ? market_info.type : 0 }}</span>
                                             <div class="line"></div>
                                         </div>
                                         <div class="quantity">
-                                            <span class="">TOTAL</span><br>
-                                            <input type="text" id="selltotal" name="selltotal" placeholder=" " class="form-control">
+                                            <span class="quantitytitle">TOTAL</span><br>
+                                            <input type="text" id="selltotal" v-model="sell_total" name="selltotal" placeholder=" " class="form-control inputvalue">
                                             <span class="tradeordereth">{{ market_info ? market_info.type : 0 }}</span>
                                             <div class="line"></div>
                                         </div>
-                                        <div class="quantity">
-                                            <span class="">TIME IN FORCE</span><br>
-                                            <select id="selltimeforce" name="selltimeforce" class="selectpicker color-blue" data-style="form-control btn-secondary">
+                                        <div class="quantity type3">
+                                            <span class="quantitytitle">TIME IN FORCE</span><br>
+                                            <select id="selltimeforce" name="selltimeforce" v-model="sell_timeforce" class="selectpicker color-blue" data-style="form-control btn-secondary">
                                                 <option>Good 'Til Cancelled(Default)</option>
                                                 <option>Immediate or Cancel</option>
                                             </select><br>
                                             <div class="line"></div>
                                         </div>
                                         <ul class="nav nav-pills success">
-                                            <button type="button" class="btn waves-effect waves-light btn-block btn-blue">SELL&nbsp;&nbsp;{{ market_info ? market_info.currency : 0 }}</button>
+                                            <button id="sellbtn" type="button" class="btn waves-effect waves-light btn-block btn-active" @click="showSellFail">SELL&nbsp;&nbsp;{{ market_info ? market_info.currency : 0 }}</button>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
+                            <div id="buy-fail" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title"><i class="fa fa-warning"></i>&nbsp;Buy Failed</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="sellmodal disclaimer">
+                                                <div class="disc-title">The following errors were encountered.</div>
+                                                <ul class="error-list">
+                                                    <li class="error-list-item">The minimum Order size is 0.05</li>
+                                                    <li class="error-list-item">The minimum Bids size is 0.01</li>
+                                                </ul>
+                                                <div class="disc-title">Please correct these issues and try again.</div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger btn-default waves-effect" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="buy-modal-content" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">{{ market_info ? market_info.name : 0 }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Confirm Your Limit Buy Order</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="sellmodal current-currency">
+                                                <div class="sellmodal current-header row">
+                                                    <div class="sellmodalname col-sm-6"><span class="">QUANTITY</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(buy_quantity).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.symbol : 0 }}</span></div>
+                                                </div>
+                                                <div><hr></div>
+                                            </div>
+                                            <div class="sellmodal current-currency">
+                                                <div class="sellmodal current-header row">
+                                                    <div class="sellmodalname col-sm-6"><span class="">PRICE</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(buy_bid_value).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                </div>
+                                                <div><hr></div>
+                                            </div>
+                                            <div class="sellmodal current-currency">
+                                                <div class="sellmodal current-header row">
+                                                    <div class="sellmodalname col-sm-6"><span class="">SUBTOTAL</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                </div>
+                                                <div><hr></div>
+                                            </div>
+                                            <div class="sellmodal current-currency">
+                                                <div class="sellmodal current-header row">
+                                                    <div class="sellmodalname col-sm-6"><span class="">COMMISSION</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                </div>
+                                                <div><hr></div>
+                                            </div>
+                                            <div class="sellmodal current-currency ">
+                                                <div class="sellmodal current-header row total">
+                                                    <div class="sellmodalname col-sm-6"><span class="">TOTAL</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                </div>
+                                                <div><hr></div>
+                                            </div>
+                                            <div class="sellmodal comment current-header row">
+                                                <div class="col-sm-3"><span class="label-name">MARKET</span>&nbsp;:&nbsp;<span class="label-content">{{ market_info ? market_info.name : 0 }}</span></div>
+                                                <div class="col-sm-3"><span class="label-type">TYPE</span>&nbsp;:&nbsp;<span class="label-content">{{ buy_order_type }}&nbsp;Buy</span></div>
+                                                <div class="col-sm-6"><span class="label-time">TIME IN FORCE</span>&nbsp;:&nbsp;<span class="label-content">{{ buy_timeforce }}</span> </div>
+                                            </div>
+                                            <div class="sellmodal disclaimer">
+                                                <div class="disc-title">DISCLAIMER</div>
+                                                <p class="disc-content">Please verify this order before confirming. All orders are final once submitted and we will be unable to issue you a refund.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn waves-effect waves-light perform">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="sell-fail" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title"><i class="fa fa-warning"></i>&nbsp;Sell Failed</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="sellmodal disclaimer">
+                                                <div class="disc-title">The following errors were encountered.</div>
+                                                <ul class="error-list">
+                                                    <li class="error-list-item">Asks must be greater than 0.05 for limit orders</li>
+                                                    <li class="error-list-item">The minimum order size is 0.1</li>
+                                                </ul>
+                                                <div class="disc-title">Please correct these issues and try again.</div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger btn-default waves-effect" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="sell-modal-content" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">{{ market_info ? market_info.name : 0 }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Confirm Your Limit Sell Order</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="sellmodal current-currency">
+                                                <div class="sellmodal current-header row">
+                                                    <div class="sellmodalname col-sm-6"><span class="">QUANTITY</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(sell_quantity).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.symbol : 0 }}</span></div>
+                                                </div>
+                                                <div><hr></div>
+                                            </div>
+                                            <div class="sellmodal current-currency">
+                                                <div class="sellmodal current-header row">
+                                                    <div class="sellmodalname col-sm-6"><span class="">PRICE</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(sell_ask_value).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                </div>
+                                                <div><hr></div>
+                                            </div>
+                                            <div class="sellmodal current-currency">
+                                                <div class="sellmodal current-header row">
+                                                    <div class="sellmodalname col-sm-6"><span class="">SUBTOTAL</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                </div>
+                                                <div><hr></div>
+                                            </div>
+                                            <div class="sellmodal current-currency">
+                                                <div class="sellmodal current-header row">
+                                                    <div class="sellmodalname col-sm-6"><span class="">COMMISSION</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                </div>
+                                                <div><hr></div>
+                                            </div>
+                                            <div class="sellmodal current-currency ">
+                                                <div class="sellmodal current-header row total">
+                                                    <div class="sellmodalname col-sm-6"><span class="">TOTAL</span></div>
+                                                    <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                </div>
+                                                <div><hr></div>
+                                            </div>
+                                            <div class="sellmodal comment current-header row">
+                                                <div class="col-sm-3"><span class="label-name">MARKET</span>&nbsp;:&nbsp;<span class="label-content">{{ market_info ? market_info.name : 0 }}</span></div>
+                                                <div class="col-sm-3"><span class="label-type">TYPE</span>&nbsp;:&nbsp;<span class="label-content">{{ sell_order_type }}&nbsp;Sell</span></div>
+                                                <div class="col-sm-6"><span class="label-time">TIME IN FORCE</span>&nbsp;:&nbsp;<span class="label-content">{{ sell_timeforce }}</span> </div>
+                                            </div>
+                                            <div class="sellmodal disclaimer">
+                                                <div class="disc-title">DISCLAIMER</div>
+                                                <p class="disc-content">Please verify this order before confirming. All orders are final once submitted and we will be unable to issue you a refund.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn waves-effect waves-light perform">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-                    <div class="col-md-4 col-lg-4 col-sm-4 trade-container accounttrade" v-else>
+                    <div class="col-sm-12 col-xs-12 col-md-4 col-lg-4 trade-container accounttrade" v-else>
                         <span class="tradeaccount">To begin trading please log in or create an account.</span>
                         <button type="button" class="btn waves-effect waves-light btn-block btn-blue accountbtn btn1"><router-link :to="{ name: 'register'}" class="accountbtn">Create Account</router-link></button>
                         <button type="button" class="btn waves-effect waves-light btn-block btn-blue accountbtn"><router-link :to="{ name: 'login'}" class="accountbtn">Log In</router-link></button>
                     </div>
-                    <div class="col-md-4 col-lg-4 col-sm-4 buy-container">
+                    <div class="col-sm-12 col-xs-12 col-md-4 col-lg-4 buy-container">
                         <div class="table-responsive buytable">
                             <table id="tblbuylist" class="table table-striped buyselltable">
                                 <thead>
@@ -587,90 +755,90 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td class="text-info"><b-btn class="btn-sell text-info" type="button" v-b-tooltip.hover title="BUY" @click="showBuyModal">BUY</b-btn></td>
-                                    <td class="text-danger">0.70794558</td>
-                                    <td>0.0199</td>
-                                    <td>0.0199</td>
-                                    <td>11.089</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-info">BUY</td>
-                                    <td class="text-danger">0.70794558</td>
-                                    <td>0.0199</td>
-                                    <td>0.0199</td>
-                                    <td>11.089</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-info">BUY</td>
-                                    <td class="text-danger">0.70794558</td>
-                                    <td>0.0199</td>
-                                    <td>0.0199</td>
-                                    <td>11.089</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-info">BUY</td>
-                                    <td class="text-danger">0.70794558</td>
-                                    <td>0.0199</td>
-                                    <td>0.0199</td>
-                                    <td>11.089</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-info">BUY</td>
-                                    <td class="text-danger">0.70794558</td>
-                                    <td>0.0199</td>
-                                    <td>0.0199</td>
-                                    <td>11.089</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-info">BUY</td>
-                                    <td class="text-danger">0.70794558</td>
-                                    <td>0.0199</td>
-                                    <td>0.0199</td>
-                                    <td>11.089</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-info">BUY</td>
-                                    <td class="text-danger">0.70794558</td>
-                                    <td>0.0199</td>
-                                    <td>0.0199</td>
-                                    <td>11.089</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-info">BUY</td>
-                                    <td class="text-danger">0.70794558</td>
-                                    <td>0.0199</td>
-                                    <td>0.0199</td>
-                                    <td>11.089</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-info">BUY</td>
-                                    <td class="text-danger">0.70794558</td>
-                                    <td>0.0199</td>
-                                    <td>0.0199</td>
-                                    <td>11.089</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-info">BUY</td>
-                                    <td class="text-danger">0.70794558</td>
-                                    <td>0.0199</td>
-                                    <td>0.0199</td>
-                                    <td>11.089</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-info">BUY</td>
-                                    <td class="text-danger">0.70794558</td>
-                                    <td>0.0199</td>
-                                    <td>0.0199</td>
-                                    <td>11.089</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-info">BUY</td>
-                                    <td class="text-danger">0.70794558</td>
-                                    <td>0.0199</td>
-                                    <td>0.0199</td>
-                                    <td>11.089</td>
-                                </tr>
+                                    <tr>
+                                        <td class="text-info"><b-btn class="btn-sell text-info" type="button" v-b-tooltip.hover title="BUY" @click="showBuyModal">BUY</b-btn></td>
+                                        <td class="text-danger">0.70794558</td>
+                                        <td>0.0199</td>
+                                        <td>0.0199</td>
+                                        <td>11.089</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-info">BUY</td>
+                                        <td class="text-danger">0.70794558</td>
+                                        <td>0.0199</td>
+                                        <td>0.0199</td>
+                                        <td>11.089</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-info">BUY</td>
+                                        <td class="text-danger">0.70794558</td>
+                                        <td>0.0199</td>
+                                        <td>0.0199</td>
+                                        <td>11.089</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-info">BUY</td>
+                                        <td class="text-danger">0.70794558</td>
+                                        <td>0.0199</td>
+                                        <td>0.0199</td>
+                                        <td>11.089</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-info">BUY</td>
+                                        <td class="text-danger">0.70794558</td>
+                                        <td>0.0199</td>
+                                        <td>0.0199</td>
+                                        <td>11.089</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-info">BUY</td>
+                                        <td class="text-danger">0.70794558</td>
+                                        <td>0.0199</td>
+                                        <td>0.0199</td>
+                                        <td>11.089</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-info">BUY</td>
+                                        <td class="text-danger">0.70794558</td>
+                                        <td>0.0199</td>
+                                        <td>0.0199</td>
+                                        <td>11.089</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-info">BUY</td>
+                                        <td class="text-danger">0.70794558</td>
+                                        <td>0.0199</td>
+                                        <td>0.0199</td>
+                                        <td>11.089</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-info">BUY</td>
+                                        <td class="text-danger">0.70794558</td>
+                                        <td>0.0199</td>
+                                        <td>0.0199</td>
+                                        <td>11.089</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-info">BUY</td>
+                                        <td class="text-danger">0.70794558</td>
+                                        <td>0.0199</td>
+                                        <td>0.0199</td>
+                                        <td>11.089</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-info">BUY</td>
+                                        <td class="text-danger">0.70794558</td>
+                                        <td>0.0199</td>
+                                        <td>0.0199</td>
+                                        <td>11.089</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-info">BUY</td>
+                                        <td class="text-danger">0.70794558</td>
+                                        <td>0.0199</td>
+                                        <td>0.0199</td>
+                                        <td>11.089</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -680,7 +848,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title m-t-10">MARKET HISTORY</h4>
+                                <h3 class="card-title m-t-10">MARKET HISTORY</h3>
                                 <div class="table-responsive m-t-20">
                                     <table id="tblemarkethistory" class="table table-bordered table-striped">
                                         <thead>
@@ -739,9 +907,9 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title m-t-10" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo22" aria-expanded="false" aria-controls="collapseTwo22" v-on:click="change_collpase1=!change_collpase1">
+                                <h3 class="card-title m-t-10" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo22" aria-expanded="false" aria-controls="collapseTwo22" v-on:click="change_collpase1=!change_collpase1">
                                     <i class="fa fa-plus-square-o" v-if="change_collpase1"></i><i class="fa fa-minus-square-o" v-if="!change_collpase1"></i><span class="title1">MY OPEN ORDERS</span>
-                                </h4>
+                                </h3>
                                 <div class="table-responsive m-t-20 collapse" id="collapseTwo22" role="tabpanel" aria-labelledby="headingTwo22">
                                     <table id="tblopenorders" class="table table-bordered table-striped">
                                         <thead>
@@ -785,9 +953,9 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title m-t-10" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo33" aria-expanded="false" aria-controls="collapseTwo33" v-on:click="change_collpase2=!change_collpase2">
+                                <h3 class="card-title m-t-10" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo33" aria-expanded="false" aria-controls="collapseTwo33" v-on:click="change_collpase2=!change_collpase2">
                                     <i class="fa fa-plus-square-o" v-if="change_collpase2"></i><i class="fa fa-minus-square-o" v-if="!change_collpase2"></i><span class="title1">MY ORDER HISTORY</span>
-                                </h4>
+                                </h3>
                                 <div class="table-responsive m-t-20 collapse" id="collapseTwo33" role="tabpanel" aria-labelledby="headingTwo22">
                                     <table id="tblorderhistory" class="table table-bordered table-striped">
                                         <thead>
@@ -851,7 +1019,20 @@
             market_info: null,
             change_collpase1:true,
             change_collpase2:true,
-            market_type: 'btc'
+            market_type: 'btc',
+            buy_order_type: 'Limit',
+            buy_quantity: 0,
+            buy_bid: 'Last',
+            buy_bid_value: 0,
+            buy_total: 0,
+            buy_timeforce: 'Good',
+            sell_order_type: 'Limit',
+            sell_quantity: 0,
+            sell_ask: 'Last',
+            sell_ask_value: 0,
+            sell_total: 0,
+            sell_timeforce: 'Good',
+
         }),
         created() {
 
@@ -936,7 +1117,27 @@
                     $('#btc-markets').hide();
                     $('#eth-markets').show();
                 }
-            }
+            },
+            showBuyFail () {
+                if ((!this.buy_quantity)||(this.buy_quantity < 0.05)||(!this.buy_bid_value)||(this.buy_bid_value < 0.01)) {
+
+                    $('#buy-fail').modal();
+                    $('#buy-modal-content').hide();
+                } else {
+                    $('#buy-fail').hide();
+                    $('#buy-modal-content').modal();
+                }
+            },
+            showSellFail () {
+                if ((!this.sell_quantity)||(this.sell_quantity < 0.05)||(!this.sell_ask_value)||(this.sell_ask_value < 0.01)) {
+
+                    $('#sell-fail').modal();
+                    $('#sell-modal-content').hide();
+                } else {
+                    $('#sell-fail').hide();
+                    $('#sell-modal-content').modal();
+                }
+            },
         },
         computed: mapGetters ({
             user: 'auth/user'
