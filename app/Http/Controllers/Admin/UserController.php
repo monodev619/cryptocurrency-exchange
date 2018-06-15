@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 use DB;
 
@@ -91,5 +92,15 @@ class UserController extends Controller
             'iTotalDisplayRecords' => $total,
             'aaData' => $result
         ];
+    }
+
+    public function deleteUser(Request $request) {
+        validate($request->all(), [
+            'id' => 'required'
+        ]);
+
+        User::destroy($request->get('id'));
+
+        return success();
     }
 }

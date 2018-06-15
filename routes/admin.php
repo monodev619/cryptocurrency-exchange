@@ -33,5 +33,6 @@ Route::group(['prefix' => 'admin'], function() {
 
         Route::get('users', 'Admin\UserController@index')->name('admin.users');
         Route::get('getusers', 'Admin\UserController@getUsers')->name('admin.users.get');
+        Route::post('user/delete', 'Admin\UserController@deleteUser')->name('admin.user.delete');
     });
 });

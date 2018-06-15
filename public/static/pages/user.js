@@ -36,7 +36,6 @@ $('.input-daterange-datepicker').on('cancel.daterangepicker', function(ev, picke
 });
 
 var register_dt;
-var login_dt;
 
 var user_table;
 var currentTrObj;
@@ -44,13 +43,15 @@ var currentTrObj;
 var initTable = function () {
     user_table = $('#tbluser').DataTable({
         columnDefs: [
-            // {
-            //     targets: 9,
-            //     render: function (data, type, full, meta) {
-            //         return '<div class="text-center"><button class="btn btn-info" type="button" onclick="open_detail_page('+data+')">查看</button>' +
-            //             '<button class="btn btn-danger" type="button" onclick="delete_user('+data+', this)">删除</button></div>';
-            //     }
-            // }
+            {
+                targets: 6,
+                render: function (data, type, full, meta) {
+                    return '<div class="button-group">\n' +
+                        '<a class="btn btn-info" href="/admin/user/' + data + '"><i class="fa fa-edit"></i></a>\n' +
+                        '<button type="button" class="btn btn-danger" onclick="deleteUser(this, ' + data + ')"><i class="fa fa-remove"></i></button>\n' +
+                        '</div>';
+                }
+            }
         ],
         columns: [
             { "data": "name" },
@@ -77,30 +78,38 @@ var open_detail_page = function (id) {
     window.location.href = "/admin/user/" + id;
 };
 
-var delete_user = function (id, obj) {
-    //currentTrObj = jQuery(obj).closest("tr");
+var deleteUser = function (obj, id) {
+    // currentTrObj = $(obj).parents("tr");
 
     swal({
-            title: "你确定要删除选中的用户吗?",
+            title: "Delete User?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
             showLoaderOnConfirm: true,
             closeOnConfirm: false,
             closeOnCancel: true
         },
         function(isConfirm){
             if (isConfirm) {
-                $.post('/admin/user/delete', {id: id}, function (resp) {
-                    if (resp.code == 0) {
-                        initTable();
-                        swal("成功!", "用户已被删除.", "success");
-                    } else {
-                        swal("失败!", resp.message, "error");
+                $.ajax({
+                    url: '/admin/user/delete',
+                    data: "id=" + id,
+                    cache: false,
+                    dataType: 'json',
+                    processData: false,
+                    type: 'POST',
+                    success: function (resp) {
+                        if (resp.code == '0') {
+                            swal("Success!", "", "success");
+                            user_table.row($(obj).parents("tr")).remove().draw();
+                        } else {
+                            swal("Error!", resp.message, "error");
+                        }
                     }
-                })
+                });
             }
         });
 };
