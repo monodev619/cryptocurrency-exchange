@@ -18,7 +18,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label">{{ $t('emailaddress')}}</label>
                                                     <input type="text" v-model="user.email" class="form-control" readonly placeholder="">
-                                                    <div v-if="error.email" class="has-danger"><div class="form-control-feedback">{{ $t('thisisrequire')}}</div></div>
+                                                    <!--<input type="text" v-model="user.email ? user.email : 0 " class="form-control" readonly placeholder="">-->
                                                 </div>
                                             </div>
                                         </div>
@@ -156,7 +156,7 @@
             return { title: this.$t('Profile') }
         },
 
-        updated() {
+        mounted() {
             if (this.profile != null) {
                 this.form.dob = this.profile.dob
                 this.form.country = this.profile.country
