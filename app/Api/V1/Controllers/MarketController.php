@@ -71,4 +71,8 @@ class MarketController extends BaseController
             return error('This market is not exist', PARAMS_ILLEGAL);
         }
     }
+
+    public function createOrder(Request $request) {
+
+    }
 }
