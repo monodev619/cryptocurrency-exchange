@@ -21,6 +21,7 @@ class CreateDepositsTable extends Migration
             $table->double('amount');
             $table->boolean('is_confirmed');
             $table->string('txid');
+            $table->enum('status', config('enum.deposit_status'));
             $table->timestamps();
         });
     }

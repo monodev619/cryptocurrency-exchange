@@ -39,10 +39,10 @@ $api->version('v1', ['middleware' => ['dingo']], function ($api) {
         $api->get('getProfile', ['as' => 'api.getProfile', 'uses' => UserController::class . '@getProfile']);
         $api->post('updateProfile', ['as' => 'api.updateProfile', 'uses' => UserController::class . '@updateProfile']);
         $api->post('updatePassword', ['as' => 'api.updatePassword', 'uses' => UserController::class . '@updatePassword']);
-        $api->post('depositCurrency', ['as' => 'api.depositCurrency', 'uses' => WalletController::class . '@requestDeposit']);
-        $api->post('withdrawCurrency', ['as' => 'api.withdrawCurrency', 'uses' => WalletController::class . '@requestWithdraw']);
-        $api->get('depositHistory/{id}', ['as' => 'api.depositHistory', 'uses' => WalletController::class . '@getDeposits']);
-        $api->get('withdrawHistory/{id}', ['as' => 'api.withdrawHistory', 'uses' => WalletController::class . '@getWithdraws']);
+        $api->post('requestDeposit', ['as' => 'api.requestDeposit', 'uses' => WalletController::class . '@requestDeposit']);
+        $api->post('requestWithdraw', ['as' => 'api.withdrawCurrency', 'uses' => WalletController::class . '@requestWithdraw']);
+        $api->get('getDeposits/{id}', ['as' => 'api.getDeposits', 'uses' => WalletController::class . '@getDeposits']);
+        $api->get('getWithdraws/{id}', ['as' => 'api.getWithdraws', 'uses' => WalletController::class . '@getWithdraws']);
 
     });
 });

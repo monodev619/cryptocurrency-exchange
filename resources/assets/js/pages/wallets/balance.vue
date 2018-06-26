@@ -89,7 +89,7 @@
                                 <h4 class="modal-title">Withdrawal</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
-                            <form class="form-horizontal form-material" @submit.prevent="withdrawCurrency" @keydown="form_withdraw.onKeydown($event)">
+                            <form class="form-horizontal form-material" @submit.prevent="requestWithdraw" @keydown="form_withdraw.onKeydown($event)">
                                 <div class="modal-body">
                                     <div class="currency">
                                         <div class="col-xs-6">Currency</div>
@@ -147,7 +147,7 @@
                                 <h4 class="modal-title">Deposit</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
-                            <form class="form-horizontal form-material" @submit.prevent="depositCurrency" @keydown="form_deposit.onKeydown($event)">
+                            <form class="form-horizontal form-material" @submit.prevent="requestDeposit" @keydown="form_deposit.onKeydown($event)">
                                 <div class="modal-body">
                                     <div class="currency">
                                         <div class="col-xs-6">Currency</div>
@@ -188,6 +188,7 @@
                                     <input class="deposit_txid" name="deposit_txid" v-model="form_deposit.txid" type="hidden">
                                     <input class="deposit_user_id" name="deposit_user_id" v-model="form_deposit.user_id" type="hidden">
                                     <input class="deposit_currency_id" name="deposit_currency_id" v-model="form_deposit.currency_id" type="hidden">
+                                    <input class="deposit_currency_id" name="deposit_status" v-model="form_deposit.status" type="hidden">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger btn-default waves-effect" data-dismiss="modal">Cancel</button>
@@ -377,7 +378,8 @@
                  is_confirmed: 0,
                  txid: '',
                  user_id: 0,
-                 currency_id: 0
+                 currency_id: 0,
+                 status: ''
              }),
 
              form_withdraw: new Form({
@@ -393,18 +395,20 @@
 
              depositHistoryTable: null,
              withdrawHistoryTable: null,
-             isLoading: false
+             isLoading: false,
+             addTableRowHtml: ''
          }),
 
          created() {
              this.form_deposit.address = '11111111',
-             this.form_deposit.is_confirmed = 1,
-             this.form_deposit.txid = 'fdswefew'
+             this.form_deposit.is_confirmed = 0,
+             this.form_deposit.txid = 'fdswefew',
+             this.form_deposit.status = '1',
 
              this.form_withdraw.quantity = 0,
              this.form_withdraw.fee = 0.0005,
              this.form_withdraw.address = 'fdsaef125w',
-             this.form_withdraw.status = '1',
+             this.form_withdraw.status = '2',
              this.form_withdraw.txid = 'yyy'
          },
 
@@ -418,8 +422,8 @@
              this.depositHistoryTable = $('#tbldeposithistory').DataTable();
              this.withdrawHistoryTable = $('#tblwithdrawhistory').DataTable();
 
-             this.depositHistory();
-             this.withdrawHistory();
+             this.getDeposits();
+             this.getWithdraws();
              this.fetchCurrencies();
              this.fetchMarkets();
 
@@ -437,6 +441,7 @@
              quantityChange() {
                  this.form_withdraw.total = this.form_withdraw.quantity - this.form_withdraw.fee;
              },
+
              async fetchMarkets () {
                  const { data } = await axios.get(urls.API_BASE_URL + '/_api/markets');
                  await this.$store.dispatch('market/getMarkets', {markets: data.data});
@@ -467,6 +472,7 @@
                      vm.gotoMarket(vm.eth_market_table.row(this).data()[0]);
                  })
              },
+
              changeMarket () {
                  if (this.market_type == 'btc') {
                      $('#btc-markets').show();
@@ -476,13 +482,16 @@
                      $('#eth-markets').show();
                  }
              },
+
              gotoMarket (param) {
                  this.$router.push({ name: 'trading', query: {MarketName: param}});
              },
+
              async fetchCurrencies() {
                  const {data} = await axios.get(urls.API_BASE_URL + '/_api/currencies');
                  await this.$store.dispatch('wallet/getCurrencies', {currencies: data.data});
              },
+
              showWithdraw(param) {
                  this.form_withdraw.quantity = 0;
                  this.form_withdraw.total = this.form_withdraw.quantity - this.form_withdraw.fee;
@@ -490,6 +499,7 @@
                  this.form_withdraw.currency_id = param.id;
                  $('#withdraw-modal').modal();
              },
+
              showDeposit(param) {
                  this.form_deposit.amount = 0;
                  this.form_deposit.address = '';
@@ -497,14 +507,19 @@
                  this.form_deposit.currency_id = param.id;
                  $('#deposit-modal').modal();
              },
-             async depositCurrency() {
+
+             async requestDeposit() {
+
                  let vm = this;
                  this.form_deposit.user_id = vm.user.id;
                  this.isLoading = true;
-                 const {data} = await this.form_deposit.post(urls.API_BASE_URL + '/_api/depositCurrency');
+                 this.addTableRowHtml = '';
+                 const {data} = await this.form_deposit.post(urls.API_BASE_URL + '/_api/requestDeposit');
                  this.isLoading = false;
                  if (data.code == codes.SUCCESS) {
-
+                     $('#tbldeposithistory .dataTables_empty').remove();
+                     this.addTableRowHtml = '<tr role="row" class="odd"><td class="sorting_1">' + data.data.date.date + '</td><td>' + data.data.symbol +
+                                            '</td><td>' + data.data.quantity + '</td><td>' + data.data.status + '</td></tr>';
                      const toast = swal.mixin({
                          toast: true,
                          position: 'top-end',
@@ -516,20 +531,28 @@
                          type: 'success',
                          title: 'Deposit has been entered successfully.'
                      });
+                     $('#tbldeposithistory').append(this.addTableRowHtml);
 
                      this.form_deposit.amount = 0;
                      this.form_deposit.address = '';
+                     $('#deposit-modal').modal('hide');
                  }
              },
-             async withdrawCurrency() {
+
+             async requestWithdraw() {
+
                  let vm = this;
                  this.form_withdraw.user_id = vm.user.id;
                  this.isLoading = true;
-                 const {data} = await this.form_withdraw.post(urls.API_BASE_URL + '/_api/withdrawCurrency');
+                 this.addTableRowHtml = '';
+                 const {data} = await this.form_withdraw.post(urls.API_BASE_URL + '/_api/requestWithdraw');
                  this.isLoading = false;
-
                  if (data.code == codes.SUCCESS) {
+                     $('#tblwithdrawhistory .dataTables_empty').remove();
+                     this.addTableRowHtml = '<tr role="row" class="odd"><td class="sorting_1">' + data.data.date.date + '</td><td>' + data.data.symbol +
+                         '</td><td>' + data.data.quantity + '</td><td>' + data.data.status + '</td></tr>';
 
+                     $('#tblwithdrawhistory').append(this.addTableRowHtml);
                      const toast = swal.mixin({
                          toast: true,
                          position: 'top-end',
@@ -544,35 +567,38 @@
 
                      this.form_withdraw.quantity = 0;
                      this.form_withdraw.address = '';
-                     this.form_withdraw.total = this.form_withdraw.quantity - this.form_withdraw.fee;
+                     this.form_withdraw.total = 0;
+                     $('#withdraw-modal').modal('hide');
                  }
              },
-             async depositHistory() {
+
+             async getDeposits() {
 
                  let vm = this;
-                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/depositHistory/' + vm.user.id);
+                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/getDeposits/' + vm.user.id);
                  await this.$store.dispatch('wallet/getdepositHistory', {currencies: data.data})
                  vm.depositHistoryTable.clear();
                  this.depositHistorys.forEach(function (history) {
                      vm.depositHistoryTable.row.add([
-                         history.name,
+                         history.date.date,
                          history.symbol,
                          history.amount,
-                         history.txid,
+                         history.status,
                      ]).draw(false);
                  })
              },
-             async withdrawHistory() {
+
+             async getWithdraws() {
 
                  let vm = this;
-                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/withdrawHistory/' + vm.user.id);
+                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/getWithdraws/' + vm.user.id);
                  await this.$store.dispatch('wallet/getwithdrawHistory', {currencies: data.data})
                  vm.withdrawHistoryTable.clear();
                  this.withdrawHistorys.forEach(function (history) {
                      vm.withdrawHistoryTable.row.add([
-                         history.name,
+                         history.date.date,
                          history.symbol,
-                         history.total,
+                         history.quantity,
                          history.status,
                      ]).draw(false);
                  })
@@ -584,7 +610,6 @@
              user: 'auth/user',
              depositHistorys: 'wallet/depositHistorys',
              withdrawHistorys: 'wallet/withdrawHistorys'
-
          })
 
      };

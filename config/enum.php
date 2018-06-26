@@ -36,5 +36,9 @@ return [
     'withdrawal_status' => [
         'pending',
         'complete'
+    ],
+    'deposit_status' => [
+        'checked',
+        'unchecked'
     ]
 ];

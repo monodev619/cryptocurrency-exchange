@@ -26,7 +26,8 @@ class WalletController extends BaseController
             'address' => 'required',
             'amount' => 'required',
             'is_confirmed' => 'required',
-            'txid' => 'required'
+            'txid' => 'required',
+            'status' => 'required'
         ]);
 
         $deposit = [
@@ -35,11 +36,18 @@ class WalletController extends BaseController
           'address' => $request->get('address'),
           'amount' => $request->get('amount'),
           'is_confirmed' => $request->get('is_confirmed'),
-          'txid' => $request->get('txid')
+          'txid' => $request->get('txid'),
+          'status' => $request->get('status')
         ];
 
-        Deposit::create($deposit);
-        return success();
+        $res = Deposit::create($deposit);
+        ($res->status == 1)? $status = 'checked' : (($res->status == 2) ? $status = 'unchecked' : 'none');
+        return success([
+            'date' => $res->created_at,
+            'symbol' => $res->currency->symbol,
+            'quantity' => $res->amount,
+            'status' => $status
+        ]);
     }
 
     public function requestWithdraw(Request $request) {
@@ -66,8 +74,14 @@ class WalletController extends BaseController
             'total' =>  $request->get('total')
         ];
 
-        Withdrawal::create($withdraw);
-        return success();
+        $res = Withdrawal::create($withdraw);
+        ($res->status == 1)? $status = 'pending' : (($res->status == 2) ? $status = 'complete' : 'none');
+        return success([
+            'date' => $res->created_at,
+            'symbol' => $res->currency->symbol,
+            'quantity' => $res->quantity,
+            'status' => $status
+        ]);
     }
 
     public function getDeposits($id) {
@@ -83,7 +97,9 @@ class WalletController extends BaseController
                 'address' => $depositHistory->address,
                 'amount' => $depositHistory->amount,
                 'is_confirmed' => $depositHistory->is_confirmed,
-                'txid' => $depositHistory->txid
+                'txid' => $depositHistory->txid,
+                'date' => $depositHistory->created_at,
+                'status' => $depositHistory->status
             ]);
         }
 
@@ -102,11 +118,13 @@ class WalletController extends BaseController
                 'name' => $withdrawHistory->currency->name,
                 'symbol' => $withdrawHistory->currency->symbol,
                 'address' => $withdrawHistory->address,
-                'amount' => $withdrawHistory->quantity,
+                'total' => $withdrawHistory->total,
+                'quantity' => $withdrawHistory->quantity,
                 'fee' => $withdrawHistory->fee,
                 'total' => $withdrawHistory->total,
                 'txid' => $withdrawHistory->txid,
-                'status' => $withdrawHistory->status
+                'status' => $withdrawHistory->status,
+                'date' => $withdrawHistory->created_at
             ]);
         }
 
