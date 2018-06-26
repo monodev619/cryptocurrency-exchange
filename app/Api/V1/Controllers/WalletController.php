@@ -15,4 +15,20 @@ class WalletController extends BaseController
     public function createWalletAddress(Request $request) {
 
     }
+
+    public function createDeposit(Request $request) {
+
+    }
+
+    public function getDeposits(Request $request) {
+        $user = user();
+    }
+
+    public function requestWithdraw(Request $request) {
+
+    }
+
+    public function getWithdrwals(Request $request) {
+
+    }
 }
