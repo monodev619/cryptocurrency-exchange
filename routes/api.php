@@ -5,6 +5,7 @@ use App\Api\V1\Controllers\AuthController;
 use App\Api\V1\Controllers\UserController;
 use App\Api\V1\Controllers\CurrencyController;
 use App\Api\V1\Controllers\MarketController;
+use App\Api\V1\Controllers\WalletController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -38,5 +39,10 @@ $api->version('v1', ['middleware' => ['dingo']], function ($api) {
         $api->get('getProfile', ['as' => 'api.getProfile', 'uses' => UserController::class . '@getProfile']);
         $api->post('updateProfile', ['as' => 'api.updateProfile', 'uses' => UserController::class . '@updateProfile']);
         $api->post('updatePassword', ['as' => 'api.updatePassword', 'uses' => UserController::class . '@updatePassword']);
+        $api->post('depositCurrency', ['as' => 'api.depositCurrency', 'uses' => WalletController::class . '@requestDeposit']);
+        $api->post('withdrawCurrency', ['as' => 'api.withdrawCurrency', 'uses' => WalletController::class . '@requestWithdraw']);
+        $api->get('depositHistory/{id}', ['as' => 'api.depositHistory', 'uses' => WalletController::class . '@getDeposits']);
+        $api->get('withdrawHistory/{id}', ['as' => 'api.withdrawHistory', 'uses' => WalletController::class . '@getWithdraws']);
+
     });
 });

@@ -10580,11 +10580,6 @@ pre {
   padding: 1% 0;
 }
 
-//.table-balance td{
-//  font-size: 15px;
-//  padding: 0.2rem 0;
-//}
-
 .table-balance thead th {
   width: 60px !important;
 }
@@ -10713,6 +10708,7 @@ pre {
 .table td {
   padding: 0.2rem 0 !important;
   font-size: 15px;
+  font-family: 'Akkurat',sans-serif;
 }
 
 .page-wrapper.main-content {
@@ -10824,11 +10820,10 @@ pre {
   font-size: 15px;
 }
 
-.selltable {
-  color: #000;
-}
-
-.buytable {
+.selltable,
+.buytable,
+.footercaption
+{
   color: #000;
 }
 
@@ -10883,26 +10878,26 @@ pre {
   width: 235px !important;
 }
 
-#tblemarkethistory_paginate a {
-  color: #000;
-}
-
-#tblopenorders_paginate a {
-  color: #000;
-}
-
-#tblorderhistory_paginate a {
-  color: #000;
-}
 
 .markethistory .card .card-body .card-title {
   font-weight: 500;
 }
 
-#btc-markets {
-  color: #000;
-}
-
 .type2 span {
   font-weight: 500;
+}
+
+.modify_input {
+  border: none;
+  text-align: right;
+}
+
+#tblbalances_wrapper,
+#tblethmarket,
+#btc-markets,
+#tblorderhistory_paginate a,
+#tblopenorders_paginate a,
+#tblemarkethistory_paginate a
+{
+  color: #000;
 }

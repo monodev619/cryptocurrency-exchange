@@ -747,11 +747,12 @@
                             <table id="tblbuylist" class="table table-striped buyselltable">
                                 <thead>
                                 <tr>
+                                    <th></th>
                                     <th>ASK({{ market_info ? market_info.type : 0 }})</th>
                                     <th>SIZE({{ market_info ? market_info.symbol : 0 }})</th>
                                     <th>TOTAL</th>
                                     <th>SUM</th>
-                                    <th></th>
+
                                 </tr>
                                 </thead>
                                 <tbody>

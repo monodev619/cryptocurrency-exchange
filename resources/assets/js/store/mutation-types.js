@@ -13,7 +13,10 @@ export const FETCH_PROFILE_FAILURE = 'FETCH_PROFILE_FAILURE';
 export const SET_LOCALE = 'SET_LOCALE';
 
 // wallet.js
+export  const GET_DEPOSITHISTORY = 'GET_DEPOSITHISTORY';
 export  const GET_CURRENCIES = 'GET_CURRENCIES';
+export  const GET_WITHDRAWHISTORY = 'GET_WITHDRAWHISTORY';
+
 
 
 //market.js
