@@ -8,6 +8,7 @@
 
 namespace App\Api\V1\Controllers;
 
+use App\Currency;
 use App\Deposit;
 use App\Withdrawal;
 use Illuminate\Http\Request;
@@ -102,7 +103,6 @@ class WalletController extends BaseController
                 'status' => $depositHistory->status
             ]);
         }
-
         return success($ret);
 
     }
@@ -129,6 +129,85 @@ class WalletController extends BaseController
         }
 
         return success($ret);
+    }
 
+    public function getPendingDeposits($id) {
+
+        $pendingDeposits = Deposit::where([['user_id', '=', $id], ['status', '=', 'unchecked']])->get();
+        $ret = [];
+        foreach ($pendingDeposits as $pendingDeposit) {
+            array_push( $ret, [
+                'id' => $pendingDeposit->id,
+                'user' => $pendingDeposit->user->name,
+                'name' => $pendingDeposit->currency->name,
+                'symbol' => $pendingDeposit->currency->symbol,
+                'address' => $pendingDeposit->address,
+                'amount' => $pendingDeposit->amount,
+                'is_confirmed' => $pendingDeposit->is_confirmed,
+                'txid' => $pendingDeposit->txid,
+                'date' => $pendingDeposit->created_at,
+                'status' => $pendingDeposit->status
+            ]);
+        }
+        return success($ret);
+    }
+
+    public function getPendingWithdraws($id) {
+
+        $pendingWithdraws = Withdrawal::where([['user_id', '=', $id], ['status', '=', 'pending']])->get();
+        $ret = [];
+        foreach ($pendingWithdraws as $pendingWithdraw) {
+            array_push( $ret, [
+                'id' => $pendingWithdraw->id,
+                'user' => $pendingWithdraw->user->name,
+                'name' => $pendingWithdraw->currency->name,
+                'symbol' => $pendingWithdraw->currency->symbol,
+                'address' => $pendingWithdraw->address,
+                'total' => $pendingWithdraw->total,
+                'quantity' => $pendingWithdraw->quantity,
+                'fee' => $pendingWithdraw->fee,
+                'total' => $pendingWithdraw->total,
+                'txid' => $pendingWithdraw->txid,
+                'status' => $pendingWithdraw->status,
+                'date' => $pendingWithdraw->created_at
+            ]);
+        }
+        return success($ret);
+    }
+
+    public function getBalances($id) {
+
+        $balanceCurrencies = [];
+
+        $currencies = Currency::all();
+
+
+        foreach ( $currencies as $currency ) {
+
+            $pendingDepValue = 0;
+            $depValue = 0;
+            $pendingDeposits = Deposit::where([['user_id', '=', $id], ['status', '=', 'unchecked'], ['currency_id', '=', $currency->id ]])->get();
+            $deposits = Deposit::where([['user_id', '=', $id], ['status', '=', 'checked'], ['currency_id', '=', $currency->id ]])->get();
+            for ($i = 0 ; $i < $pendingDeposits->count() ; $i++) {
+                $pendingDepValue += $pendingDeposits[$i]->amount;
+            }
+
+            for ($i = 0 ; $i < $deposits->count() ; $i++) {
+                $depValue += $deposits[$i]->amount;
+            }
+
+            array_push($balanceCurrencies, [
+                'id' => $currency->id,
+                'name' => $currency->name,
+                'symbol' => $currency->symbol,
+                'info' => $currency->info,
+                'logo' => image_url($currency->logo),
+                'deposit' => $depValue,
+                'pendingDeposit' => $pendingDepValue
+
+            ]);
+         }
+
+         return success($balanceCurrencies);
     }
 }

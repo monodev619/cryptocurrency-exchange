@@ -80,7 +80,7 @@ var open_detail_page = function (id) {
 
 var deleteUser = function (obj, id) {
     // currentTrObj = $(obj).parents("tr");
-
+    console.log(id);
     swal({
             title: "Delete User?",
             type: "warning",

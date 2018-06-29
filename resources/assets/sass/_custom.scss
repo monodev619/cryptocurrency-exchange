@@ -10871,8 +10871,13 @@ pre {
 }
 
 .type2 .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
-  width: 60px !important;
+  width: 70px !important;
 }
+
+.buycond.type2 .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+  width: 213px !important;
+}
+
 
 .type3 .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
   width: 235px !important;
@@ -10900,4 +10905,18 @@ pre {
 #tblemarkethistory_paginate a
 {
   color: #000;
+}
+
+.condition,
+.form-width
+{
+  width: 100%;
+}
+
+.label-content,
+.modaltype,
+.modaltimeinforce {
+  color: #000;
+  font-family: 'Akkurat',sans-serif;
+  font-size: 14px;
 }

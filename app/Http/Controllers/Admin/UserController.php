@@ -28,6 +28,7 @@ class UserController extends Controller
                 $join->on('users.id', '=', 'user_profiles.user_id');
             });
 
+
         if ($request->get('name') != '') {
             $users = $users->where('users.name', 'like', '%' . $request->get('name') . '%');
         }
@@ -86,12 +87,14 @@ class UserController extends Controller
             ]);
         }
 
+
         return [
             'sEcho' => $request->get('sEcho'),
             'iTotalRecords' => $total,
             'iTotalDisplayRecords' => $total,
             'aaData' => $result
         ];
+
     }
 
     public function deleteUser(Request $request) {

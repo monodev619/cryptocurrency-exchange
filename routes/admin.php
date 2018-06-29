@@ -34,5 +34,12 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('users', 'Admin\UserController@index')->name('admin.users');
         Route::get('getusers', 'Admin\UserController@getUsers')->name('admin.users.get');
         Route::post('user/delete', 'Admin\UserController@deleteUser')->name('admin.user.delete');
+
+        Route::get('wallet/deposits', 'Admin\WalletController@deposits')->name('admin.wallet.deposits');
+        Route::get('wallet/getDeposits', 'Admin\WalletController@getDeposits')->name('admin.wallet.getDeposits');
+        Route::post('wallet/checkDeposit', 'Admin\WalletController@checkDeposit')->name('admin.wallet.checkDeposit');
+        Route::get('wallet/withdrawals', 'Admin\WalletController@withdraws')->name('admin.wallet.withdraws');
+        Route::get('wallet/getwithdraws', 'Admin\WalletController@getWithdraws')->name('admin.wallet.getWithdraws');
+        Route::post('wallet/completeWithdrawal', 'Admin\WalletController@completeWithdraw')->name('admin.wallet.completeWithdrawal');
     });
 });

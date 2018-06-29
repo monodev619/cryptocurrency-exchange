@@ -58,20 +58,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="currency in currencies">
-                                        <td ref="cointype">{{currency.name}}</td>
-                                        <td ref="coinsymbol">{{currency.symbol}}</td>
-                                        <td>0.00000000</td>
-                                        <td>0.00000000</td>
+                                    <tr v-for="balancCurrency in balanceCurrencies">
+                                        <td ref="cointype">{{ balancCurrency.name }}</td>
+                                        <td ref="coinsymbol">{{ balancCurrency.symbol }}</td>
+                                        <td>{{ balancCurrency.deposit }}</td>
+                                        <td>{{ balancCurrency.pendingDeposit }}</td>
                                         <td>0.00000000</td>
                                         <td>0.00000000</td>
                                         <td>0.00000000</td>
                                         <td>%0.8</td>
                                         <td>
-                                            <b-btn class="btn btn-googleplus balbtn" type="button" v-b-tooltip.hover title="Withdrawal" @click="showWithdraw(currency)">
+                                            <b-btn class="btn btn-googleplus balbtn" type="button" v-b-tooltip.hover title="Withdrawal" @click="showWithdraw(balancCurrency)">
                                                 <i class="mdi mdi-arrow-down-bold"></i>
                                             </b-btn>
-                                            <b-btn class="btn btn-twitter balbtn waves-effect waves-light" type="button" v-b-tooltip.hover title="Deposit" @click="showDeposit(currency)">
+                                            <b-btn class="btn btn-twitter balbtn waves-effect waves-light" type="button" v-b-tooltip.hover title="Deposit" @click="showDeposit(balancCurrency)">
                                                 <i class="mdi mdi-arrow-up-bold"></i>
                                             </b-btn>
                                         </td>
@@ -218,18 +218,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Bitcoin</td>
-                                            <td>BTC</td>
-                                            <td>0.00000000</td>
-                                            <td>0.00000000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Bitcoin</td>
-                                            <td>BTC</td>
-                                            <td>0.00000000</td>
-                                            <td>0.00000000</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -256,18 +244,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Bitcoin</td>
-                                            <td>BTC</td>
-                                            <td>0.00000000</td>
-                                            <td>0.00000000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Bitcoin</td>
-                                            <td>BTC</td>
-                                            <td>0.00000000</td>
-                                            <td>0.00000000</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -320,12 +296,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="depositHistory in depositHistorys">
-                                            <td>{{ depositHistory.name }}</td>
-                                            <td>{{ depositHistory.symbol }}</td>
-                                            <td>{{ depositHistory.amount }}</td>
-                                            <td>{{ depositHistory.txid }}</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -395,6 +365,8 @@
 
              depositHistoryTable: null,
              withdrawHistoryTable: null,
+             pendingDepositsTable: null,
+             pendingWithdrawsTable: null,
              isLoading: false,
              addTableRowHtml: ''
          }),
@@ -421,11 +393,16 @@
 
              this.depositHistoryTable = $('#tbldeposithistory').DataTable();
              this.withdrawHistoryTable = $('#tblwithdrawhistory').DataTable();
+             this.pendingDepositsTable = $('#tblpendingdeposit').DataTable();
+             this.pendingWithdrawsTable = $('#tblpendingwithdraw').DataTable();
 
              this.getDeposits();
              this.getWithdraws();
              this.fetchCurrencies();
              this.fetchMarkets();
+             this.getPendingDeposits();
+             this.getPendingWithdraws();
+             this.getBalances();
 
          },
 
@@ -433,8 +410,7 @@
 
              $('#tblbalances').DataTable();
              $('#tblebalancemarket').DataTable();
-             $('#tblpendingwithdraw').DataTable();
-             $('#tblpendingdeposit').DataTable();
+
          },
 
          methods: {
@@ -489,7 +465,7 @@
 
              async fetchCurrencies() {
                  const {data} = await axios.get(urls.API_BASE_URL + '/_api/currencies');
-                 await this.$store.dispatch('wallet/getCurrencies', {currencies: data.data});
+                 await this.$store.dispatch('wallet/getCurrencies', {res: data.data});
              },
 
              showWithdraw(param) {
@@ -522,7 +498,7 @@
                                             '</td><td>' + data.data.quantity + '</td><td>' + data.data.status + '</td></tr>';
                      const toast = swal.mixin({
                          toast: true,
-                         position: 'top-end',
+                         position: 'center',
                          showConfirmButton: false,
                          timer: 3000
                      });
@@ -555,7 +531,7 @@
                      $('#tblwithdrawhistory').append(this.addTableRowHtml);
                      const toast = swal.mixin({
                          toast: true,
-                         position: 'top-end',
+                         position: 'center',
                          showConfirmButton: false,
                          timer: 3000
                      });
@@ -575,8 +551,8 @@
              async getDeposits() {
 
                  let vm = this;
-                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/getDeposits/' + vm.user.id);
-                 await this.$store.dispatch('wallet/getdepositHistory', {currencies: data.data})
+                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/Deposits/' + vm.user.id);
+                 await this.$store.dispatch('wallet/getdepositHistory', {res: data.data})
                  vm.depositHistoryTable.clear();
                  this.depositHistorys.forEach(function (history) {
                      vm.depositHistoryTable.row.add([
@@ -591,8 +567,8 @@
              async getWithdraws() {
 
                  let vm = this;
-                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/getWithdraws/' + vm.user.id);
-                 await this.$store.dispatch('wallet/getwithdrawHistory', {currencies: data.data})
+                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/Withdraws/' + vm.user.id);
+                 await this.$store.dispatch('wallet/getwithdrawHistory', {res: data.data})
                  vm.withdrawHistoryTable.clear();
                  this.withdrawHistorys.forEach(function (history) {
                      vm.withdrawHistoryTable.row.add([
@@ -602,14 +578,68 @@
                          history.status,
                      ]).draw(false);
                  })
-             }
+             },
+
+             async getPendingDeposits() {
+
+                 let vm = this;
+                 const {data} = await axios.get(urls.API_BASE_URL + '/_api/PendingDeposits/' + vm.user.id);
+                 await this.$store.dispatch('wallet/getPendingDeposits', {res: data.data})
+                 vm.pendingDepositsTable.clear();
+                 this.pendingDeposits.forEach(function (deposit) {
+                     vm.pendingDepositsTable.row.add([
+                         deposit.date.date,
+                         deposit.symbol,
+                         deposit.amount,
+                         deposit.is_confirmed,
+                     ]).draw(false);
+                 })
+             },
+
+             async getPendingWithdraws() {
+
+                 let vm = this;
+                 const {data} = await axios.get(urls.API_BASE_URL + '/_api/PendingWithdraws/' + vm.user.id);
+                 await this.$store.dispatch('wallet/getPendingWithdraws', {res: data.data})
+                 vm.pendingWithdrawsTable.clear();
+
+                 this.pendingWithdraws.forEach(function (withdraw) {
+                     vm.pendingWithdrawsTable.row.add([
+                         withdraw.date.date,
+                         withdraw.symbol,
+                         withdraw.quantity,
+                         withdraw.status,
+                     ]).draw(false);
+                 })
+             },
+
+             async getBalances() {
+
+                 let vm = this;
+                 const {data} = await axios.get(urls.API_BASE_URL + '/_api/Balances/' + vm.user.id);
+                 await this.$store.dispatch('wallet/getBalances', {res: data.data})
+
+                 // vm.pendingWithdrawsTable.clear();
+                 //
+                 // this.pendingWithdraws.forEach(function (withdraw) {
+                 //     vm.pendingWithdrawsTable.row.add([
+                 //         withdraw.date.date,
+                 //         withdraw.symbol,
+                 //         withdraw.quantity,
+                 //         withdraw.status,
+                 //     ]).draw(false);
+                 // })
+             },
          },
 
          computed: mapGetters({
              currencies: 'wallet/currencies',
              user: 'auth/user',
              depositHistorys: 'wallet/depositHistorys',
-             withdrawHistorys: 'wallet/withdrawHistorys'
+             withdrawHistorys: 'wallet/withdrawHistorys',
+             pendingDeposits: 'wallet/pendingDeposits',
+             pendingWithdraws: 'wallet/pendingWithdraws',
+             balanceCurrencies: 'wallet/balanceCurrencies',
          })
 
      };

@@ -29,7 +29,7 @@
                                             <h5 class="box-title m-t-10">Name</h5>
                                             <input type="text" class="form-control" id="name" name="name">
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <h5 class="box-title m-t-10">Email</h5>
                                             <input type="text" class="form-control" id="email" name="email">
                                         </div>
@@ -46,7 +46,7 @@
                                             <h5 class="box-title m-t-10">Reg Date</h5>
                                             <input class="form-control input-daterange-datepicker" type="text" id="register-dt" name="daterange" value=""/>
                                         </div>
-                                        <div class="col-md-1">
+                                        <div class="col-md-2">
                                             <h5 class="box-title m-t-10">Search</h5>
                                             <button type="button" class="btn btn-block btn-info" onclick="initTable()">Search</button>
                                         </div>
