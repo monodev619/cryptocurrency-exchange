@@ -1139,7 +1139,6 @@
 
                 vm.eth_market_table.on('click', 'tr', function () {
                     vm.gotoMarket(vm.eth_market_table.row(this).data()[0]);
-
                 })
             },
 
