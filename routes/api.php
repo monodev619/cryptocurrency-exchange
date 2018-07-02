@@ -47,8 +47,10 @@ $api->version('v1', ['middleware' => ['dingo']], function ($api) {
         $api->get('PendingDeposits/{id}', ['as' => 'api.PendingDeposits', 'uses' => WalletController::class . '@getPendingDeposits']);
         $api->get('PendingWithdraws/{id}', ['as' => 'api.PendingWithdraws', 'uses' => WalletController::class . '@getPendingWithdraws']);
         $api->get('Balances/{id}', ['as' => 'api.Balances', 'uses' => WalletController::class . '@getBalances']);
-        $api->post('requestBuyOrder', ['as' => 'api.requestBuyOrder', 'uses' => OrderController::class . '@requestBuyOrder']);
-        $api->post('requestSellOrder', ['as' => 'api.requestSellOrder', 'uses' => OrderController::class . '@requestSellOrder']);
+        $api->post('requestOrder', ['as' => 'api.requestOrder', 'uses' => OrderController::class . '@requestOrder']);
+//        $api->post('requestSellOrder', ['as' => 'api.requestSellOrder', 'uses' => OrderController::class . '@requestSellOrder']);
+        $api->get('Orders/', ['as' => 'api.Orders', 'uses' => OrderController::class . '@getOrders']);
+        $api->get('openOrders/', ['as' => 'api.openOrders', 'uses' => OrderController::class . '@getOpenOrders']);
 
     });
 });

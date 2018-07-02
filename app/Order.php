@@ -17,4 +17,8 @@ class Order extends Model
     public function currency() {
         return $this->belongsTo(Currency::class);
     }
+
+    public function market() {
+        return $this->belongsTo(Market::class);
+    }
 }

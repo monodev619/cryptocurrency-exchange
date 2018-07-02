@@ -41,5 +41,9 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('wallet/withdrawals', 'Admin\WalletController@withdraws')->name('admin.wallet.withdraws');
         Route::get('wallet/getwithdraws', 'Admin\WalletController@getWithdraws')->name('admin.wallet.getWithdraws');
         Route::post('wallet/completeWithdrawal', 'Admin\WalletController@completeWithdraw')->name('admin.wallet.completeWithdrawal');
+
+        Route::get('trade/orders', 'Admin\OrderController@orders')->name('admin.market.orders');
+        Route::get('trade/getOrders', 'Admin\OrderController@getOrders')->name('admin.trade.getOrders');
+        Route::post('trade/closeOrder', 'Admin\OrderController@closeOrder')->name('admin.trade.closeOrder');
     });
 });

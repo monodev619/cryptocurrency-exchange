@@ -476,7 +476,6 @@
                             <div class="tab-content">
                                 <div id="navpills-1" class="tab-pane active">
                                     <div class="row main-info">
-
                                             <div class="quantity type1">
                                                 <span class="quantitytitle">ORDERTYPE</span><br>
                                                 <select id="buyordertype" name="buyordertype" v-model="form_Order.order_type" class="selectpicker color-dark" data-style="form-control btn-secondary">
@@ -631,7 +630,7 @@
                             </div>
                             <div id="buy-modal-content" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                                 <div class="modal-dialog">
-                                    <form class="form-width" @submit.prevent="requestBuyOrder" @keydown="form_Order.onKeydown($event)">
+                                    <form class="form-width" @submit.prevent="requestOrder" @keydown="form_Order.onKeydown($event)">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4 class="modal-title">{{ market_info ? market_info.name : 0 }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Confirm Your Limit Buy Order</h4>
@@ -655,21 +654,21 @@
                                                 <div class="sellmodal current-currency">
                                                     <div class="sellmodal current-header row">
                                                         <div class="sellmodalname col-sm-6"><span class="">SUBTOTAL</span></div>
-                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(this.subTotal).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                     </div>
                                                     <div><hr></div>
                                                 </div>
                                                 <div class="sellmodal current-currency">
                                                     <div class="sellmodal current-header row">
                                                         <div class="sellmodalname col-sm-6"><span class="">COMMISSION</span></div>
-                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.fee).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                     </div>
                                                     <div><hr></div>
                                                 </div>
                                                 <div class="sellmodal current-currency ">
                                                     <div class="sellmodal current-header row total">
                                                         <div class="sellmodalname col-sm-6"><span class="">TOTAL</span></div>
-                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.total).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                     </div>
                                                     <div><hr></div>
                                                 </div>
@@ -684,7 +683,7 @@
                                                     </p>
                                                 </div>
                                             </div>
-                                            <input class="buyorder" name="fee" v-model="form_Order.fee" type="hidden">
+                                            <input class="buybalance" name="fee" v-model="form_Order.fee" type="hidden">
                                             <input class="buybalance" name="balance" v-model="form_Order.balance" type="hidden">
                                             <input class="buystatus" name="status" v-model="form_Order.status" type="hidden">
                                             <div class="modal-footer">
@@ -720,7 +719,7 @@
                             </div>
                             <div id="sell-modal-content" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                                 <div class="modal-dialog">
-                                    <form class="form-width" @submit.prevent="requestBuyOrder" @keydown="form_Order.onKeydown($event)">
+                                    <form class="form-width" @submit.prevent="requestOrder" @keydown="form_Order.onKeydown($event)">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4 class="modal-title">{{ market_info ? market_info.name : 0 }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Confirm Your Limit Sell Order</h4>
@@ -744,21 +743,21 @@
                                                 <div class="sellmodal current-currency">
                                                     <div class="sellmodal current-header row">
                                                         <div class="sellmodalname col-sm-6"><span class="">SUBTOTAL</span></div>
-                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(this.subTotal).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                     </div>
                                                     <div><hr></div>
                                                 </div>
                                                 <div class="sellmodal current-currency">
                                                     <div class="sellmodal current-header row">
                                                         <div class="sellmodalname col-sm-6"><span class="">COMMISSION</span></div>
-                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.fee).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                     </div>
                                                     <div><hr></div>
                                                 </div>
                                                 <div class="sellmodal current-currency ">
                                                     <div class="sellmodal current-header row total">
                                                         <div class="sellmodalname col-sm-6"><span class="">TOTAL</span></div>
-                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">0.00000000</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.total).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                     </div>
                                                     <div><hr></div>
                                                 </div>
@@ -802,7 +801,6 @@
                                     <th>SIZE({{ market_info ? market_info.symbol : 0 }})</th>
                                     <th>TOTAL</th>
                                     <th>SUM</th>
-
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -975,24 +973,6 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>Bitcoin</td>
-                                            <td>BTC</td>
-                                            <td>0.00000000</td>
-                                            <td>0.00000000</td>
-                                            <td>BTC</td>
-                                            <td>0.00000000</td>
-                                            <td>0.00000000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Bitcoin</td>
-                                            <td>BTC</td>
-                                            <td>0.00000000</td>
-                                            <td>0.00000000</td>
-                                            <td>BTC</td>
-                                            <td>0.00000000</td>
-                                            <td>0.00000000</td>
-                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -1021,24 +1001,6 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>Bitcoin</td>
-                                            <td>BTC</td>
-                                            <td>0.00000000</td>
-                                            <td>0.00000000</td>
-                                            <td>BTC</td>
-                                            <td>0.00000000</td>
-                                            <td>0.00000000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Bitcoin</td>
-                                            <td>BTC</td>
-                                            <td>0.00000000</td>
-                                            <td>0.00000000</td>
-                                            <td>BTC</td>
-                                            <td>0.00000000</td>
-                                            <td>0.00000000</td>
-                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -1082,6 +1044,10 @@
             market_type: 'btc',
             isLoading: false,
             bidType: '',
+            order_history_table: null,
+            openOrder_table: null,
+            subTotal: 0,
+            commission: 0,
 
             form_Order: new Form({
                 user_id: 0,
@@ -1101,35 +1067,40 @@
         }),
 
         created() {
+            this.order_history_table = null,
+            this.openOrder_table = null,
             this.form_Order.order_type = 'Limit',
             this.form_Order.bidask = 'bid',
             this.form_Order.condition = 'None',
             this.form_Order.timeinforce = 'Good Til Canceled',
-            this.form_Order.fee = 0.005,
+            this.form_Order.fee = 0,
             this.form_Order.balance = 100,
             this.form_Order.status = 'opened'
+            this.commission = 0.0025
+
         },
 
         mounted() {
             $('.selectpicker').selectpicker();
-
             this.btc_market_table = $('#tblbtcmarket').DataTable();
             this.eth_market_table = $('#tblethmarket').DataTable();
+            this.order_history_table = $('#tblorderhistory').DataTable();
+            this.openOrder_table = $('#tblopenorders').DataTable();
+
             $('#eth-markets').hide();
 
             this.fetchMarket();
             this.fetchMarkets();
 
-
         },
 
         updated() {
+
             $('#tblselllist').DataTable();
             $('#tblbuylist').DataTable();
             $('#tblemarkethistory').DataTable();
-            $('#tblopenorders').DataTable();
-            $('#tblorderhistory').DataTable();
             $('.selectpicker').selectpicker('refresh');
+
         },
 
         watch: {
@@ -1168,12 +1139,19 @@
 
                 vm.eth_market_table.on('click', 'tr', function () {
                     vm.gotoMarket(vm.eth_market_table.row(this).data()[0]);
+
                 })
             },
 
             async fetchMarket () {
                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/market' + '/' + this.$route.query.MarketName);
                 this.market_info = data.data;
+                let vm = this;
+
+                this.openOrder_table.clear().draw();
+                this.order_history_table.clear().draw();
+                vm.getOrders();
+                vm.getOpenOrders();
             },
 
             gotoMarket (param) {
@@ -1212,6 +1190,10 @@
                     $('#buy-fail').modal();
                     $('#buy-modal-content').hide();
                 } else {
+                    let vm = this;
+                    this.form_Order.total = this.form_Order.quantity * this.form_Order.price + this.form_Order.price * this.commission;
+                    vm.subTotal = this.form_Order.quantity * this.form_Order.price;
+                    this.form_Order.fee = this.form_Order.total - vm.subTotal;
                     $('#buy-fail').hide();
                     $('#buy-modal-content').modal();
                 }
@@ -1223,6 +1205,11 @@
                     $('#sell-fail').modal();
                     $('#sell-modal-content').hide();
                 } else {
+                    let vm = this;
+                    this.form_Order.total = this.form_Order.quantity * this.form_Order.price + this.commission * this.form_Order.price;
+                    vm.subTotal = this.form_Order.quantity * this.form_Order.price;
+                    this.form_Order.fee = this.form_Order.total - vm.subTotal;
+
                     $('#sell-fail').hide();
                     $('#sell-modal-content').modal();
                 }
@@ -1234,7 +1221,7 @@
             },
 
 
-            async requestBuyOrder() {
+            async requestOrder() {
 
                 let vm = this;
                 this.form_Order.user_id = vm.user.id;
@@ -1243,15 +1230,16 @@
                     this.form_Order.condition = 'None';
                     this.form_Order.target_price = 0;
                 }
-                // this.isLoading = true;
-                // this.addTableRowHtml = '';
+                this.isLoading = true;
+                this.addOrderTableRowHtml = '';
+                this.addOpenTableRowHtml = '';
 
-                const {data} = await this.form_Order.post(urls.API_BASE_URL + '/_api/requestBuyOrder');
+                const {data} = await this.form_Order.post(urls.API_BASE_URL + '/_api/requestOrder');
                 this.isLoading = false;
                 if (data.code == codes.SUCCESS) {
-                    // $('#tbldeposithistory .dataTables_empty').remove();
-                    // this.addTableRowHtml = '<tr role="row" class="odd"><td class="sorting_1">' + data.data.date.date + '</td><td>' + data.data.symbol +
-                    //     '</td><td>' + data.data.quantity + '</td><td>' + data.data.status + '</td></tr>';
+                    $('#tblorderhistory .dataTables_empty').remove();
+                    this.addOrderTableRowHtml = '<tr role="row" class="odd"><td class="sorting_1">' + data.data.updated_at.date + '</td><td>' + data.data.created_at.date +
+                        '</td><td>' + data.data.order_type + '</td><td>' + 0.2356 + '</td><td>' + data.data.total + '</td><td>' + 0.236 + '</td><td>' + 0.0001 + '</td></tr>';
                     const toast = swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -1263,12 +1251,20 @@
                         type: 'success',
                         title: 'Order has been entered successfully.'
                     });
-                    // $('#tbldeposithistory').append(this.addTableRowHtml);
+                    if (data.data.status == 'opened') {
+                        $('#tblopenorders .dataTables_empty').remove();
+                        this.addOpenTableRowHtml = '<tr role="row" class="odd"><td class="sorting_1">' + data.data.created_at.date + '</td><td>' + data.data.order_type +
+                            '</td><td>' + data.data.bidask + '</td><td>' + 0.2356 + '</td><td>' + data.data.total + '</td><td>' + 0.236 + '</td><td>' + 0.0001 + '</td></tr>';
+                        $('#tblopenorders').append(this.addOpenTableRowHtml);
+                    }
+                    $('#tblorderhistory').append(this.addOrderTableRowHtml);
 
                     this.form_Order.price = 0;
                     this.form_Order.quantity = 0;
                     this.form_Order.total = 0;
                     this.form_Order.target_price = 0;
+                    this.form_Order.fee = 0;
+                    vm.subTotal = 0;
 
                     $('#buy-modal-content').modal('hide');
                     $('#sell-modal-content').modal('hide');
@@ -1277,23 +1273,44 @@
 
             async getOrders() {
                 let vm = this;
-                const { data } = await axios.get(urls.API_BASE_URL + '/_api/Orders/' + vm.user.id);
-                await this.$store.dispatch('wallet/getwithdrawHistory', {res: data.data})
-                vm.withdrawHistoryTable.clear();
-                this.withdrawHistorys.forEach(function (history) {
-                    vm.withdrawHistoryTable.row.add([
-                        history.date.date,
-                        history.symbol,
-                        history.quantity,
-                        history.status,
+                const { data } = await axios.get(urls.API_BASE_URL + '/_api/Orders?user_id=' + vm.user.id + '&market_id=' + vm.market_info.id );
+                await this.$store.dispatch('order/getOrders', {res: data.data})
+                vm.order_history_table.clear();
+                this.orders.forEach(function (order) {
+                    vm.order_history_table.row.add([
+                        order.close_date.date,
+                        order.open_date.date,
+                        order.type,
+                        0.0000000,
+                        order.total_units,
+                        154800,
+                        0.23656
+                    ]).draw(false);
+                })
+            },
+
+            async getOpenOrders() {
+                let vm = this;
+                const { data } = await axios.get(urls.API_BASE_URL + '/_api/openOrders?user_id=' + vm.user.id + '&market_id=' + vm.market_info.id );
+                await this.$store.dispatch('order/getOpenOrders', {res: data.data})
+                vm.openOrder_table.clear();
+                this.open_orders.forEach(function (order) {
+                    vm.openOrder_table.row.add([
+                        order.order_date.date,
+                        order.type,
+                        order.bidask,
+                        154800,
+                        order.units_total,
+                        0.23656,
+                        0.235566
                     ]).draw(false);
                 })
             }
-
-
         },
         computed: mapGetters ({
-            user: 'auth/user'
+            user: 'auth/user',
+            orders: 'order/orders',
+            open_orders: 'order/open_orders',
         })
     }
 </script>

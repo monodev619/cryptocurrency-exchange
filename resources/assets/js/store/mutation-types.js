@@ -24,3 +24,8 @@ export  const GET_BALANCES = 'GET_BALANCES';
 
 //market.js
 export  const GET_MARKETS = 'GET_MARKETS';
+
+
+//order.js
+export const GET_ORDERS = 'GET_ORDERS';
+export const GET_OPENORDERS = 'GET_OPENORDERS';

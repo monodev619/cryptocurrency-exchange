@@ -6,9 +6,9 @@
                 <li> <a class="waves-effect waves-dark {{ strcmp(Request::path(), 'admin') == 0 ? 'active' : '' }}" href="{{ url('/admin') }}" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu">Home</span></a></li>
                 <li> <a class="waves-effect waves-dark {{ str_contains(Request::path(), 'admin/user') ? 'active' : '' }}" href="{{ url('/admin/users') }}" aria-expanded="false"><i class="mdi mdi-account"></i><span class="hide-menu">Users</span></a></li>
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-store"></i><span class="hide-menu">Market</span></a>
-                    <ul aria-expanded="{{ str_contains(Request::path(), 'admin/market') ? 'true' : 'false' }}" class="{{ str_contains(Request::path(), 'admin/market') ? 'collapse in' : 'collapse' }}">
-                        <li><a class="{{ str_contains(Request::path(), 'admin/market/orders') ? 'active' : '' }}" href="{{ url('/admin/market/orders') }}">Order</a></li>
-                        <li><a class="{{ str_contains(Request::path(), 'admin/market/transactions') ? 'active' : '' }}" href="{{ url('/admin/market/transactions') }}">Transaction</a></li>
+                    <ul aria-expanded="{{ str_contains(Request::path(), 'admin/trade') ? 'true' : 'false' }}" class="{{ str_contains(Request::path(), 'admin/trade') ? 'collapse in' : 'collapse' }}">
+                        <li><a class="{{ str_contains(Request::path(), 'admin/trade/orders') ? 'active' : '' }}" href="{{ url('/admin/trade/orders') }}">Order</a></li>
+                        <li><a class="{{ str_contains(Request::path(), 'admin/trade/transactions') ? 'active' : '' }}" href="{{ url('/admin/trade/transactions') }}">Transaction</a></li>
                     </ul>
                 </li>
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-file-document-box"></i><span class="hide-menu">Wallet</span></a>

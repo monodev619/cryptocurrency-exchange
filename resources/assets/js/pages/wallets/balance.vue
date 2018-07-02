@@ -432,7 +432,6 @@
                  });
 
                  vm.btc_market_table.on('click', 'tr', function () {
-                     console.log(vm.btc_market_table.row(this).data()[0])
                      vm.gotoMarket(vm.btc_market_table.row(this).data()[0]);
                  })
 
