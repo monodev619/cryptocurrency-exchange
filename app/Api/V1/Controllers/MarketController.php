@@ -55,6 +55,7 @@ class MarketController extends BaseController
                 'name' => $market->name,
                 'type' => $market->market_type,
                 'currency' => $market->currency->name,
+                'currency_id' => $market->currency->id,
                 'symbol' => $market->currency->symbol,
                 'logo' => image_url($market->currency->logo),
                 'rate' => $market->rate,
