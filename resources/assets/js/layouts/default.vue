@@ -29,7 +29,7 @@ export default {
     },
 
     data: () => ({
-     show_footer:true,
+     show_footer:false,
       change_footer:true
     }),
 
