@@ -15,8 +15,8 @@ const Trading = () => import('~/pages/markets/main').then(m => m.default || m)
 
 
 export default [
-  { path: '/', name: 'welcome', component: Welcome },
-  { path: '/login', name: 'login', component: Login },
+  // { path: '/', name: 'welcome', component: Welcome },
+  { path: '/', name: 'login', component: Login },
   { path: '/register', name: 'register', component: Register },
 
   { path: '/settings', name: 'settings',  component: Setting,
