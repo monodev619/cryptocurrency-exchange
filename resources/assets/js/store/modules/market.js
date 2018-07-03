@@ -11,9 +11,6 @@ export const state = {
 export const getters = {
     btc_markets: state => state.btc_markets,
     eth_markets: state => state.eth_markets,
-    getMarketId: (state) => (name) => {
-        return state.btc_markets.find(market => market.name === name)
-    }
 }
 
 
@@ -30,4 +27,5 @@ export const actions = {
     getMarkets ({ commit, dispatch }, payload) {
         commit(types.GET_MARKETS, payload)
     }
+
 }
