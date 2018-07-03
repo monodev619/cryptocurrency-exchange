@@ -128,103 +128,123 @@
                 </div>
                 <div class="col-lg-2 col-md-2 btndepwith" v-if="user">
                     <div class="button">
-                        <b-btn class="waves-effect waves-light btn-danger btnwithdraw" type="button"  v-b-tooltip.hover title="Withdraw" @click="showWithdraw">Withdraw</b-btn>
-                        <b-btn class="waves-effect waves-light btn-success btndeposit" type="button"  v-b-tooltip.hover title="Deposit" @click="showDeposit">Deposit</b-btn>
+                        <b-btn class="waves-effect waves-light btn-danger btnwithdraw" type="button"  v-b-tooltip.hover title="Withdraw" @click="showWithdraw(market_info.currency_id)">Withdraw</b-btn>
+                        <b-btn class="waves-effect waves-light btn-success btndeposit" type="button"  v-b-tooltip.hover title="Deposit" @click="showDeposit(market_info.currency_id)">Deposit</b-btn>
                     </div>
                     <div id="withdraw-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                        <loading :active.sync="isLoading" :can-cancel="false" ></loading>
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title">Withdrawal</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 </div>
-                                <div class="modal-body">
-                                    <div class="currency">
-                                        <div class="col-xs-6">Currency</div>
-                                    </div>
-                                    <div class="current-currency withdraw">
-                                        <div class="current-header row">
-                                            <div class="col-sm-4"><span class="label-name">NAME</span></div>
-                                            <div class="col-sm-4"><span class="symbol">SYMBOL</span> </div>
-                                            <div class="col-sm-4"><span class="balance">AVAILABLE BALANCE</span></div>
+                                <form class="form-horizontal form-material" @submit.prevent="requestWithdraw" @keydown="form_withdraw.onKeydown($event)">
+                                    <div class="modal-body">
+                                        <div class="currency">
+                                            <div class="col-xs-6">Currency</div>
                                         </div>
-                                        <div><hr></div>
-                                        <div class="current-body row">
-                                            <div class="col-sm-4"><span class="coinname">{{ market_info ? market_info.currency : 0 }}</span></div>
-                                            <div class="col-sm-4"><span class="symbolname">{{ market_info ? market_info.symbol : 0 }}</span></div>
-                                            <div class="col-sm-4"><span class="balancevalue">0</span></div>
+                                        <div class="current-currency withdraw">
+                                            <div class="current-header row">
+                                                <div class="col-sm-4"><span class="label-name">NAME</span></div>
+                                                <div class="col-sm-4"><span class="symbol">SYMBOL</span> </div>
+                                                <div class="col-sm-4"><span class="balance">AVAILABLE BALANCE</span></div>
+                                            </div>
+                                            <div><hr></div>
+                                            <div class="current-body row">
+                                                <div class="col-sm-4"><span class="coinname">{{ market_info ? market_info.currency : 0 }}</span></div>
+                                                <div class="col-sm-4"><span class="symbolname">{{ market_info ? market_info.symbol : 0 }}</span></div>
+                                                <div class="col-sm-4"><span class="balancevalue">0</span></div>
+                                            </div>
                                         </div>
+                                        <div class="withdrawamount row">
+                                            <h2 class="col-sm-12 withdraw-title">Withdrawal amount</h2>
+                                            <div class="col-sm-6">QUANTITY</div>
+                                            <div class="col-sm-6"><input type="text" class="quantityvalue" name="withdraw_quantity" v-model="form_withdraw.quantity" v-on:change="quantityChange"><span class="cointype">{{ market_info ? market_info.symbol : 0 }}</span></div>
+                                            <div class="col-sm-6">TRANSACTION FEE</div>
+                                            <div class="col-sm-6"><input type="text" class="modify_input" name="withdraw_fee" v-model="form_withdraw.fee" readonly><span class="feevalue">&nbsp;{{ market_info ? market_info.symbol : 0 }}</span></div>
+                                            <div class="col-sm-6">TOTAL WITHDRAWAL</div>
+                                            <div class="col-sm-6"><input type="text" class="modify_input" name="withdraw_total" v-model="form_withdraw.total"><span class="totalvalue">&nbsp;{{ market_info ? market_info.symbol : 0 }}</span></div>
+                                        </div>
+                                        <div class="address withdraw">
+                                            <span class="addr-title">Address</span><br>
+                                            <input type="text" class="withdraw-addr-input" id="withdraw_address" v-model="form_withdraw.address"  placeholder="">
+                                        </div>
+                                        <div class="de-instruct withdraw">
+                                            <h2 class="title">DISCLAIMER</h2>
+                                            <p class="instruct-content">Please verify your withdrawal address. We cannot refund an incorrect withdrawal.</p>
+                                            <p>DO NOT WITHDRAW DIRECTLY TO A CROWDFUND OR ICO.</p>
+                                            <p class="instruct-content">We will not credit your account with tokens from that sale.</p>
+                                        </div>
+                                        <input class="deposit_is_confirm" name="withdraw_is_confirmed" v-model="form_withdraw.status" type="hidden">
+                                        <input class="deposit_txid" name="withdraw_txid" v-model="form_withdraw.txid" type="hidden">
+                                        <input class="deposit_user_id" name="withdraw_user_id" v-model="form_withdraw.user_id" type="hidden">
+                                        <input class="deposit_currency_id" name="withdraw_currency_id" v-model="form_withdraw.currency_id" type="hidden">
                                     </div>
-                                    <div class="withdrawamount row">
-                                        <h2 class="col-sm-12 withdraw-title">Withdrawal amount</h2>
-                                        <div class="col-sm-6">QUANTITY</div>
-                                        <div class="col-sm-6"><input type="text" class="quantityvalue" v-bind:value="0"><span class="cointype">{{ market_info ? market_info.symbol : 0 }}</span></div>
-                                        <div class="col-sm-6">TRANSACTION FEE</div>
-                                        <div class="col-sm-6"><span class="feevalue">0.00050000 &nbsp;{{ market_info ? market_info.symbol : 0 }}</span></div>
-                                        <div class="col-sm-6">TOTAL WITHDRAWAL</div>
-                                        <div class="col-sm-6"><span class="totalvalue">-0.00050000 &nbsp;{{ market_info ? market_info.symbol : 0 }}</span></div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn  waves-effect waves-light perform">{{ market_info ? market_info.symbol : 0 }}&nbsp; Withdraw</button>
                                     </div>
-                                    <div class="address withdraw">
-                                        <span class="addr-title">Address</span><br>
-                                        <input type="text" class="withdraw-addr-input" id="addr" placeholder="Error generating address">
-                                    </div>
-                                    <div class="de-instruct withdraw">
-                                        <h2 class="title">DISCLAIMER</h2>
-                                        <p class="instruct-content">Please verify your withdrawal address. We cannot refund an incorrect withdrawal.</p>
-                                        <p>DO NOT WITHDRAW DIRECTLY TO A CROWDFUND OR ICO.</p>
-                                        <p class="instruct-content">We will not credit your account with tokens from that sale.</p>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger btn-default waves-effect" data-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn  waves-effect waves-light perform">{{ market_info ? market_info.symbol : 0 }}&nbsp; Withdraw</button>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                     <div id="deposit-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                        <loading :active.sync="isLoading" :can-cancel="false" ></loading>
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title">Deposit</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 </div>
-                                <div class="modal-body">
-                                    <div class="currency">
-                                        <div class="col-xs-6">Currency</div>
-                                    </div>
-                                    <div class="current-currency">
-                                        <div class="current-header row">
-                                            <div class="col-sm-6"><span class="label-name">NAME</span></div>
-                                            <div class="col-sm-6"><span class="symbol">SYMBOL</span> </div>
+                                <form class="form-horizontal form-material" @submit.prevent="requestDeposit" @keydown="form_deposit.onKeydown($event)">
+                                    <div class="modal-body">
+                                        <div class="currency">
+                                            <div class="col-xs-6">Currency</div>
                                         </div>
-                                        <div><hr></div>
-                                        <div class="current-body row">
-                                            <div class="col-sm-6"><span class="coinname">{{ market_info ? market_info.currency : 0 }}</span></div>
-                                            <div class="col-sm-6"><span class="symbolname">{{ market_info ? market_info.symbol : 0 }}</span></div>
+                                        <div class="current-currency">
+                                            <div class="current-header row">
+                                                <div class="col-sm-6"><span class="label-name">NAME</span></div>
+                                                <div class="col-sm-6"><span class="symbol">SYMBOL</span> </div>
+                                            </div>
+                                            <div><hr></div>
+                                            <div class="current-body row">
+                                                <div class="col-sm-6"><span class="coinname">{{ market_info ? market_info.currency : 0 }}</span></div>
+                                                <div class="col-sm-6"><span class="symbolname">{{ market_info ? market_info.symbol : 0 }}</span></div>
+                                            </div>
                                         </div>
+                                        <div class="disclaimer">
+                                            <div class="disc-title">DISCLAIMER</div>
+                                            <p class="disc-content">I acknowledge the following information:<br>
+                                                By depositing tokens to this address, you agree to our <a href="https://bittrex.zendesk.com/hc/en-us/articles/115000961172" target="_blank">deposit recovery policy</a>.
+                                                Depositing tokens to an address other than BTC may result in your funds being lost.
+                                            </p>
+                                        </div>
+                                        <div class="withdrawamount row">
+                                            <h2 class="col-sm-12 withdraw-title">Deposit amount</h2>
+                                            <div class="col-sm-6">Amount</div>
+                                            <div class="col-sm-6"><input type="text" class="quantityvalue" name="deposit_amount" v-model="form_deposit.amount"><span class="cointype">{{ market_info ? market_info.symbol : 0 }}</span></div>
+                                        </div>
+                                        <div class="address">
+                                            <span class="addr-title">Address</span><br>
+                                            <input type="text" class="addr-input" id="deposit_address" name="deposit_address" v-model="form_deposit.address" placeholder="Generate a new address">
+                                            <button class="addr-button">New Address</button>
+                                        </div>
+                                        <div class="de-instruct">
+                                            <h2 class="title">DEPOSIT INSTRUCTIONS</h2>
+                                            <p class="instruct-content">Depositing tokens to this address other than BTC will result in your funds being lost.</p>
+                                        </div>
+                                        <input class="deposit_is_confirm" name="deposit_is_confirmed" v-model="form_deposit.is_confirmed" type="hidden">
+                                        <input class="deposit_txid" name="deposit_txid" v-model="form_deposit.txid" type="hidden">
+                                        <input class="deposit_user_id" name="deposit_user_id" v-model="form_deposit.user_id" type="hidden">
+                                        <input class="deposit_currency_id" name="deposit_currency_id" v-model="form_deposit.currency_id" type="hidden">
+                                        <input class="deposit_currency_id" name="deposit_status" v-model="form_deposit.status" type="hidden">
                                     </div>
-                                    <div class="disclaimer">
-                                        <div class="disc-title">DISCLAIMER</div>
-                                        <p class="disc-content">I acknowledge the following information:<br>
-                                            By depositing tokens to this address, you agree to our <a href="https://bittrex.zendesk.com/hc/en-us/articles/115000961172" target="_blank">deposit recovery policy</a>.
-                                            Depositing tokens to an address other than BTC may result in your funds being lost.
-                                        </p>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn waves-effect waves-light perform">Done</button>
                                     </div>
-                                    <div class="address">
-                                        <span class="addr-title">Address</span><br>
-                                        <input type="text" class="addr-input" id="addr" placeholder="Error generating address">
-                                        <button class="addr-button">New Address</button>
-                                    </div>
-                                    <div class="de-instruct">
-                                        <h2 class="title">DEPOSIT INSTRUCTIONS</h2>
-                                        <p class="instruct-content">Depositing tokens to this address other than BTC will result in your funds being lost.</p>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger btn-default waves-effect" data-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn waves-effect waves-light perform">Done</button>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -640,35 +660,35 @@
                                                 <div class="sellmodal current-currency">
                                                     <div class="sellmodal current-header row">
                                                         <div class="sellmodalname col-sm-6"><span class="">QUANTITY</span></div>
-                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.quantity).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.symbol : 0 }}</span></div>
+                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.quantity).toFixed(5) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.symbol : 0 }}</span></div>
                                                     </div>
                                                     <div><hr></div>
                                                 </div>
                                                 <div class="sellmodal current-currency">
                                                     <div class="sellmodal current-header row">
                                                         <div class="sellmodalname col-sm-6"><span class="">PRICE</span></div>
-                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.price).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.price).toFixed(5) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                     </div>
                                                     <div><hr></div>
                                                 </div>
                                                 <div class="sellmodal current-currency">
                                                     <div class="sellmodal current-header row">
                                                         <div class="sellmodalname col-sm-6"><span class="">SUBTOTAL</span></div>
-                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(this.subTotal).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(this.subTotal).toFixed(5) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                     </div>
                                                     <div><hr></div>
                                                 </div>
                                                 <div class="sellmodal current-currency">
                                                     <div class="sellmodal current-header row">
                                                         <div class="sellmodalname col-sm-6"><span class="">COMMISSION</span></div>
-                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.fee).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.fee).toFixed(5) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                     </div>
                                                     <div><hr></div>
                                                 </div>
                                                 <div class="sellmodal current-currency ">
                                                     <div class="sellmodal current-header row total">
                                                         <div class="sellmodalname col-sm-6"><span class="">TOTAL</span></div>
-                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.total).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.total).toFixed(5) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                     </div>
                                                     <div><hr></div>
                                                 </div>
@@ -729,35 +749,35 @@
                                                 <div class="sellmodal current-currency">
                                                     <div class="sellmodal current-header row">
                                                         <div class="sellmodalname col-sm-6"><span class="">QUANTITY</span></div>
-                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.quantity).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.symbol : 0 }}</span></div>
+                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.quantity).toFixed(5) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.symbol : 0 }}</span></div>
                                                     </div>
                                                     <div><hr></div>
                                                 </div>
                                                 <div class="sellmodal current-currency">
                                                     <div class="sellmodal current-header row">
                                                         <div class="sellmodalname col-sm-6"><span class="">PRICE</span></div>
-                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.price).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.price).toFixed(5) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                     </div>
                                                     <div><hr></div>
                                                 </div>
                                                 <div class="sellmodal current-currency">
                                                     <div class="sellmodal current-header row">
                                                         <div class="sellmodalname col-sm-6"><span class="">SUBTOTAL</span></div>
-                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(this.subTotal).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(this.subTotal).toFixed(5) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                     </div>
                                                     <div><hr></div>
                                                 </div>
                                                 <div class="sellmodal current-currency">
                                                     <div class="sellmodal current-header row">
                                                         <div class="sellmodalname col-sm-6"><span class="">COMMISSION</span></div>
-                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.fee).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.fee).toFixed(5) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                     </div>
                                                     <div><hr></div>
                                                 </div>
                                                 <div class="sellmodal current-currency ">
                                                     <div class="sellmodal current-header row total">
                                                         <div class="sellmodalname col-sm-6"><span class="">TOTAL</span></div>
-                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.total).toFixed(8) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
+                                                        <div class="col-sm-6"><span class="sellmodalvalue color-green">{{ parseFloat(form_Order.total).toFixed(5) }}</span>&nbsp;&nbsp;<span class="sellmodalcoin">{{ market_info ? market_info.type : 0 }}</span></div>
                                                     </div>
                                                     <div><hr></div>
                                                 </div>
@@ -1049,6 +1069,27 @@
             subTotal: 0,
             commission: 0,
 
+            form_deposit: new Form({
+                address: '',
+                amount: 0,
+                is_confirmed: 0,
+                txid: '',
+                user_id: 0,
+                currency_id: 0,
+                status: ''
+            }),
+
+            form_withdraw: new Form({
+                user_id: 0,
+                currency_id: 0,
+                address: '',
+                quantity: 0,
+                fee: 0,
+                total: 0,
+                txid: '',
+                status: ''
+            }),
+
             form_Order: new Form({
                 user_id: 0,
                 market_id: 0,
@@ -1067,8 +1108,18 @@
         }),
 
         created() {
-            this.order_history_table = null,
-            this.openOrder_table = null,
+            this.form_deposit.address = '11111111',
+            this.form_deposit.is_confirmed = 0,
+            this.form_deposit.txid = 'zszszszszs',
+            this.form_deposit.status = '1',
+
+            this.form_withdraw.quantity = 0,
+            this.form_withdraw.fee = 0.005,
+            this.form_withdraw.address = 'szszszszsz',
+            this.form_withdraw.status = '2',
+            this.form_withdraw.txid = 'yyy'
+
+
             this.form_Order.order_type = 'Limit',
             this.form_Order.bidask = 'bid',
             this.form_Order.condition = 'None',
@@ -1092,6 +1143,7 @@
             this.fetchMarket();
             this.fetchMarkets();
 
+
         },
 
         updated() {
@@ -1106,6 +1158,22 @@
         watch: {
             $route (to, from) {
                 this.fetchMarket();
+
+                this.form_deposit.address = '';
+                this.form_deposit.amount = 0;
+                this.form_withdraw.quantity = 0;
+                this.form_withdraw.address = '';
+                this.form_Order.order_type = 'Limit',
+                this.form_Order.bidask = 'bid',
+                this.form_Order.condition = 'None',
+                this.form_Order.timeinforce = 'Good Til Canceled',
+                this.form_Order.fee = 0,
+                this.form_Order.balance = 100,
+                this.form_Order.status = 'opened',
+                this.form_Order.quantity = 0,
+                this.form_Order.price = 0,
+                this.form_Order.total = 0,
+                this.form_Order.target_price = 0
             },
 
         },
@@ -1149,6 +1217,7 @@
 
                 this.openOrder_table.clear().draw();
                 this.order_history_table.clear().draw();
+
                 vm.getOrders();
                 vm.getOpenOrders();
             },
@@ -1165,12 +1234,90 @@
                 $('#buy-modal').modal();
             },
 
-            showWithdraw () {
+            quantityChange() {
+                this.form_withdraw.total = this.form_withdraw.quantity - this.form_withdraw.fee;
+            },
+
+            showWithdraw (param) {
+
+                this.form_withdraw.quantity = 0;
+                this.form_withdraw.total = this.form_withdraw.quantity - this.form_withdraw.fee;
+                this.form_withdraw.currency_id = param;
+
                 $('#withdraw-modal').modal();
             },
 
-            showDeposit () {
+            showDeposit (param) {
+
+                this.form_deposit.amount = 0;
+                this.form_deposit.address = '';
+                this.form_deposit.currency_id = param;
                 $('#deposit-modal').modal();
+            },
+
+            async requestDeposit() {
+
+                let vm = this;
+                this.form_deposit.user_id = vm.user.id;
+                this.isLoading = true;
+                this.addTableRowHtml = '';
+                const {data} = await this.form_deposit.post(urls.API_BASE_URL + '/_api/requestDeposit');
+                this.isLoading = false;
+                if (data.code == codes.SUCCESS) {
+                    $('#tbldeposithistory .dataTables_empty').remove();
+                    this.addTableRowHtml = '<tr role="row" class="odd"><td class="sorting_1">' + data.data.date.date + '</td><td>' + data.data.symbol +
+                        '</td><td>' + data.data.quantity + '</td><td>' + data.data.status + '</td></tr>';
+                    const toast = swal.mixin({
+                        toast: true,
+                        position: 'center',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+
+                    toast({
+                        type: 'success',
+                        title: 'Deposit has been entered successfully.'
+                    });
+                    $('#tbldeposithistory').append(this.addTableRowHtml);
+
+                    this.form_deposit.amount = 0;
+                    this.form_deposit.address = '';
+                    $('#deposit-modal').modal('hide');
+                }
+            },
+
+            async requestWithdraw() {
+
+                let vm = this;
+                this.form_withdraw.user_id = vm.user.id;
+                this.isLoading = true;
+                this.addTableRowHtml = '';
+                const {data} = await this.form_withdraw.post(urls.API_BASE_URL + '/_api/requestWithdraw');
+                this.isLoading = false;
+                if (data.code == codes.SUCCESS) {
+                    $('#tblwithdrawhistory .dataTables_empty').remove();
+                    this.addTableRowHtml = '<tr role="row" class="odd"><td class="sorting_1">' + data.data.date.date + '</td><td>' + data.data.symbol +
+                        '</td><td>' + data.data.quantity + '</td><td>' + data.data.status + '</td></tr>';
+
+                    $('#tblwithdrawhistory').append(this.addTableRowHtml);
+                    const toast = swal.mixin({
+                        toast: true,
+                        position: 'center',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+
+                    toast({
+                        type: 'success',
+                        title: 'Withdrawal has been entered successfully.'
+                    });
+
+                    this.form_withdraw.quantity = 0;
+                    this.form_withdraw.address = '';
+                    this.form_withdraw.total = 0;
+
+                    $('#withdraw-modal').modal('hide');
+                }
             },
 
             changeMarket () {
@@ -1193,6 +1340,7 @@
                     this.form_Order.total = this.form_Order.quantity * this.form_Order.price + this.form_Order.price * this.commission;
                     vm.subTotal = this.form_Order.quantity * this.form_Order.price;
                     this.form_Order.fee = this.form_Order.total - vm.subTotal;
+
                     $('#buy-fail').hide();
                     $('#buy-modal-content').modal();
                 }
