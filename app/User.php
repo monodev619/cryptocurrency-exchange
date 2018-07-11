@@ -39,4 +39,12 @@ class User extends Authenticatable
     public function userProfile() {
         return $this->hasOne(UserProfile::class);
     }
+
+    public function deposits() {
+        return $this->hasMany(Deposit::class);
+    }
+
+    public function withrawals() {
+        return $this->hasMany(Withdrawal::class);
+    }
 }

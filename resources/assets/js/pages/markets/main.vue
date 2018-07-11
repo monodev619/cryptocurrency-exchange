@@ -1181,7 +1181,7 @@
         methods: {
 
             async fetchMarkets () {
-                const { data } = await axios.get(urls.API_BASE_URL + '/_api/markets');
+                const { data } = await axios.get(urls.API_BASE_URL + '/markets');
                 await this.$store.dispatch('market/getMarkets', {markets: data.data});
 
                 let vm = this;
@@ -1211,7 +1211,7 @@
             },
 
             async fetchMarket () {
-                const { data } = await axios.get(urls.API_BASE_URL + '/_api/market' + '/' + this.$route.query.MarketName);
+                const { data } = await axios.get(urls.API_BASE_URL + '/market' + '/' + this.$route.query.MarketName);
                 this.market_info = data.data;
                 let vm = this;
 
@@ -1261,7 +1261,7 @@
                 this.form_deposit.user_id = vm.user.id;
                 this.isLoading = true;
                 this.addTableRowHtml = '';
-                const {data} = await this.form_deposit.post(urls.API_BASE_URL + '/_api/requestDeposit');
+                const {data} = await this.form_deposit.post(urls.API_BASE_URL + '/requestDeposit');
                 this.isLoading = false;
                 if (data.code == codes.SUCCESS) {
                     $('#tbldeposithistory .dataTables_empty').remove();
@@ -1292,7 +1292,7 @@
                 this.form_withdraw.user_id = vm.user.id;
                 this.isLoading = true;
                 this.addTableRowHtml = '';
-                const {data} = await this.form_withdraw.post(urls.API_BASE_URL + '/_api/requestWithdraw');
+                const {data} = await this.form_withdraw.post(urls.API_BASE_URL + '/requestWithdraw');
                 this.isLoading = false;
                 if (data.code == codes.SUCCESS) {
                     $('#tblwithdrawhistory .dataTables_empty').remove();
@@ -1381,7 +1381,7 @@
                 this.addOrderTableRowHtml = '';
                 this.addOpenTableRowHtml = '';
 
-                const {data} = await this.form_Order.post(urls.API_BASE_URL + '/_api/requestOrder');
+                const {data} = await this.form_Order.post(urls.API_BASE_URL + '/requestOrder');
                 this.isLoading = false;
                 if (data.code == codes.SUCCESS) {
                     $('#tblorderhistory .dataTables_empty').remove();
@@ -1420,7 +1420,7 @@
 
             async getOrders() {
                 let vm = this;
-                const { data } = await axios.get(urls.API_BASE_URL + '/_api/Orders?user_id=' + vm.user.id + '&market_id=' + vm.market_info.id );
+                const { data } = await axios.get(urls.API_BASE_URL + '/Orders?user_id=' + vm.user.id + '&market_id=' + vm.market_info.id );
                 await this.$store.dispatch('order/getOrders', {res: data.data})
                 vm.order_history_table.clear();
                 this.orders.forEach(function (order) {
@@ -1438,7 +1438,7 @@
 
             async getOpenOrders() {
                 let vm = this;
-                const { data } = await axios.get(urls.API_BASE_URL + '/_api/openOrders?user_id=' + vm.user.id + '&market_id=' + vm.market_info.id );
+                const { data } = await axios.get(urls.API_BASE_URL + '/openOrders?user_id=' + vm.user.id + '&market_id=' + vm.market_info.id );
                 await this.$store.dispatch('order/getOpenOrders', {res: data.data})
                 vm.openOrder_table.clear();
                 this.open_orders.forEach(function (order) {

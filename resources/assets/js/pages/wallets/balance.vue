@@ -348,7 +348,6 @@
                  amount: 0,
                  is_confirmed: 0,
                  txid: '',
-                 user_id: 0,
                  currency_id: 0,
                  status: ''
              }),
@@ -420,7 +419,7 @@
              },
 
              async fetchMarkets () {
-                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/markets');
+                 const { data } = await axios.get(urls.API_BASE_URL + '/markets');
                  await this.$store.dispatch('market/getMarkets', {markets: data.data});
 
                  let vm = this;
@@ -464,7 +463,7 @@
              },
 
              async fetchCurrencies() {
-                 const {data} = await axios.get(urls.API_BASE_URL + '/_api/currencies');
+                 const {data} = await axios.get(urls.API_BASE_URL + '/currencies');
                  await this.$store.dispatch('wallet/getCurrencies', {res: data.data});
              },
 
@@ -487,10 +486,9 @@
              async requestDeposit() {
 
                  let vm = this;
-                 this.form_deposit.user_id = vm.user.id;
                  this.isLoading = true;
                  this.addTableRowHtml = '';
-                 const {data} = await this.form_deposit.post(urls.API_BASE_URL + '/_api/requestDeposit');
+                 const {data} = await this.form_deposit.post(urls.API_BASE_URL + '/requestDeposit');
                  this.isLoading = false;
                  if (data.code == codes.SUCCESS) {
                      $('#tbldeposithistory .dataTables_empty').remove();
@@ -518,10 +516,9 @@
              async requestWithdraw() {
 
                  let vm = this;
-                 this.form_withdraw.user_id = vm.user.id;
                  this.isLoading = true;
                  this.addTableRowHtml = '';
-                 const {data} = await this.form_withdraw.post(urls.API_BASE_URL + '/_api/requestWithdraw');
+                 const {data} = await this.form_withdraw.post(urls.API_BASE_URL + '/requestWithdraw');
                  this.isLoading = false;
                  if (data.code == codes.SUCCESS) {
                      $('#tblwithdrawhistory .dataTables_empty').remove();
@@ -551,7 +548,7 @@
              async getDeposits() {
 
                  let vm = this;
-                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/Deposits/' + vm.user.id);
+                 const { data } = await axios.get(urls.API_BASE_URL + '/deposits/');
                  await this.$store.dispatch('wallet/getdepositHistory', {res: data.data})
                  vm.depositHistoryTable.clear();
                  this.depositHistorys.forEach(function (history) {
@@ -567,7 +564,7 @@
              async getWithdraws() {
 
                  let vm = this;
-                 const { data } = await axios.get(urls.API_BASE_URL + '/_api/Withdraws/' + vm.user.id);
+                 const { data } = await axios.get(urls.API_BASE_URL + '/withdraws/');
                  await this.$store.dispatch('wallet/getwithdrawHistory', {res: data.data})
                  vm.withdrawHistoryTable.clear();
                  this.withdrawHistorys.forEach(function (history) {
@@ -583,7 +580,7 @@
              async getPendingDeposits() {
 
                  let vm = this;
-                 const {data} = await axios.get(urls.API_BASE_URL + '/_api/PendingDeposits/' + vm.user.id);
+                 const {data} = await axios.get(urls.API_BASE_URL + '/pendingDeposits/');
                  await this.$store.dispatch('wallet/getPendingDeposits', {res: data.data})
                  vm.pendingDepositsTable.clear();
                  this.pendingDeposits.forEach(function (deposit) {
@@ -599,7 +596,7 @@
              async getPendingWithdraws() {
 
                  let vm = this;
-                 const {data} = await axios.get(urls.API_BASE_URL + '/_api/PendingWithdraws/' + vm.user.id);
+                 const {data} = await axios.get(urls.API_BASE_URL + '/pendingWithdraws/');
                  await this.$store.dispatch('wallet/getPendingWithdraws', {res: data.data})
                  vm.pendingWithdrawsTable.clear();
 
@@ -616,7 +613,7 @@
              async getBalances() {
 
                  let vm = this;
-                 const {data} = await axios.get(urls.API_BASE_URL + '/_api/Balances/' + vm.user.id);
+                 const {data} = await axios.get(urls.API_BASE_URL + '/balances');
                  await this.$store.dispatch('wallet/getBalances', {res: data.data})
 
                  // vm.pendingWithdrawsTable.clear();

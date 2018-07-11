@@ -176,7 +176,7 @@
 
         methods: {
             async fetchMarkets () {
-                const { data } = await axios.get(urls.API_BASE_URL + '/_api/markets');
+                const { data } = await axios.get(urls.API_BASE_URL + '/markets');
                 await this.$store.dispatch('market/getMarkets', {markets: data.data});
 
                 let vm = this;

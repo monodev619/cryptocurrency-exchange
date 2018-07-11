@@ -177,7 +177,7 @@
 
             async updateProfile () {
                 if(!this.validateForm()) return;
-                const { data } = await this.form.post(urls.API_BASE_URL + '/_api/updateProfile');
+                const { data } = await this.form.post(urls.API_BASE_URL + '/updateProfile');
                 await this.$store.dispatch('auth/fetchProfile');
                 this.form.apt = '';
                 this.form.dob = '';

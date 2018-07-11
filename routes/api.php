@@ -42,11 +42,11 @@ $api->version('v1', ['middleware' => ['dingo']], function ($api) {
         $api->post('updatePassword', ['as' => 'api.updatePassword', 'uses' => UserController::class . '@updatePassword']);
         $api->post('requestDeposit', ['as' => 'api.requestDeposit', 'uses' => WalletController::class . '@requestDeposit']);
         $api->post('requestWithdraw', ['as' => 'api.withdrawCurrency', 'uses' => WalletController::class . '@requestWithdraw']);
-        $api->get('Deposits/{id}', ['as' => 'api.Deposits', 'uses' => WalletController::class . '@getDeposits']);
-        $api->get('Withdraws/{id}', ['as' => 'api.Withdraws', 'uses' => WalletController::class . '@getWithdraws']);
-        $api->get('PendingDeposits/{id}', ['as' => 'api.PendingDeposits', 'uses' => WalletController::class . '@getPendingDeposits']);
-        $api->get('PendingWithdraws/{id}', ['as' => 'api.PendingWithdraws', 'uses' => WalletController::class . '@getPendingWithdraws']);
-        $api->get('Balances/{id}', ['as' => 'api.Balances', 'uses' => WalletController::class . '@getBalances']);
+        $api->get('deposits', ['as' => 'api.Deposits', 'uses' => WalletController::class . '@getDeposits']);
+        $api->get('withdraws', ['as' => 'api.Withdraws', 'uses' => WalletController::class . '@getWithdraws']);
+        $api->get('pendingDeposits', ['as' => 'api.PendingDeposits', 'uses' => WalletController::class . '@getPendingDeposits']);
+        $api->get('pendingWithdraws', ['as' => 'api.PendingWithdraws', 'uses' => WalletController::class . '@getPendingWithdraws']);
+        $api->get('balances', ['as' => 'api.Balances', 'uses' => WalletController::class . '@getBalances']);
         $api->post('requestOrder', ['as' => 'api.requestOrder', 'uses' => OrderController::class . '@requestOrder']);
 //        $api->post('requestSellOrder', ['as' => 'api.requestSellOrder', 'uses' => OrderController::class . '@requestSellOrder']);
         $api->get('Orders/', ['as' => 'api.Orders', 'uses' => OrderController::class . '@getOrders']);

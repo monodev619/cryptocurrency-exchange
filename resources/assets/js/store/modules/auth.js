@@ -64,7 +64,7 @@ export const actions = {
   async fetchUser ({ commit, state }) {
     try {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + state.token;
-      const { data } = await axios.get(urls.API_BASE_URL + '/_api/user');
+      const { data } = await axios.get(urls.API_BASE_URL + '/user');
 
       commit(types.FETCH_USER_SUCCESS, { user: data.data });
     } catch (e) {
@@ -78,7 +78,7 @@ export const actions = {
 
   async fetchProfile ({ commit, state }) {
     try {
-        const { data } = await axios.get(urls.API_BASE_URL + '/_api/getProfile');
+        const { data } = await axios.get(urls.API_BASE_URL + '/getProfile');
 
         commit(types.FETCH_PROFILE_SUCCESS, { profile: data.data });
     } catch (e) {
@@ -88,7 +88,7 @@ export const actions = {
 
   async logout ({ commit }) {
     try {
-      await axios.post(urls.API_BASE_URL + '/_api/logout')
+      await axios.post(urls.API_BASE_URL + '/logout')
     } catch (e) { }
 
     commit(types.LOGOUT)

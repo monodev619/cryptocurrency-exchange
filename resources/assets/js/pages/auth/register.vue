@@ -82,14 +82,14 @@ export default {
       // Register the user.
         this.validation_error = false;
 
-      const { data } = await this.form.post(urls.API_BASE_URL + '/_api/register')
+      const { data } = await this.form.post(urls.API_BASE_URL + '/register')
 
       // if (data.code == codes.VALIDATION_ERROR) {
       //     this.validation_error = true;
       // }
 
       // Log in the user.
-      const { data: { token } } = await this.form.post(urls.API_BASE_URL + '/_api/login')
+      const { data: { token } } = await this.form.post(urls.API_BASE_URL + '/login')
 
       // Save the token.
       // this.$store.dispatch('auth/saveToken', { token })

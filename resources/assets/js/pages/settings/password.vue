@@ -139,7 +139,7 @@
                 if (!this.validateForm()) return;
 
                 this.isLoading = true;
-                const { data } = await this.form.post('/_api/updatePassword');
+                const { data } = await this.form.post('/updatePassword');
                 this.isLoading = false;
 
                 if (data.code == codes.SUCCESS) {

@@ -22,7 +22,6 @@ class WalletController extends BaseController
     public function requestDeposit(Request $request) {
 
         validate($request->all(), [
-            'user_id' => 'required',
             'currency_id' => 'required',
             'address' => 'required',
             'amount' => 'required',
@@ -32,7 +31,7 @@ class WalletController extends BaseController
         ]);
 
         $deposit = [
-          'user_id' => $request->get('user_id'),
+          'user_id' => user()->id,
           'currency_id' => $request->get('currency_id'),
           'address' => $request->get('address'),
           'amount' => $request->get('amount'),
@@ -54,7 +53,6 @@ class WalletController extends BaseController
     public function requestWithdraw(Request $request) {
 
         validate($request->all(), [
-            'user_id' => 'required',
             'currency_id' => 'required',
             'address' => 'required',
             'quantity' => 'required',
@@ -65,7 +63,7 @@ class WalletController extends BaseController
         ]);
 
         $withdraw = [
-            'user_id' => $request->get('user_id'),
+            'user_id' => user()->id,
             'currency_id' => $request->get('currency_id'),
             'address' => $request->get('address'),
             'quantity' => $request->get('quantity'),
@@ -85,9 +83,12 @@ class WalletController extends BaseController
         ]);
     }
 
-    public function getDeposits($id) {
+    public function getDeposits() {
 
-        $depositHistorys = Deposit::where('user_id', '=', $id)->get();
+        $user = user();
+
+        $depositHistorys = $user->deposits;
+
         $ret = [];
         foreach ($depositHistorys as $depositHistory) {
             array_push( $ret, [
@@ -107,11 +108,14 @@ class WalletController extends BaseController
 
     }
 
-    public function getWithdraws($id) {
+    public function getWithdraws() {
 
-        $withdrawHistorys = Withdrawal::where('user_id', '=', $id)->get();
+        $user = user();
+
+        $withdrawHistories = $user->withrawals;
+
         $ret = [];
-        foreach ($withdrawHistorys as $withdrawHistory) {
+        foreach ($withdrawHistories as $withdrawHistory) {
             array_push( $ret, [
                 'id' => $withdrawHistory->id,
                 'user' => $withdrawHistory->user->name,
@@ -131,9 +135,10 @@ class WalletController extends BaseController
         return success($ret);
     }
 
-    public function getPendingDeposits($id) {
+    public function getPendingDeposits() {
 
-        $pendingDeposits = Deposit::where([['user_id', '=', $id], ['status', '=', 'unchecked']])->get();
+        $pendingDeposits = user()->deposits()->where('status', 'unchecked')->get();
+
         $ret = [];
         foreach ($pendingDeposits as $pendingDeposit) {
             array_push( $ret, [
@@ -152,9 +157,9 @@ class WalletController extends BaseController
         return success($ret);
     }
 
-    public function getPendingWithdraws($id) {
+    public function getPendingWithdraws() {
 
-        $pendingWithdraws = Withdrawal::where([['user_id', '=', $id], ['status', '=', 'pending']])->get();
+        $pendingWithdraws = user()->withrawals()->where('status', 'pending')->get();
         $ret = [];
         foreach ($pendingWithdraws as $pendingWithdraw) {
             array_push( $ret, [
@@ -175,26 +180,22 @@ class WalletController extends BaseController
         return success($ret);
     }
 
-    public function getBalances($id) {
+    public function getBalances() {
 
+        $user = user();
         $balanceCurrencies = [];
-
         $currencies = Currency::all();
 
 
         foreach ( $currencies as $currency ) {
 
-            $pendingDepValue = 0;
-            $depValue = 0;
-            $pendingDeposits = Deposit::where([['user_id', '=', $id], ['status', '=', 'unchecked'], ['currency_id', '=', $currency->id ]])->get();
-            $deposits = Deposit::where([['user_id', '=', $id], ['status', '=', 'checked'], ['currency_id', '=', $currency->id ]])->get();
-            for ($i = 0 ; $i < $pendingDeposits->count() ; $i++) {
-                $pendingDepValue += $pendingDeposits[$i]->amount;
-            }
+            $pendingDepValue = $user->deposits()
+                ->where([['status', 'unchecked'], ['currency_id', $currency->id]])
+                ->sum('amount');
 
-            for ($i = 0 ; $i < $deposits->count() ; $i++) {
-                $depValue += $deposits[$i]->amount;
-            }
+            $depValue = $user->deposits()
+                ->where([['status', 'checked'], ['currency_id', $currency->id]])
+                ->sum('amount');
 
             array_push($balanceCurrencies, [
                 'id' => $currency->id,
